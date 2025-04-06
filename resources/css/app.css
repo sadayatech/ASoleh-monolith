@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+@import url("https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css");
+@import url("https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css");
+@import url("https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-chubby/css/uicons-solid-chubby.css");
+@import url("https://cdn-uicons.flaticon.com/2.6.0/uicons-brands/css/uicons-brands.css");
+@import "../../public/assets/webfonts/uicons-solid-rounded.css";
+
+@import "tailwindcss";
+
+@plugin '@tailwindcss/forms';
+@plugin 'tailwindcss-animate';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
+@custom-variant dark (&:is(.dark *));
+
+/* @theme {
+    --color-primary-900: #3e632b;
+    --color-primary-100: rgb(211 232 200);
+    --color-primary-800: rgb(62 99 43);
+    --color-primary-50: rgb(241 248 237);
+} */
+
+@theme {
+    --font-display: "Plus Jakarta Sans", "sans-serif";
+
+    --color-primary: #f1bd2c;
+    --color-secondary: #a40c0b;
+    --color-bgGray: #f8f8f8;
+    --color-textGray: #e6e6e6;
+    --color-textGrayDark: #a4a2a7;
+    --color-textDark: #2d3134;
+    --color-white: #ffffff;
+    --color-green: #31cf4a;
+}
