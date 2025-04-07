@@ -159,8 +159,7 @@ const closeModal = () => {
                 >
                     Batal
                 </button>
-                <button
-                    class="w-full bg-primary text-textDark py-3 rounded-full font-medium cursor-pointer hover:brightness-90 duration-300"
+                <button @click="$inertia.post('/logout')" class="w-full bg-primary text-textDark py-3 rounded-full font-medium cursor-pointer hover:brightness-90 duration-300"
                 >
                     Keluar
                 </button>

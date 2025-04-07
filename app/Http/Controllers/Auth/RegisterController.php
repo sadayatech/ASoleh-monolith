@@ -63,6 +63,6 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        return redirect(route(auth()->user->role === 'customer' ? 'home' : 'dashboard', absolute: false));
+        return redirect(route(auth()->user()->role === 'customer' ? 'home' : 'dashboard', absolute: false));
     }
 }
