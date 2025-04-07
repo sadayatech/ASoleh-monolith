@@ -5,11 +5,11 @@ import { Head, Link, router, useForm, usePage } from "@inertiajs/vue3";
 const page = usePage();
 const carts = page.props.carts;
 const total = page.props.total;
-
+console.log(page.props)
 const form = useForm({
-    consumer_name: page.props.user?.name,
-    email: page.props.user?.email,
-    whatsapp_number: page.props.user?.whatsapp_number,
+    consumer_name: page.props.auth.user?.name,
+    email: page.props.auth.user?.email,
+    whatsapp_number: page.props.auth.user?.whatsapp_number,
     notes: "",
     payment_method: "cash",
 });

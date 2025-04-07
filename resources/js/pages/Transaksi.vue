@@ -8,7 +8,7 @@ const route = { path: page.url };
 
 // Ambil data dari backend
 const transactions = ref(page.props.transactions ?? []);
-
+console.log(page.props)
 // Fungsi tombol kembali
 const handleBackButton = () => {
     if (route.path === "/transaksi") {

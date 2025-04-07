@@ -28,11 +28,7 @@ Route::get('/berhasil', fn () => Inertia::render('Berhasil'))->name('berhasil');
 Route::get('/detail-transaksi', fn () => Inertia::render('DetailTransaksi'))->name('detailTransaksi');
 Route::get('/pengaturan-akun', fn () => Inertia::render('PengaturanAkun'))->name('pengaturanAkun');
 Route::get('/pusat-bantuan', fn () => Inertia::render('PusatBantuan'))->name('pusatBantuan');
-Route::get('/transaksi', function (\Illuminate\Http\Request $request) {
-    return Inertia::render('Transaksi', [
-        'transactions' => json_decode($request->cookie('transactions', '[]'), true),
-    ]);
-})->name('transaksi');
+Route::get('/transaksi', [OrderController::class, 'index'])->name('transaksi');
 
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('keranjang.add');
 Route::middleware('guest')->group(function () {

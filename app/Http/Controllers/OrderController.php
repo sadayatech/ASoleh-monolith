@@ -106,9 +106,11 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
+        // dd(['aLL_transaction' => Order::all(), 'users' => Auth::user()]);
+
         // Jika user login, ambil dari database
         if (Auth::check()) {
-            $orders = Order::where('user_id', Auth::id())
+            $transactions = Order::where('user_id', Auth::id())
                 ->latest()
                 ->get(['transaction_code', 'consumer_name', 'payment_method', 'total_amount', 'created_at']);
         }
@@ -116,7 +118,7 @@ class OrderController extends Controller
         else {
             $transactions = json_decode($request->cookie('transactions', '[]'), true);
 
-            $orders = collect($transactions)->map(function ($transaction) {
+            $transactions = collect($transactions)->map(function ($transaction) {
                 return (object) [
                     'transaction_code' => $transaction['transaction_code'],
                     'consumer_name' => $transaction['consumer_name'],
