@@ -16,7 +16,7 @@ Route::get('/detail-transaksi/{order:transaction_code}', [OrderController::class
 
 Route::get('/pusat-bantuan', fn () => Inertia::render('PusatBantuan'))->name('pusatBantuan');
 Route::get('/transaksi', [OrderController::class, 'index'])->name('transaksi');
-
+Route::post('/upload-bukti/{order}', [OrderController::class, 'uploadBukti']);
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('keranjang.add');
 Route::middleware('guest')->group(function () {
     Route::get('/login', fn () => Inertia::render('auth/Login'))->name('login');

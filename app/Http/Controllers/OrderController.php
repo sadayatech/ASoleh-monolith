@@ -140,4 +140,20 @@ class OrderController extends Controller
             'order' => $order->load('items.item'),
         ]);
     }
+
+    public function uploadBukti(Request $request, Order $order)
+    {
+        $request->validate([
+            'bukti_pembayaran' => 'required|image|max:2048', // max 2MB
+        ]);
+
+        $path = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
+
+        $order->update([
+            'receipt' => $path,
+            'status' => 'under-review',
+        ]);
+
+        return back()->with('message', 'Bukti pembayaran berhasil diupload!');
+    }
 }

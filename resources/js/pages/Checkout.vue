@@ -211,7 +211,9 @@ const grandTotal = computed(() => {
             <div class="flex justify-between items-center w-full px-4">
                 <div class="flex flex-col -space-y-0.5">
                     <span class="text-textGrayDark text-xs">Total</span>
-                    <p class="text-textDark font-bold">Rp{{ Number(total).toLocaleString("id-ID") }}</p>
+                    <p class="text-textDark font-bold">
+                        Rp{{ Number(total).toLocaleString("id-ID") }}
+                    </p>
                 </div>
                 <button
                     @click.prevent="submit"

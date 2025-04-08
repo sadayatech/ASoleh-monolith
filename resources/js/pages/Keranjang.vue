@@ -81,7 +81,11 @@ const confirmDelete = () => {
                     </div>
                     <div class="w-[56%] max-w-[480px]">
                         <h1 class="line-clamp-1">{{ cart.item.name }}</h1>
-                        <h2 class="font-bold">Rp{{ Number(cart.item.price).toLocaleString("id-ID") }}</h2>
+                        <h2 class="font-bold">
+                            Rp{{
+                                Number(cart.item.price).toLocaleString("id-ID")
+                            }}
+                        </h2>
                         <p class="text-xs text-secondary mt-1">
                             Sisa {{ cart.item.stock }}
                         </p>
@@ -127,7 +131,9 @@ const confirmDelete = () => {
             class="fixed z-10 bottom-0 left-1/2 -translate-y-4 -translate-x-1/2 w-[calc(100%-32px)] max-w-[448px] bg-white shadow-sm rounded-full flex justify-around py-2"
         >
             <div class="flex justify-between items-center w-full px-4">
-                <p class="text-textDark font-bold">Rp{{ Number(total).toLocaleString("id-ID") }}</p>
+                <p class="text-textDark font-bold">
+                    Rp{{ Number(total).toLocaleString("id-ID") }}
+                </p>
                 <Link href="/checkout">
                     <button
                         class="bg-primary px-6 py-3 rounded-full cursor-pointer translate-x-1.5 hover:brightness-90 duration-300"

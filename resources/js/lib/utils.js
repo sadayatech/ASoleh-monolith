@@ -4,6 +4,8 @@ export const konversiStatus = (status) => {
             return "Sudah bayar";
         case "unpaid":
             return "Belum bayar";
+        case "under-review":
+            return "Sedang ditinjau";
         case "rejected":
             return "Ditolak";
         case "done":

@@ -46,7 +46,12 @@ onUnmounted(() => {
                 </div>
                 <div class="w-full mt-4">
                     <button
-                        type="button"
+                        @click="
+                            $inertia.visit(
+                                '/detail-transaksi/' +
+                                    $page.props.order.transaction_code,
+                            )
+                        "
                         class="bg-primary w-full py-3 mt-4 rounded-full cursor-pointer hover:brightness-90 duration-300"
                     >
                         <p class="font-bold">Lihat Detail Transaksi</p>
