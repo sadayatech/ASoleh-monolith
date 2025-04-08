@@ -106,31 +106,37 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
-        // dd(['aLL_transaction' => Order::all(), 'users' => Auth::user()]);
-
-        // Jika user login, ambil dari database
         if (Auth::check()) {
+            // User login → ambil semua transaksi user dari database
             $transactions = Order::where('user_id', Auth::id())
                 ->latest()
-                ->get(['transaction_code', 'consumer_name', 'payment_method', 'total_amount', 'created_at']);
+                ->get();
+        } else {
+            // Guest → ambil kode dari cookie
+            $cookieTransactions = json_decode($request->cookie('transactions', '[]'), true);
+    
+            // Ambil hanya kode transaksi dari cookie
+            $transactionCodes = collect($cookieTransactions)
+                ->pluck('transaction_code')
+                ->filter()
+                ->toArray();
+    
+            // Query ke database pakai kode transaksi dari cookie
+            $transactions = Order::whereIn('transaction_code', $transactionCodes)
+                ->latest()
+                ->get();
         }
-        // Jika guest, ambil dari cookie 'transactions'
-        else {
-            $transactions = json_decode($request->cookie('transactions', '[]'), true);
-
-            $transactions = collect($transactions)->map(function ($transaction) {
-                return (object) [
-                    'transaction_code' => $transaction['transaction_code'],
-                    'consumer_name' => $transaction['consumer_name'],
-                    'payment_method' => $transaction['payment_method'],
-                    'total_amount' => $transaction['total_amount'],
-                    'created_at' => $transaction['created_at'],
-                ];
-            });
-        }
-
+    
         return Inertia::render('Transaksi', [
             'transactions' => $transactions,
+        ]);
+    }
+    
+
+
+    public function viewOrder(Order $order,  Request $request) {
+        return Inertia::render('DetailTransaksi', [
+            'order' => $order->load('items.item'),
         ]);
     }
 }

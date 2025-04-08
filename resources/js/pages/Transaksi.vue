@@ -2,13 +2,13 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import { usePage, router, Link, Head } from "@inertiajs/vue3";
 import BottomNavbar from "@/components/BottomNavbar.vue";
+import { konversiStatus } from "@/lib/utils";
 
 const page = usePage();
 const route = { path: page.url };
 
 // Ambil data dari backend
 const transactions = ref(page.props.transactions ?? []);
-console.log(page.props)
 // Fungsi tombol kembali
 const handleBackButton = () => {
     if (route.path === "/transaksi") {
@@ -62,7 +62,7 @@ onUnmounted(() => {
                             </div>
                             <div>
                                 <p class="text-primary text-sm">
-                                    {{ order?.status }}
+                                    {{konversiStatus(order.status)}}
                                 </p>
                             </div>
                         </div>

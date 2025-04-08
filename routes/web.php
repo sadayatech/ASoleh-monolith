@@ -25,7 +25,7 @@ Route::get('/keranjang', [CartController::class, 'index'])->name('keranjang');
 Route::get('/checkout', [CartController::class, 'Checkout'])->name('confirm_checkout');
 Route::post('/checkout', [OrderController::class, 'Checkout'])->name('checkout');
 Route::get('/berhasil', fn () => Inertia::render('Berhasil'))->name('berhasil');
-Route::get('/detail-transaksi', fn () => Inertia::render('DetailTransaksi'))->name('detailTransaksi');
+Route::get('/detail-transaksi/{order:transaction_code}', [OrderController::class, 'viewOrder'])->name('detailTransaksi');
 Route::get('/pengaturan-akun', fn () => Inertia::render('PengaturanAkun'))->name('pengaturanAkun');
 Route::get('/pusat-bantuan', fn () => Inertia::render('PusatBantuan'))->name('pusatBantuan');
 Route::get('/transaksi', [OrderController::class, 'index'])->name('transaksi');
