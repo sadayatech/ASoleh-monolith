@@ -79,7 +79,7 @@ defineExpose({ openOffcanvas });
             </div>
             <div class="w-[56%] max-w-[480px]">
                 <h1 class="line-clamp-1">{{ selectedProduct.name }}</h1>
-                <h2 class="font-bold">Rp{{ selectedProduct.price }}</h2>
+                <h2 class="font-bold">Rp{{ Number(selectedProduct.price).toLocaleString("id-ID") }}</h2>
                 <p class="text-xs text-secondary mt-1">
                     Sisa {{ selectedProduct.stock }}
                 </p>
