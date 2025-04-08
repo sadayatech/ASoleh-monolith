@@ -25,7 +25,8 @@ const goBack = () => {
 const submit = () => {
     form.put("/password/update", {
         preserveScroll: true,
-        onSuccess: () => form.reset("current_password", "password", "password_confirmation"),
+        onSuccess: () =>
+            form.reset("current_password", "password", "password_confirmation"),
     });
 };
 </script>
@@ -36,10 +37,15 @@ const submit = () => {
 
         <section class="bg-primary w-full p-4">
             <div class="flex items-center">
-                <p class="text-textDark text-2xl translate-y-0.5 cursor-pointer" @click="goBack">
+                <p
+                    class="text-textDark text-2xl translate-y-0.5 cursor-pointer"
+                    @click="goBack"
+                >
                     <i class="fi fi-rr-arrow-left"></i>
                 </p>
-                <h1 class="text-textDark text-lg font-semibold absolute left-1/2 -translate-x-1/2">
+                <h1
+                    class="text-textDark text-lg font-semibold absolute left-1/2 -translate-x-1/2"
+                >
                     Pengaturan Akun
                 </h1>
             </div>
@@ -47,15 +53,21 @@ const submit = () => {
 
         <section class="mt-4 p-4">
             <div class="flex justify-center items-center gap-2">
-                <i class="fi fi-br-user-pen text-textDark text-lg translate-y-0.5"></i>
-                <h1 class="text-textDark text-lg font-semibold">Ubah Kata Sandi</h1>
+                <i
+                    class="fi fi-br-user-pen text-textDark text-lg translate-y-0.5"
+                ></i>
+                <h1 class="text-textDark text-lg font-semibold">
+                    Ubah Kata Sandi
+                </h1>
             </div>
 
             <!-- Form -->
             <form class="space-y-4 mt-4" @submit.prevent="submit">
                 <!-- Kata Sandi Saat Ini -->
                 <div>
-                    <label for="current_password" class="text-textDark">Kata Sandi Saat Ini</label>
+                    <label for="current_password" class="text-textDark"
+                        >Kata Sandi Saat Ini</label
+                    >
                     <div class="relative mt-2">
                         <input
                             :type="showPasswordOld ? 'text' : 'password'"
@@ -64,7 +76,9 @@ const submit = () => {
                             class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                             placeholder="Masukkan Kata Sandi Saat Ini"
                         />
-                        <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none ps-4">
+                        <div
+                            class="absolute inset-y-0 left-0 flex items-center pointer-events-none ps-4"
+                        >
                             <i class="fi fi-rr-lock text-textDark text-xl"></i>
                         </div>
                         <button
@@ -72,15 +86,27 @@ const submit = () => {
                             @click="showPasswordOld = !showPasswordOld"
                             class="absolute inset-y-0 right-0 flex items-center pr-4 text-textDark"
                         >
-                            <i :class="showPasswordOld ? 'fi fi-rr-eye text-xl' : 'fi fi-rr-eye-crossed text-xl'"></i>
+                            <i
+                                :class="
+                                    showPasswordOld
+                                        ? 'fi fi-rr-eye text-xl'
+                                        : 'fi fi-rr-eye-crossed text-xl'
+                                "
+                            ></i>
                         </button>
                     </div>
-                    <span v-if="form.errors.current_password" class="text-red-500 text-sm">{{ form.errors.current_password }}</span>
+                    <span
+                        v-if="form.errors.current_password"
+                        class="text-red-500 text-sm"
+                        >{{ form.errors.current_password }}</span
+                    >
                 </div>
 
                 <!-- Kata Sandi Baru -->
                 <div>
-                    <label for="password" class="text-textDark">Kata Sandi Baru</label>
+                    <label for="password" class="text-textDark"
+                        >Kata Sandi Baru</label
+                    >
                     <div class="relative mt-2">
                         <input
                             :type="showPasswordNew ? 'text' : 'password'"
@@ -89,7 +115,9 @@ const submit = () => {
                             class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                             placeholder="Masukkan Kata Sandi Baru"
                         />
-                        <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none ps-4">
+                        <div
+                            class="absolute inset-y-0 left-0 flex items-center pointer-events-none ps-4"
+                        >
                             <i class="fi fi-rr-lock text-textDark text-xl"></i>
                         </div>
                         <button
@@ -97,15 +125,27 @@ const submit = () => {
                             @click="showPasswordNew = !showPasswordNew"
                             class="absolute inset-y-0 right-0 flex items-center pr-4 text-textDark"
                         >
-                            <i :class="showPasswordNew ? 'fi fi-rr-eye text-xl' : 'fi fi-rr-eye-crossed text-xl'"></i>
+                            <i
+                                :class="
+                                    showPasswordNew
+                                        ? 'fi fi-rr-eye text-xl'
+                                        : 'fi fi-rr-eye-crossed text-xl'
+                                "
+                            ></i>
                         </button>
                     </div>
-                    <span v-if="form.errors.password" class="text-red-500 text-sm">{{ form.errors.password }}</span>
+                    <span
+                        v-if="form.errors.password"
+                        class="text-red-500 text-sm"
+                        >{{ form.errors.password }}</span
+                    >
                 </div>
 
                 <!-- Konfirmasi Kata Sandi Baru -->
                 <div>
-                    <label for="password_confirmation" class="text-textDark">Konfirmasi Kata Sandi Baru</label>
+                    <label for="password_confirmation" class="text-textDark"
+                        >Konfirmasi Kata Sandi Baru</label
+                    >
                     <div class="relative mt-2">
                         <input
                             :type="showPasswordConfirm ? 'text' : 'password'"
@@ -114,7 +154,9 @@ const submit = () => {
                             class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                             placeholder="Ketik Ulang Kata Sandi Baru"
                         />
-                        <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none ps-4">
+                        <div
+                            class="absolute inset-y-0 left-0 flex items-center pointer-events-none ps-4"
+                        >
                             <i class="fi fi-rr-lock text-textDark text-xl"></i>
                         </div>
                         <button
@@ -122,13 +164,20 @@ const submit = () => {
                             @click="showPasswordConfirm = !showPasswordConfirm"
                             class="absolute inset-y-0 right-0 flex items-center pr-4 text-textDark"
                         >
-                            <i :class="showPasswordConfirm ? 'fi fi-rr-eye text-xl' : 'fi fi-rr-eye-crossed text-xl'"></i>
+                            <i
+                                :class="
+                                    showPasswordConfirm
+                                        ? 'fi fi-rr-eye text-xl'
+                                        : 'fi fi-rr-eye-crossed text-xl'
+                                "
+                            ></i>
                         </button>
                     </div>
                 </div>
 
                 <p class="text-textDark text-sm mt-2">
-                    <span class="text-secondary">Catatan:</span> Kata sandi minimal 6 karakter
+                    <span class="text-secondary">Catatan:</span> Kata sandi
+                    minimal 6 karakter
                 </p>
 
                 <button

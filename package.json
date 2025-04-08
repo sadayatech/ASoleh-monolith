@@ -4,6 +4,7 @@
     "scripts": {
         "build": "vite build",
         "watch": "vite build --watch",
+        "format": "eslint && npx prettier --write ./resources/js/",
         "dev": "vite"
     },
     "devDependencies": {

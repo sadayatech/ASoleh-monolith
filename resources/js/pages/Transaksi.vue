@@ -62,7 +62,7 @@ onUnmounted(() => {
                             </div>
                             <div>
                                 <p class="text-primary text-sm">
-                                    {{konversiStatus(order.status)}}
+                                    {{ konversiStatus(order.status) }}
                                 </p>
                             </div>
                         </div>

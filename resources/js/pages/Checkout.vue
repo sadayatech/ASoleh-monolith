@@ -5,7 +5,7 @@ import { Head, Link, router, useForm, usePage } from "@inertiajs/vue3";
 const page = usePage();
 const carts = page.props.carts;
 const total = page.props.total;
-console.log(page.props)
+console.log(page.props);
 const form = useForm({
     consumer_name: page.props.auth.user?.name,
     email: page.props.auth.user?.email,

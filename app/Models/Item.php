@@ -28,6 +28,4 @@ class Item extends Model
         $this->attributes['name'] = ucwords($value);
         $this->attributes['slug'] = Str::slug($value);
     }
-
-
 }

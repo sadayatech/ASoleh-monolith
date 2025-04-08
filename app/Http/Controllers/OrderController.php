@@ -114,27 +114,26 @@ class OrderController extends Controller
         } else {
             // Guest → ambil kode dari cookie
             $cookieTransactions = json_decode($request->cookie('transactions', '[]'), true);
-    
+
             // Ambil hanya kode transaksi dari cookie
             $transactionCodes = collect($cookieTransactions)
                 ->pluck('transaction_code')
                 ->filter()
                 ->toArray();
-    
+
             // Query ke database pakai kode transaksi dari cookie
             $transactions = Order::whereIn('transaction_code', $transactionCodes)
                 ->latest()
                 ->get();
         }
-    
+
         return Inertia::render('Transaksi', [
             'transactions' => $transactions,
         ]);
     }
-    
 
-
-    public function viewOrder(Order $order,  Request $request) {
+    public function viewOrder(Order $order, Request $request)
+    {
         return Inertia::render('DetailTransaksi', [
             'order' => $order->load('items.item'),
         ]);

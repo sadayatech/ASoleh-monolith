@@ -15,8 +15,6 @@ use Inertia\Response;
 
 class ProfileController extends Controller
 {
-
-
     public function edit()
     {
         return inertia('Profil');
@@ -48,7 +46,6 @@ class ProfileController extends Controller
 
         return redirect()->route('profile.edit')->with('success', 'Profil berhasil diperbarui.');
     }
-
 
     /**
      * Display the user's profile form.
