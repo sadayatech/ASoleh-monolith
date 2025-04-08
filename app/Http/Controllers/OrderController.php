@@ -50,6 +50,7 @@ class OrderController extends Controller
                 'consumer_name' => $request->consumer_name,
                 'user_has_account' => Auth::check(),
                 'payment_method' => $request->payment_method,
+                'notes' => $request->notes,
                 'total_amount' => $total,
             ]);
 
@@ -85,6 +86,7 @@ class OrderController extends Controller
                     'consumer_name' => $order->consumer_name,
                     'payment_method' => $order->payment_method,
                     'total_amount' => $order->total_amount,
+                    'notes' => $order->notes,
                     'created_at' => now()->toDateTimeString(),
                 ];
                 cookie()->queue(cookie('transactions', json_encode($transactions), 60 * 24 * 30)); // Simpan selama 30 hari
