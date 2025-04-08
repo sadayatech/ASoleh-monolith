@@ -32,8 +32,7 @@ class LoginController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect(route(auth()->user()->role === 'customer' ? 'home' : 'dashboard', absolute: false));
     }
 
     /**
