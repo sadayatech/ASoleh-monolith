@@ -10,10 +10,19 @@ use Inertia\Inertia;
 
 class HomeController extends Controller
 {
-    public function renderHomePage()
+
+    
+    public function renderHomePage(Request $request)
     {
-        $items = Item::all();
-        $items = $items->map(function ($item) {
+        $search = $request->input('search');
+    
+        $itemsQuery = Item::query();
+    
+        if ($search) {
+            $itemsQuery->where('name', 'like', '%' . $search . '%');
+        }
+    
+        $items = $itemsQuery->latest()->get()->map(function ($item) {
             return [
                 'id' => $item->id,
                 'name' => $item->name,
@@ -22,11 +31,15 @@ class HomeController extends Controller
                 'image' => $item->media_path,
             ];
         });
-
+    
         return Inertia::render('Home', [
             'items' => $items,
+            'filters' => [
+                'search' => $search,
+            ],
         ]);
     }
+    
 
     public function searchItems(Request $request): JsonResponse
     {
