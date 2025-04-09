@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
-            $table->decimal('amount_paid', 10, 2);
-            $table->enum('payment_method', ['transfer', 'cash']);
-            $table->string('transfer_proof')->nullable();
+            $table->unsignedInteger('amount_paid');
+            $table->unsignedInteger('return_amount')->default(0);
+            $table->enum('payment_method', ['qris', 'cash']);
+            $table->string('proof')->nullable();
             $table->boolean('validated')->default(false);
             $table->timestamps();
         });

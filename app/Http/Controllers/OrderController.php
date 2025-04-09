@@ -150,10 +150,16 @@ class OrderController extends Controller
         $path = $request->file('bukti_pembayaran')->store('bukti_pembayaran', 'public');
 
         $order->update([
-            'receipt' => $path,
             'status' => 'under-review',
         ]);
-
+        $order->payment()->updateOrCreate(
+            ['order_id' => $order->id],
+            [
+                'amount_paid' => $order->total_amount,
+                'payment_method' => $order->payment_method,
+                'proof' => $path,
+            ]
+        );
         return back()->with('message', 'Bukti pembayaran berhasil diupload!');
     }
 }

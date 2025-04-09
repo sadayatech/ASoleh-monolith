@@ -1,6 +1,7 @@
 <script setup>
 import { Head, useForm, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
+document.body.classList.value = "max-w-[480px] mx-auto min-h-screen shadow-lg relative font-display antialiased";
 
 const goBack = () => {
     const ref = document.referrer;

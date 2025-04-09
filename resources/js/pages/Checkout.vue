@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import { Head, Link, router, useForm, usePage } from "@inertiajs/vue3";
+document.body.classList.value = "max-w-[480px] mx-auto min-h-screen shadow-lg relative font-display antialiased";
 
 const page = usePage();
 const carts = page.props.carts;
@@ -226,4 +227,3 @@ const grandTotal = computed(() => {
     </main>
 </template>
 
-<style scoped></style>

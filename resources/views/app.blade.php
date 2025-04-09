@@ -12,7 +12,7 @@
     @inertiaHead
 </head>
 
-<body class="max-w-[480px] mx-auto min-h-screen shadow-lg relative font-display antialiased">
+<body class="font-display antialiased">
     @inertia
 </body>
 

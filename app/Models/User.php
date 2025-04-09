@@ -25,6 +25,10 @@ class User extends Authenticatable
 
     protected $guarded = [];
 
+    public function getImageAttribute($value)
+    {
+        return $value ?? '/assets/images/user.png';
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
