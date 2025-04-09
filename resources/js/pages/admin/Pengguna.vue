@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import Sidebar from './components/Sidebar.vue'
+import { useForm } from '@inertiajs/vue3'
 
 // Dropdown Profil
 const isDropdownOpen = ref(false)
@@ -13,6 +14,50 @@ const handleClickOutside = (event) => {
     isDropdownOpen.value = false
   }
 }
+
+const updateUser = (user) => {
+  editForm.post('/admin/pengguna/update', {
+    data: {
+      id: user.id,
+      image: null,
+      email: editForm.email,
+      name: editForm.name,
+      whatsapp_number: editForm.whatsapp_number,
+      role: editForm.role,
+      tanggal_lahir: editForm.tanggal_lahir,
+      jenis_kelamin: editForm.jenis_kelamin,
+    },
+    onSuccess: () => {
+      closeModalDetail()
+    },
+    onError: () => {
+      console.error('Failed to update user')
+    },
+  })
+}
+const deleteForm = useForm({
+  id: null,
+});
+const deleteUser = (user) => deleteForm.delete('/admin/pengguna/delete', {
+  data: { id: user.id },
+  onSuccess: () => {
+    closeModalHapus()
+  },
+  onError: () => {
+    console.error('Failed to delete user')
+  },
+})
+
+const editForm = useForm({
+  image: '',
+  email: '',
+  name: '',
+  whatsapp_number: '',
+  role: '',
+  tanggal_lahir: '',
+  jenis_kelamin: 0,
+})
+
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
 })
@@ -22,8 +67,15 @@ onBeforeUnmount(() => {
 
 // Modal Detail Pengguna
 const showModalDetail = ref(false);
-const openModalDetail = () => {
+const openModalDetail = (user) => {
     showModalDetail.value = true;
+    editForm.image = user.image;
+    editForm.email = user.email;
+    editForm.whatsapp_number = user.whatsapp_number;
+    editForm.role = user.role;
+    editForm.tanggal_lahir = user.tanggal_lahir;
+    editForm.jenis_kelamin = user.jenis_kelamin;
+    editForm.name = user.name;
 };
 const closeModalDetail = () => {
     showModalDetail.value = false;
@@ -79,8 +131,8 @@ const closeModalKeluar = () => {
                         <img src="/assets/images/user.png" alt="user">
                     </div>
                     <div class="hidden md:inline-flex flex-col text-left">
-                        <h2 class="text-textDark font-semibold">Admin</h2>
-                        <p class="text-textDark text-sm">admin@gmail.com</p>
+                        <h2 class="text-textDark font-semibold">{{ $page.props.auth?.user.name }}</h2>
+                        <p class="text-textDark text-sm">{{ $page.props.auth?.user.email }}</p>
                     </div>
                     <div>
                         <p class="hidden md:block text-textDark transition-transform duration-200" :class="isDropdownOpen ? 'rotate-180' : ''">
@@ -137,70 +189,22 @@ const closeModalKeluar = () => {
             <div>
                 <h1 class="text-textDark text-lg font-semibold">Daftar Pengguna</h1>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-x-4">
-                    <button @click="openModalDetail" type="button" class="relative col-span-1 bg-white p-6 mt-4 rounded-3xl flex items-center gap-4 text-start cursor-pointer">
+                    <div v-for="userL in $page.props.users" @click="openModalDetail(userL)" class="relative col-span-1 bg-white p-6 mt-4 rounded-3xl flex items-center gap-4 text-start cursor-pointer">
                         <!-- Badge -->
                         <div class="absolute top-0 right-0 bg-primaryThin py-1.5 px-4 rounded-tr-3xl rounded-bl-3xl">
-                            <p class="text-sm text-primary font-medium">Customer</p>
+                            <p class="text-sm text-primary font-medium capitalize">{{ userL.role }}</p>
                         </div>
                         <div class="h-14 w-14 rounded-full overflow-hidden">
                             <img src="/assets/images/user.png" alt="user">
                         </div>
                         <div>
-                            <h1 class="line-clamp-1 text-textDark font-semibold">Nama Pengguna</h1>
-                            <h2 class="text-textDark">emailpengguna@gmail.com</h2>
+                            <h1 class="line-clamp-1 text-textDark font-semibold">{{ userL.name }}</h1>
+                            <h2 class="text-textDark">{{ userL.email }}</h2>
                         </div>
                         <div class="flex items-center ml-auto">
                             <p class="text-textDark"><i class="fi fi-rr-angle-right"></i></p>
                         </div>
-                    </button>
-                    <button @click="openModalDetail" type="button" class="relative col-span-1 bg-white p-6 mt-4 rounded-3xl flex items-center gap-4 text-start cursor-pointer">
-                        <!-- Badge -->
-                        <div class="absolute top-0 right-0 bg-primaryThin py-1.5 px-4 rounded-tr-3xl rounded-bl-3xl">
-                            <p class="text-sm text-primary font-medium">Customer</p>
-                        </div>
-                        <div class="h-14 w-14 rounded-full overflow-hidden">
-                            <img src="/assets/images/user.png" alt="user">
-                        </div>
-                        <div>
-                            <h1 class="line-clamp-1 text-textDark font-semibold">Nama Pengguna</h1>
-                            <h2 class="text-textDark">emailpengguna@gmail.com</h2>
-                        </div>
-                        <div class="flex items-center ml-auto">
-                            <p class="text-textDark"><i class="fi fi-rr-angle-right"></i></p>
-                        </div>
-                    </button>
-                    <button @click="openModalDetail" type="button" class="relative col-span-1 bg-white p-6 mt-4 rounded-3xl flex items-center gap-4 text-start cursor-pointer">
-                        <!-- Badge -->
-                        <div class="absolute top-0 right-0 bg-primaryThin py-1.5 px-4 rounded-tr-3xl rounded-bl-3xl">
-                            <p class="text-sm text-primary font-medium">Customer</p>
-                        </div>
-                        <div class="h-14 w-14 rounded-full overflow-hidden">
-                            <img src="/assets/images/user.png" alt="user">
-                        </div>
-                        <div>
-                            <h1 class="line-clamp-1 text-textDark font-semibold">Nama Pengguna</h1>
-                            <h2 class="text-textDark">emailpengguna@gmail.com</h2>
-                        </div>
-                        <div class="flex items-center ml-auto">
-                            <p class="text-textDark"><i class="fi fi-rr-angle-right"></i></p>
-                        </div>
-                    </button>
-                    <button @click="openModalDetail" type="button" class="relative col-span-1 bg-white p-6 mt-4 rounded-3xl flex items-center gap-4 text-start cursor-pointer">
-                        <!-- Badge -->
-                        <div class="absolute top-0 right-0 bg-primaryThin py-1.5 px-4 rounded-tr-3xl rounded-bl-3xl">
-                            <p class="text-sm text-primary font-medium">Customer</p>
-                        </div>
-                        <div class="h-14 w-14 rounded-full overflow-hidden">
-                            <img src="/assets/images/user.png" alt="user">
-                        </div>
-                        <div>
-                            <h1 class="line-clamp-1 text-textDark font-semibold">Nama Pengguna</h1>
-                            <h2 class="text-textDark">emailpengguna@gmail.com</h2>
-                        </div>
-                        <div class="flex items-center ml-auto">
-                            <p class="text-textDark"><i class="fi fi-rr-angle-right"></i></p>
-                        </div>
-                    </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -225,29 +229,29 @@ const closeModalKeluar = () => {
                     <div class="text-start w-full">
                         <div class="flex flex-col justify-center items-center">
                             <div class="h-32 w-32 rounded-full overflow-hidden relative">
-                                <img src="/assets/images/user.png" alt="user profile">
+                                <img :src="editForm.image" alt="user profile">
                             </div>
                             <div class="text-center mt-2 space-y-1">
-                                <h1 class="text-textDark text-xl font-bold">Nama Customer</h1>
-                                <p class="bg-primaryThin text-primary text-sm py-1 px-4 rounded-full mx-auto w-fit">Customer</p>
+                                <h1 class="text-textDark text-xl font-bold">{{ editForm.name }}</h1>
+                                <p class="bg-primaryThin text-primary text-sm py-1 px-4 rounded-full mx-auto w-fit capitalize">{{ editForm.role }}</p>
                             </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 mt-6 gap-y-4">
                             <div class="">
                                 <p class="text-textGrayDark text-xs">Nomor WhatsApp</p>
-                                <h2 class="text-textDark">0812345678910</h2>
+                                <h2 class="text-textDark">{{ editForm.whatsapp_number || "N/A"   }}</h2>
                             </div>
                             <div class="">
                                 <p class="text-textGrayDark text-xs">Alamat Email</p>
-                                <h2 class="text-textDark break-words">emailpengguna@gmail.com</h2>
+                                <h2 class="text-textDark break-words">{{ editForm.email }}</h2>
                             </div>
                             <div class="">
                                 <p class="text-textGrayDark text-xs">Tanggal Lahir</p>
-                                <h2 class="text-textDark">09-04-2025</h2>
+                                <h2 class="text-textDark">{{ editForm.tanggal_lahir || "N/A" }}</h2>
                             </div>
                             <div class="">
                                 <p class="text-textGrayDark text-xs">Jenis Kelamin</p>
-                                <h2 class="text-textDark">Laki-Laki</h2>
+                                <h2 class="text-textDark">{{ editForm.jenis_kelamin != null ?(editForm.jenis_kelamin === 1 ? 'Laki-laki' : 'Perempuan') : "N/A" }}</h2>
                             </div>
                         </div>
                     </div>

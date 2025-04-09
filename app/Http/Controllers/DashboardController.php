@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -41,7 +42,26 @@ class DashboardController extends Controller
     }
     public function render_users(Request $request)
     {
-        return Inertia::render('admin/Pengguna');
+        $search = $request->input('search');
+        $usersQuery = User::query();
+        if ($search) {
+            $usersQuery->where('name', 'like', '%' . $search . '%');
+        }
+        $users = $usersQuery->latest()->get()->map(function ($user) {
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->role,
+                'image' => $user->media_path,
+            ];
+        });
+        return Inertia::render('admin/Pengguna', [
+            'users' => $users,
+            'filters' => [
+                'search' => $search,
+            ],
+        ]);
     }
     public function render_supplier(Request $request)
     {
