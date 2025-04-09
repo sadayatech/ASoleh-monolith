@@ -10,7 +10,6 @@ export default defineConfig({
             input: "resources/js/app.js",
             ssr: "resources/js/ssr.js",
             refresh: true,
-
         }),
         vue({
             template: {

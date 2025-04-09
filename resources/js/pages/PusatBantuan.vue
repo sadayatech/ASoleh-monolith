@@ -1,6 +1,5 @@
 <script setup>
 import { Head } from "@inertiajs/vue3";
-document.body.classList.value = "max-w-[480px] mx-auto min-h-screen shadow-lg relative font-display antialiased";
 
 const goBack = () => {
     const ref = document.referrer;

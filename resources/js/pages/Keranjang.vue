@@ -6,7 +6,6 @@ console.log(usePage().props);
 const total = usePage().props.total;
 const carts = ref(JSON.parse(JSON.stringify(usePage().props.carts))); // clone to avoid mutating props
 const itemToDelete = ref(null); // Simpan item yang akan dihapus
-document.body.classList.value = "max-w-[480px] mx-auto min-h-screen shadow-lg relative font-display antialiased";
 
 const openModal = (index) => {
     itemToDelete.value = index;

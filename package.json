@@ -2,7 +2,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vite build",
+        "build": "vite build && vite build --ssr",
         "watch": "vite build --watch",
         "format": "eslint && npx prettier --write ./resources/js/",
         "dev": "vite"
@@ -24,6 +24,7 @@
         "vue-tsc": "^2.0.24"
     },
     "dependencies": {
+        "@vue/server-renderer": "^3.5.13",
         "apexcharts": "^4.5.0",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",

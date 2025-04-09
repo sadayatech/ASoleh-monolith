@@ -76,11 +76,11 @@ const closeModalKeluar = () => {
             <div class="relative" ref="dropdownRef">
                 <button @click="toggleDropdown" class="flex items-center gap-4 cursor-pointer">
                     <div class="h-12 w-12 rounded-full overflow-hidden">
-                        <img :src="$page.props.auth.user.image" :alt="$page.props.auth.user.name + ' profile picture'">
+                        <img src="/assets/images/user.png" alt="user">
                     </div>
                     <div class="hidden md:inline-flex flex-col text-left">
-                        <h2 class="text-textDark font-semibold">{{ $page.props.auth.user.name }}</h2>
-                        <p class="text-textDark text-sm">{{ $page.props.auth.user.email }}</p>
+                        <h2 class="text-textDark font-semibold">Admin</h2>
+                        <p class="text-textDark text-sm">admin@gmail.com</p>
                     </div>
                     <div>
                         <p class="hidden md:block text-textDark transition-transform duration-200" :class="isDropdownOpen ? 'rotate-180' : ''">
@@ -139,7 +139,7 @@ const closeModalKeluar = () => {
                 <div class="grid grid-cols-1 md:grid-cols-3 md:gap-x-4">
                     <button @click="openModalDetail" type="button" class="col-span-1 bg-white p-6 mt-4 rounded-3xl flex items-center gap-4 text-start cursor-pointer">
                         <div class="h-14 w-14 rounded-full overflow-hidden">
-                            <img :src="$page.props.auth.user.image" :alt="$page.props.auth.user.name + ' profile picture'">
+                            <img src="/assets/images/user.png" alt="user">
                         </div>
                         <div>
                             <h1 class="line-clamp-1 text-textDark font-semibold">Nama Supplier</h1>
@@ -151,7 +151,7 @@ const closeModalKeluar = () => {
                     </button>
                     <button @click="openModalDetail" type="button" class="col-span-1 bg-white p-6 mt-4 rounded-3xl flex items-center gap-4 text-start cursor-pointer">
                         <div class="h-14 w-14 rounded-full overflow-hidden">
-                            <img :src="$page.props.auth.user.image" :alt="$page.props.auth.user.name + ' profile picture'">
+                            <img src="/assets/images/user.png" alt="user">
                         </div>
                         <div>
                             <h1 class="line-clamp-1 text-textDark font-semibold">Nama Supplier</h1>
@@ -163,7 +163,7 @@ const closeModalKeluar = () => {
                     </button>
                     <button @click="openModalDetail" type="button" class="col-span-1 bg-white p-6 mt-4 rounded-3xl flex items-center gap-4 text-start cursor-pointer">
                         <div class="h-14 w-14 rounded-full overflow-hidden">
-                            <img :src="$page.props.auth.user.image" :alt="$page.props.auth.user.name + ' profile picture'">
+                            <img src="/assets/images/user.png" alt="user">
                         </div>
                         <div>
                             <h1 class="line-clamp-1 text-textDark font-semibold">Nama Supplier</h1>
@@ -175,7 +175,7 @@ const closeModalKeluar = () => {
                     </button>
                     <button @click="openModalDetail" type="button" class="col-span-1 bg-white p-6 mt-4 rounded-3xl flex items-center gap-4 text-start cursor-pointer">
                         <div class="h-14 w-14 rounded-full overflow-hidden">
-                            <img :src="$page.props.auth.user.image" :alt="$page.props.auth.user.name + ' profile picture'">
+                            <img src="/assets/images/user.png" alt="user">
                         </div>
                         <div>
                             <h1 class="line-clamp-1 text-textDark font-semibold">Nama Supplier</h1>

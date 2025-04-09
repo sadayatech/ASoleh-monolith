@@ -2,7 +2,6 @@
 import { usePage } from "@inertiajs/vue3";
 const route = { path: usePage().url };
 import { Link } from "@inertiajs/vue3";
-document.body.classList.value = "max-w-[480px] mx-auto min-h-screen shadow-lg relative font-display antialiased";
 
 </script>
 

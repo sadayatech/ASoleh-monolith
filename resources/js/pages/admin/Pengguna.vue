@@ -76,11 +76,11 @@ const closeModalKeluar = () => {
             <div class="relative" ref="dropdownRef">
                 <button @click="toggleDropdown" class="flex items-center gap-4 cursor-pointer">
                     <div class="h-12 w-12 rounded-full overflow-hidden">
-                        <img :src="$page.props.auth.user.image" :alt="$page.props.auth.user.name + ' profile picture'">
+                        <img src="/assets/images/user.png" alt="user">
                     </div>
                     <div class="hidden md:inline-flex flex-col text-left">
-                        <h2 class="text-textDark font-semibold">{{ $page.props.auth.user.name }}</h2>
-                        <p class="text-textDark text-sm">{{ $page.props.auth.user.email }}</p>
+                        <h2 class="text-textDark font-semibold">Admin</h2>
+                        <p class="text-textDark text-sm">admin@gmail.com</p>
                     </div>
                     <div>
                         <p class="hidden md:block text-textDark transition-transform duration-200" :class="isDropdownOpen ? 'rotate-180' : ''">
@@ -143,7 +143,7 @@ const closeModalKeluar = () => {
                             <p class="text-sm text-primary font-medium">Customer</p>
                         </div>
                         <div class="h-14 w-14 rounded-full overflow-hidden">
-                            <img :src="$page.props.auth.user.image" :alt="$page.props.auth.user.name + ' profile picture'">
+                            <img src="/assets/images/user.png" alt="user">
                         </div>
                         <div>
                             <h1 class="line-clamp-1 text-textDark font-semibold">Nama Pengguna</h1>
@@ -159,7 +159,7 @@ const closeModalKeluar = () => {
                             <p class="text-sm text-primary font-medium">Customer</p>
                         </div>
                         <div class="h-14 w-14 rounded-full overflow-hidden">
-                            <img :src="$page.props.auth.user.image" :alt="$page.props.auth.user.name + ' profile picture'">
+                            <img src="/assets/images/user.png" alt="user">
                         </div>
                         <div>
                             <h1 class="line-clamp-1 text-textDark font-semibold">Nama Pengguna</h1>
@@ -175,7 +175,7 @@ const closeModalKeluar = () => {
                             <p class="text-sm text-primary font-medium">Customer</p>
                         </div>
                         <div class="h-14 w-14 rounded-full overflow-hidden">
-                            <img :src="$page.props.auth.user.image" :alt="$page.props.auth.user.name + ' profile picture'">
+                            <img src="/assets/images/user.png" alt="user">
                         </div>
                         <div>
                             <h1 class="line-clamp-1 text-textDark font-semibold">Nama Pengguna</h1>
@@ -191,7 +191,7 @@ const closeModalKeluar = () => {
                             <p class="text-sm text-primary font-medium">Customer</p>
                         </div>
                         <div class="h-14 w-14 rounded-full overflow-hidden">
-                            <img :src="$page.props.auth.user.image" :alt="$page.props.auth.user.name + ' profile picture'">
+                            <img src="/assets/images/user.png" alt="user">
                         </div>
                         <div>
                             <h1 class="line-clamp-1 text-textDark font-semibold">Nama Pengguna</h1>
@@ -225,7 +225,7 @@ const closeModalKeluar = () => {
                     <div class="text-start w-full">
                         <div class="flex flex-col justify-center items-center">
                             <div class="h-32 w-32 rounded-full overflow-hidden relative">
-                                <img src="/src/assets/images/user.png" alt="user profile">
+                                <img src="/assets/images/user.png" alt="user profile">
                             </div>
                             <div class="text-center mt-2 space-y-1">
                                 <h1 class="text-textDark text-xl font-bold">Nama Customer</h1>

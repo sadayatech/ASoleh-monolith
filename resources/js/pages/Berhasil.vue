@@ -1,7 +1,6 @@
 <script setup>
 import { onMounted, onUnmounted } from "vue";
 import { Head, Link, router } from "@inertiajs/vue3";
-document.body.classList.value = "max-w-[480px] mx-auto min-h-screen shadow-lg relative font-display antialiased";
 
 const confirmGoHome = () => {
     const confirmExit = window.confirm(

@@ -13,7 +13,6 @@ const goBack = () => {
         router.visit("/transaksi");
     }
 };
-document.body.classList.value = "max-w-[480px] mx-auto min-h-screen shadow-lg relative font-display antialiased";
 
 const form = useForm({
     bukti_pembayaran: null,

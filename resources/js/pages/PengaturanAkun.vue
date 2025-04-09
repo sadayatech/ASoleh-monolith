@@ -5,7 +5,6 @@ import { Head, useForm, router } from "@inertiajs/vue3";
 const showPasswordOld = ref(false);
 const showPasswordNew = ref(false);
 const showPasswordConfirm = ref(false);
-document.body.classList.value = "max-w-[480px] mx-auto min-h-screen shadow-lg relative font-display antialiased";
 
 const form = useForm({
     current_password: "",
