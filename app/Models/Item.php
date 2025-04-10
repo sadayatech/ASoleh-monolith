@@ -28,4 +28,13 @@ class Item extends Model
         $this->attributes['name'] = ucwords($value);
         $this->attributes['slug'] = Str::slug($value);
     }
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

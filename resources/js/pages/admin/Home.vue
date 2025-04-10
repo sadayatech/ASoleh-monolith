@@ -56,7 +56,7 @@
                     <div class="col-span-1 bg-primaryThin p-4 rounded-3xl flex justify-between items-center">
                         <div class="space-y-2">
                             <p class="text-textDark">Menu Aktif</p>
-                            <h1 class="text-textDark text-3xl font-bold">25</h1>
+                            <h1 class="text-textDark text-3xl font-bold">{{ $page.props.stats.items }}</h1>
                         </div>
                         <div>
                             <p class="text-primary text-5xl"><i class="fi fi-sr-hamburger-soda"></i></p>
@@ -65,7 +65,7 @@
                     <div class="col-span-1 bg-primaryThin p-4 rounded-3xl flex justify-between items-center">
                         <div class="space-y-2">
                             <p class="text-textDark">Jumlah Pesanan</p>
-                            <h1 class="text-textDark text-3xl font-bold">50</h1>
+                            <h1 class="text-textDark text-3xl font-bold">{{ $page.props.stats.orders }}</h1>
                         </div>
                         <div>
                             <p class="text-primary text-5xl"><i class="fi fi-sr-room-service"></i></p>
@@ -100,7 +100,7 @@
                         <div class="bg-primaryThin p-4 rounded-3xl flex justify-between items-center">
                             <div class="space-y-2">
                                 <p class="text-textDark">Jumlah Supplier</p>
-                                <h1 class="text-textDark text-3xl font-bold">32</h1>
+                                <h1 class="text-textDark text-3xl font-bold">{{ $page.props.stats.supplier }}</h1>
                             </div>
                             <div>
                                 <p class="text-primary text-5xl"><i class="fi fi-ss-supplier"></i></p>
@@ -109,7 +109,7 @@
                         <div class="bg-primaryThin p-4 rounded-3xl flex justify-between items-center">
                             <div class="space-y-2">
                                 <p class="text-textDark">Pengguna Terdaftar</p>
-                                <h1 class="text-textDark text-3xl font-bold">1675</h1>
+                                <h1 class="text-textDark text-3xl font-bold">{{ $page.props.stats.customer }}</h1>
                             </div>
                             <div>
                                 <p class="text-primary text-5xl"><i class="fi fi-sr-users"></i></p>

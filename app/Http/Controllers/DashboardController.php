@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Order;
+use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,7 +13,19 @@ class DashboardController extends Controller
 {
     public function render_home(Request $request)
     {
-        return Inertia::render('admin/Home');
+        $activeItemCount = Item::where('stock', '>', 0)->count();
+        $orderCount = Order::count(); // Assuming you have an Order model
+        $supplierCount = Supplier::count();
+        $customerCount = User::where('role', 'customer')->count();
+
+        return Inertia::render('admin/Home', [
+            'stats' => [
+                'items' => $activeItemCount,
+                'orders' => $orderCount,
+                'supplier' => $supplierCount,
+                'customer' => $customerCount,
+            ],
+        ]);
     }
     public function render_menu(Request $request)
     {
@@ -65,7 +79,30 @@ class DashboardController extends Controller
     }
     public function render_supplier(Request $request)
     {
-        return Inertia::render('admin/Supplier');
+        $search = $request->input('search');
+        $suppliersQuery = Supplier::query()->with('items');
+        if ($search) {
+            $suppliersQuery->where('name', 'like', '%' . $search . '%');
+        }
+        $suppliers = $suppliersQuery->latest()->get()->map(function ($supplier) {
+            $items = $supplier->items->pluck('name')->map(function ($name) {
+                return $name;
+            })->implode(', ');
+            
+            return [
+                'id' => $supplier->id,
+                'name' => $supplier->name,
+                'image' => $supplier->image,
+                'whatsapp_number' => $supplier->whatsapp_number,
+                'items' => $items,
+            ];
+        });
+        return Inertia::render('admin/Supplier', [
+            'suppliers' => $suppliers,
+            'filters' => [
+                'search' => $search,
+            ],
+        ]);
     }
     public function render_report(Request $request)
     {

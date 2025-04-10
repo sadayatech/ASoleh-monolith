@@ -30,7 +30,8 @@ class ItemFactory extends Factory
             'price' => $this->faker->randomNumber(6, 1, 100),
             'category_id' => $this->faker->numberBetween(1, 3),
             'stock' => $this->faker->numberBetween(1, 100),
-            'media_path' => $this->faker->imageUrl(width: 640, height: 480, category: 'food', randomize: true),
+            'supplier_id' => $this->faker->numberBetween(1, 2),
+            'media_path' => $this->faker->image(public_path('images'), 640, 480, 'food', false),
         ];
     }
 }

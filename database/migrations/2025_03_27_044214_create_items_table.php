@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Category;
+use App\Models\Supplier;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->integer('stock')->default(10);
             $table->integer('sold')->default(0);
+            $table->foreignIdFor(Supplier::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
