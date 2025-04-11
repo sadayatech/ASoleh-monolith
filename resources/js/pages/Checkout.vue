@@ -121,7 +121,7 @@ const grandTotal = computed(() => {
                         id="nomor-whatsapp"
                         v-model="form.whatsapp_number"
                         class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
-                        placeholder="Masukkan nomor whatsapp"
+                        placeholder="Contoh: 6281234567891"
                         required
                     />
                     <div
@@ -142,7 +142,7 @@ const grandTotal = computed(() => {
                         class="w-[calc(50%-56px)] h-[12vh] sm:w-[8vw] rounded-2xl overflow-hidden relative"
                     >
                         <img
-                            :src="cart.item.media_path"
+                            :src="cart.item.image"
                             class="absolute top-0 left-0 w-full h-full object-cover"
                             alt=""
                         />

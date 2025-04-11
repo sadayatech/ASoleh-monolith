@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm, usePage } from "@inertiajs/vue3";
+import { Head, router, useForm, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
 
 const goBack = () => {

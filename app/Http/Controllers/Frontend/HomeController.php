@@ -26,7 +26,7 @@ class HomeController extends Controller
                 'name' => $item->name,
                 'price' => $item->price,
                 'stock' => $item->stock,
-                'image' => $item->media_path,
+                'image' => $item->image,
             ];
         });
 
@@ -48,7 +48,7 @@ class HomeController extends Controller
                 'name' => $item->name,
                 'price' => $item->price,
                 'stock' => $item->stock,
-                'image' => $item->media_path,
+                'image' => $item->image,
             ];
         });
 

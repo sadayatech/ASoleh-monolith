@@ -84,7 +84,7 @@ const submit = () => {
                         <button
                             type="button"
                             @click="showPasswordOld = !showPasswordOld"
-                            class="absolute inset-y-0 right-0 flex items-center pr-4 text-textDark"
+                            class="absolute inset-y-0 right-0 flex items-center pr-4 text-textDark cursor-pointer"
                         >
                             <i
                                 :class="
@@ -123,7 +123,7 @@ const submit = () => {
                         <button
                             type="button"
                             @click="showPasswordNew = !showPasswordNew"
-                            class="absolute inset-y-0 right-0 flex items-center pr-4 text-textDark"
+                            class="absolute inset-y-0 right-0 flex items-center pr-4 text-textDark cursor-pointer"
                         >
                             <i
                                 :class="
@@ -162,7 +162,7 @@ const submit = () => {
                         <button
                             type="button"
                             @click="showPasswordConfirm = !showPasswordConfirm"
-                            class="absolute inset-y-0 right-0 flex items-center pr-4 text-textDark"
+                            class="absolute inset-y-0 right-0 flex items-center pr-4 text-textDark cursor-pointer"
                         >
                             <i
                                 :class="

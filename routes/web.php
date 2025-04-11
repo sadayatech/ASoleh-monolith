@@ -14,6 +14,7 @@ use App\Http\Controllers\Auth\{
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -33,8 +34,9 @@ Route::post('/checkout', [OrderController::class, 'Checkout'])->name('checkout')
 Route::get('/berhasil', fn() => Inertia::render('Berhasil'))->name('berhasil');
 Route::get('/detail-transaksi/{order:transaction_code}', [OrderController::class, 'viewOrder'])->name('detailTransaksi');
 Route::get('/pusat-bantuan', fn() => Inertia::render('PusatBantuan'))->name('pusatBantuan');
-Route::get('/akun', fn() => Inertia::render('Akun'))->name('akun');
 Route::post('/upload-bukti/{order}', [OrderController::class, 'uploadBukti']);
+Route::get('/transaksi', [OrderController::class, 'index'])->name('transaksi');
+Route::get('/underconstruction', fn() => Inertia::render('UnderConstruction'));
 
 /*
 |--------------------------------------------------------------------------
@@ -67,15 +69,26 @@ Route::middleware('guest')->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth')->group(function () {
+    Route::get('/akun', fn() => Inertia::render('Akun'))->name('akun');
     Route::get('/profil', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/pengaturan-akun', fn() => Inertia::render('PengaturanAkun'))->name('pengaturan-akun');
-    Route::get('/transaksi', [OrderController::class, 'index'])->name('transaksi');
     Route::get('/admin/dashboard', [DashboardController::class, 'render_home'])->name('dashboard');
     Route::get('/admin/menu', [DashboardController::class, 'render_menu'])->name('dashboard.menu');
     Route::get('/admin/supplier', [DashboardController::class, 'render_supplier'])->name('dashboard.supplier');
     Route::get('/admin/users', [DashboardController::class, 'render_users'])->name('dashboard.users');
 
+    // Kasir
+    Route::get('/kasir/dashboard', fn() => Inertia::render('kasir/HomeDashboard'));
+    Route::get('/kasir/pesanan', fn() => Inertia::render('kasir/Pesanan'));
+    Route::get('/kasir/riwayat', fn() => Inertia::render('kasir/Riwayat'));
+    Route::get('/kasir/pengaturan', fn() => Inertia::render('kasir/Pengaturan'));
+    Route::get('/kasir/berhasil', fn() => Inertia::render('kasir/Berhasil'));
+
+    // Pelayan
+    Route::get('/pelayan/dashboard', fn() => Inertia::render('pelayan/HomeDashboard'));
+    Route::get('/pelayan/supplier', fn() => Inertia::render('pelayan/Supplier'));
+    Route::get('/pelayan/pengaturan', fn() => Inertia::render('pelayan/Pengaturan'));
 
 
     // Email Verification
@@ -94,4 +107,10 @@ Route::middleware('auth')->group(function () {
 
     // Logout
     Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
+    
+    // Item
+    Route::post('item/toggle/{item}', [ItemController::class, 'toggleActiveState'])->name('toggle.item');
+    Route::put('item/update/{item}', [ItemController::class, 'update'])->name('update.item');
+    Route::post('item/store', [ItemController::class, 'store'])->name('store.item');
+    Route::delete('item/delete/{item}', [ItemController::class, 'destroy'])->name('delete.item');
 });

@@ -1,7 +1,7 @@
 <script setup>
 import { Link, usePage } from '@inertiajs/vue3';
 const page = usePage()
-const route = {path: page.props.route};
+const route = {path: page.url};
 </script>
 
 <template>

@@ -1,6 +1,7 @@
 <script setup>
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
+import BottomNavbar from "@/components/BottomNavbar.vue";
 
 const form = useForm({
     name: "",
@@ -18,7 +19,7 @@ const showPassword = ref(false);
 </script>
 
 <template>
-    <main class="bg-bgGray min-h-screen">
+    <main class="bg-bgGray min-h-screen pb-24">
         <Head title="Daftar" />
 
         <section>
@@ -117,7 +118,7 @@ const showPassword = ref(false);
                         <button
                             type="button"
                             @click="showPassword = !showPassword"
-                            class="absolute inset-y-0 right-0 flex items-center pr-4 text-textDark"
+                            class="absolute inset-y-0 right-0 flex items-center pr-4 text-textDark cursor-pointer"
                         >
                             <i
                                 :class="
@@ -150,6 +151,8 @@ const showPassword = ref(false);
                 </div>
             </form>
         </section>
+
+        <BottomNavbar />
     </main>
 </template>
 

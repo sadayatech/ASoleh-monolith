@@ -76,7 +76,7 @@ const closeModal = () => {
                             class="w-[calc(50%-56px)] h-[12vh] sm:w-[8vw] rounded-2xl overflow-hidden relative"
                         >
                             <img
-                                :src="orderItem.item.image_url"
+                                :src="orderItem.item.image"
                                 class="absolute top-0 left-0 w-full h-full object-cover"
                                 alt=""
                             />
@@ -236,7 +236,7 @@ const closeModal = () => {
                     </p>
                 </div>
                 <div class="mt-8">
-                    <img src="/assets/images/qr.png" alt="" />
+                    <img src="/assets/images/qris.jpeg" alt="QRIS SPW PPLG" />
                     <p class="text-start text-textDark font-bold mt-4">
                         Total Bayar: Rp{{
                             Number(order.total_amount).toLocaleString("id-ID")

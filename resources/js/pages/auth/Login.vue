@@ -1,6 +1,7 @@
 <script setup>
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
+import BottomNavbar from "@/components/BottomNavbar.vue";
 const form = useForm({
     email: "",
     password: "",
@@ -16,7 +17,7 @@ const showPassword = ref(false);
 </script>
 
 <template>
-    <main class="bg-bgGray min-h-screen">
+    <main class="bg-bgGray min-h-screen pb-36">
         <Head title="Login" />
 
         <section>
@@ -72,7 +73,7 @@ const showPassword = ref(false);
                         <button
                             type="button"
                             @click="showPassword = !showPassword"
-                            class="absolute inset-y-0 right-0 flex items-center pr-4 text-textDark"
+                            class="absolute inset-y-0 right-0 flex items-center pr-4 text-textDark cursor-pointer"
                         >
                             <i
                                 :class="
@@ -110,12 +111,14 @@ const showPassword = ref(false);
                 </div>
                 <Link
                     href="/pusat-bantuan"
-                    class="fixed z-10 bottom-0 right-0 -translate-y-4 -translate-x-4 py-4 px-6 bg-white shadow-sm rounded-full hover:brightness-90 duration-300"
+                    class="fixed z-10 bottom-0 right-0 -translate-y-24 -translate-x-4 py-4 px-6 bg-white shadow-sm rounded-full hover:brightness-90 duration-300"
                 >
                     <p>Perlu Bantuan?</p>
                 </Link>
             </form>
         </section>
+
+        <BottomNavbar />
     </main>
 </template>
 

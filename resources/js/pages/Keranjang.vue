@@ -74,7 +74,7 @@ const confirmDelete = () => {
                         class="w-[calc(50%-56px)] rounded-2xl overflow-hidden relative"
                     >
                         <img
-                            :src="cart.item.media_path"
+                            :src="cart.item.image"
                             class="absolute top-0 left-0 w-full h-full object-cover"
                             alt=""
                         />

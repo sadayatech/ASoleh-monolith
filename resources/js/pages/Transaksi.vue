@@ -68,8 +68,8 @@ onUnmounted(() => {
                         </div>
                         <div class="flex justify-between">
                             <div>
-                                <h2 class="text-textDark line-clamp-2">
-                                    {{ order.consumer_name }}
+                                <h2 class="text-textDark line-clamp-2 truncate">
+                                    {{ order.items.map((item) => item.item.name).join(", ") }}
                                 </h2>
                             </div>
                             <div class="text-end">
@@ -80,14 +80,16 @@ onUnmounted(() => {
                                         ).toLocaleString("id-ID")
                                     }}
                                 </h2>
-                                <p class="text-textGrayDark text-sm">-</p>
+                                <p class="text-textGrayDark text-sm">
+                                    {{ order.items.reduce((sum, item) => sum + item.quantity, 0) }} Item
+                                </p>
                             </div>
                         </div>
                     </Link>
                 </template>
 
                 <p v-else class="text-textGrayDark text-center mt-10">
-                    Tidak ada transaksi ditemukan.
+                    Belum ada transaksi.
                 </p>
             </div>
         </section>

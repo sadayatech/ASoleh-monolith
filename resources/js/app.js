@@ -16,7 +16,7 @@ createInertiaApp({
         const page = await resolvePageComponent(`./pages/${name}.vue`, pages)
 
         // 💡 Set layout based on folder name
-        if (name.startsWith('admin/')) {
+        if (name.startsWith('admin/') || name.startsWith('kasir/')) {
             page.default.layout ??= AdminLayout
         } else {
             page.default.layout ??= UserLayout

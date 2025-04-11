@@ -111,7 +111,7 @@ class OrderController extends Controller
         if (Auth::check()) {
             // User login → ambil semua transaksi user dari database
             $transactions = Order::where('user_id', Auth::id())
-                ->latest()
+                ->latest()->with('items.item')
                 ->get();
         } else {
             // Guest → ambil kode dari cookie
@@ -125,7 +125,7 @@ class OrderController extends Controller
 
             // Query ke database pakai kode transaksi dari cookie
             $transactions = Order::whereIn('transaction_code', $transactionCodes)
-                ->latest()
+                ->latest()->with('items.item')
                 ->get();
         }
 

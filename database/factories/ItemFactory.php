@@ -28,10 +28,10 @@ class ItemFactory extends Factory
             'name' => $this->faker->word(),
             'description' => $this->faker->sentence(),
             'price' => $this->faker->randomNumber(6, 1, 100),
+            'supplier_price' => $this->faker->randomNumber(6, 1, 100),
             'category_id' => $this->faker->numberBetween(1, 3),
             'stock' => $this->faker->numberBetween(1, 100),
             'supplier_id' => $this->faker->numberBetween(1, 2),
-            'media_path' => $this->faker->image(public_path('images'), 640, 480, 'food', false),
         ];
     }
 }

@@ -16,13 +16,13 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete();
-            $table->string('media_path')->nullable();
-            $table->enum('media_type', ['photo', 'video'])->default('photo');
+            $table->string('image')->nullable();
             $table->string('name');
             $table->string('slug');
             $table->text('description')->nullable();
             $table->unsignedBigInteger('price');
-            $table->boolean('is_active')->default(true);
+            $table->unsignedBigInteger('supplier_price');
+            $table->boolean('status')->default(true);
             $table->integer('stock')->default(10);
             $table->integer('sold')->default(0);
             $table->foreignIdFor(Supplier::class)->constrained()->cascadeOnDelete();

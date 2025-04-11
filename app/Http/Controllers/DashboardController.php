@@ -17,13 +17,23 @@ class DashboardController extends Controller
         $orderCount = Order::count(); // Assuming you have an Order model
         $supplierCount = Supplier::count();
         $customerCount = User::where('role', 'customer')->count();
-
+        $todayIncome = Order::whereDate('created_at', now())
+            ->whereIn('status', ['paid', 'done'])
+            ->with('orderItems')
+            ->get()
+            ->flatMap(function ($order) {
+                return $order->orderItems;
+            })
+            ->sum(function ($orderItem) {
+                return $orderItem->quantity * $orderItem->amount;
+            });
         return Inertia::render('admin/Home', [
             'stats' => [
                 'items' => $activeItemCount,
                 'orders' => $orderCount,
                 'supplier' => $supplierCount,
                 'customer' => $customerCount,
+                'income' => $todayIncome,
             ],
         ]);
     }
@@ -37,21 +47,14 @@ class DashboardController extends Controller
             $itemsQuery->where('name', 'like', '%' . $search . '%');
         }
 
-        $items = $itemsQuery->latest()->get()->map(function ($item) {
-            return [
-                'id' => $item->id,
-                'name' => $item->name,
-                'price' => $item->price,
-                'stock' => $item->stock,
-                'image' => $item->media_path,
-            ];
-        });
+        $items = $itemsQuery->latest()->get();
 
         return Inertia::render('admin/Menu', [
             'items' => $items,
             'filters' => [
                 'search' => $search,
             ],
+            'suppliers' => Supplier::all()
         ]);
     }
     public function render_users(Request $request)
@@ -67,7 +70,7 @@ class DashboardController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'role' => $user->role,
-                'image' => $user->media_path,
+                'image' => $user->image,
             ];
         });
         return Inertia::render('admin/Pengguna', [
@@ -88,7 +91,7 @@ class DashboardController extends Controller
             $items = $supplier->items->pluck('name')->map(function ($name) {
                 return $name;
             })->implode(', ');
-            
+
             return [
                 'id' => $supplier->id,
                 'name' => $supplier->name,

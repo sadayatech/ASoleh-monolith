@@ -121,7 +121,7 @@ const closeModal = () => {
                             <p
                                 class="flex gap-6 text-textDark text-xl group-hover:text-primary duration-300"
                             >
-                                <i class="fi fi-rr-insert-alt"></i>
+                                <i class="fi fi-rr-sign-in-alt"></i>
                                 <span class="text-base">Masuk</span>
                             </p>
                             <p

@@ -1,7 +1,8 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import Sidebar from './components/Sidebar.vue'
-import { useForm } from '@inertiajs/vue3'
+import { Link, useForm } from '@inertiajs/vue3'
+import HeaderDashboard from './components/HeaderDashboard.vue'
 
 // Dropdown Profil
 const isDropdownOpen = ref(false)
@@ -120,50 +121,8 @@ const closeModalKeluar = () => {
 
 <template>
     <div class="bg-bgGray min-h-screen md:ps-[150px] p-4 md:pe-4 pt-[18px] pb-24 md:pb-0">
-        <div class="bg-white p-4 rounded-2xl flex justify-between items-center">
-            <div>
-                <h1 class="text-lg font-semibold">SPW Gridas</h1>
-            </div>
-            <!-- Dropdown -->
-            <div class="relative" ref="dropdownRef">
-                <button @click="toggleDropdown" class="flex items-center gap-4 cursor-pointer">
-                    <div class="h-12 w-12 rounded-full overflow-hidden">
-                        <img src="/assets/images/user.png" alt="user">
-                    </div>
-                    <div class="hidden md:inline-flex flex-col text-left">
-                        <h2 class="text-textDark font-semibold">{{ $page.props.auth?.user.name }}</h2>
-                        <p class="text-textDark text-sm">{{ $page.props.auth?.user.email }}</p>
-                    </div>
-                    <div>
-                        <p class="hidden md:block text-textDark transition-transform duration-200" :class="isDropdownOpen ? 'rotate-180' : ''">
-                        <i class="fi fi-sr-angle-down"></i>
-                        </p>
-                    </div>
-                </button>
 
-                <Transition name="fade">
-                    <div
-                        v-if="isDropdownOpen"
-                        class="absolute right-0 z-10 mt-2 w-56 bg-white rounded-2xl shadow-lg"
-                        >
-                        <router-link to="/admin/pengguna" class="flex md:hidden items-center py-2.5 px-4 gap-4 hover:bg-bgGray duration-300 cursor-pointer">
-                            <p class="text-textDark text-lg"><i class="fi fi-rr-users"></i></p>
-                            <p class="text-textDark">Pengguna</p>
-                        </router-link>
-                        <router-link to="/admin/pengaturan" class="flex md:hidden items-center py-2.5 px-4 gap-4 hover:bg-bgGray duration-300 cursor-pointer">
-                            <p class="text-textDark text-lg"><i class="fi fi-rr-settings"></i></p>
-                            <p class="text-textDark">Pengaturan</p>
-                        </router-link>
-                        <!-- Garis Pemisah -->
-                        <div class="border-t md:border-none border-textGray mt-1"></div>
-                        <button @click="openModalKeluar" class="flex items-center p-4 gap-4 w-full hover:bg-bgGray duration-300 cursor-pointer">
-                            <p class="text-secondary text-lg"><i class="fi fi-rr-sign-out-alt"></i></p>
-                            <p class="text-secondary">Keluar</p>
-                        </button>
-                    </div>
-                </Transition>
-            </div>
-        </div>
+        <HeaderDashboard @openModalKeluar="openModalKeluar" />
 
         <section class="mt-4 w-full">
             <div class="md:flex justify-between">
@@ -715,7 +674,7 @@ const closeModalKeluar = () => {
                 </div>
                 <div class="flex justify-between mt-4 gap-2">
                     <button @click="closeModalKeluar" class="w-full text-secondary py-3 rounded-full font-medium cursor-pointer">Batal</button>
-                    <button class="w-full bg-primary text-textDark py-3 rounded-full font-medium cursor-pointer hover:brightness-90 duration-300">Keluar</button>
+                    <button class="w-full bg-primary text-textDark py-3 rounded-full font-medium cursor-pointer hover:brightness-90 duration-300" @click="$inertia.post('/logout')">Keluar</button>
                 </div>
             </div>
         </Transition>

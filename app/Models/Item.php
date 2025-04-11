@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Item extends Model
@@ -23,11 +24,28 @@ class Item extends Model
         'updated_at',
     ];
 
+
+    public function getImageAttribute($value)
+    {
+        if (!$value) {
+            return asset('assets/images/product.png');
+        }
+        if (Storage::exists($value)) {
+            return $value;
+        }
+        
+        return '/storage/' . $value;
+    }
+
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = ucwords($value);
         $this->attributes['slug'] = Str::slug($value);
     }
+
+
+
+
 
     public function supplier()
     {
