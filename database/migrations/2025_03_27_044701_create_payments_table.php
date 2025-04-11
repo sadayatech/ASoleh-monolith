@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('proof')->nullable();
             $table->boolean('validated')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

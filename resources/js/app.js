@@ -12,7 +12,7 @@ createInertiaApp({
     title: (title) => `${title} | ${appName}`,
 
     resolve: async name => {
-        const pages = import.meta.glob('./pages/**/*.vue', { eager: true })
+        const pages = import.meta.glob('./pages/**/*.vue', { eager: false })
         const page = await resolvePageComponent(`./pages/${name}.vue`, pages)
 
         // 💡 Set layout based on folder name

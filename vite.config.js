@@ -31,14 +31,37 @@ export default defineConfig({
             algorithm: 'brotliCompress', exclude: [/\.(br)$ /, /\.(gz)$/],
         }),
     ],
-    // build: { cssMinify: true, minify: true },
+    build: {
+        cssMinify: true,
+        minify: true,
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    if (id.includes('node_modules')) {
+                        if (id.includes('vue')) return 'vue'
+                        if (id.includes('axios')) return 'axios'
+                        if (id.includes('apexcharts')) return 'apexcharts'
+                        return 'vendor'
+                    }
+                },
+            },
+        },
+        chunkSizeWarningLimit: 1000, // opsional, supaya gak terlalu sering warning
+    },
+    server: {
+        watch: {
+            usePolling: true,
+            interval: 1000,
+            ignored: ['node_modules', 'public', 'storage', 'vendor', 'resources/js/app.js', 'app']
+        },
+    },
     esbuild: true,
     resolve: {
         alias: {
             '@': path.resolve(__dirname, 'resources/js'),
         },
     },
-    // optimizeDeps: {
-    //     esbuildOptions: { minifyWhitespace: true, minify: true, minifyIdentifiers: true, minifySyntax: true, legalComments: "none" },
-    // },
+    optimizeDeps: {
+        esbuildOptions: { minifyWhitespace: true, minify: true, minifyIdentifiers: true, minifySyntax: true, legalComments: "none" },
+    },
 });

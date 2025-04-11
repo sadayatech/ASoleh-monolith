@@ -21,7 +21,11 @@ return new class extends Migration
             $table->enum('payment_method', ['qris', 'cash']);
             $table->enum('status', ['paid', 'unpaid', 'under-review', 'rejected', 'done'])->default('unpaid');
             $table->text('notes')->nullable();
-            $table->decimal('total_amount', 10, 2);
+            $table->unsignedInteger('total_amount');
+            $table->unsignedInteger('cash_given');
+            $table->unsignedInteger('change');
+            
+            $table->softDeletes();
             $table->timestamps();
         });
     }

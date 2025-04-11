@@ -1,15 +1,43 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import Sidebar from './components/Sidebar.vue'
-import { Link } from '@inertiajs/vue3';
+import { Link, router, useForm } from '@inertiajs/vue3';
 import HeaderDashboard from './components/HeaderDashboard.vue'
 
 // Dropdown Profil
 const selectedSupplier = ref({});
 const isDropdownOpen = ref(false)
 const dropdownRef = ref(null)
-const toggleDropdown = () => {
-    isDropdownOpen.value = !isDropdownOpen.value
+const newSupplier = useForm({
+    name: '',
+    whatsapp_number: ''
+});
+const saveNewSupplier = () => {
+    newSupplier.post('/supplier/store', {
+        onSuccess: () => {
+            newSupplier.reset()
+            closeModalTambah()
+        },
+        onError: () => {
+            console.log('Error saving supplier')
+        }
+    })
+}
+
+const editSupplierForm = useForm({
+    name: selectedSupplier.value.name,
+    whatsapp_number: selectedSupplier.value.whatsapp_number
+});
+const saveEditedSupplier = () => {
+    editSupplierForm.put(`/supplier/update/${selectedSupplier.value.id}`, {
+        onSuccess: () => {
+            editSupplierForm.reset()
+            closeModalUbah()
+        },
+        onError: () => {
+            console.log('Error saving edited supplier')
+        }
+    })
 }
 const handleClickOutside = (event) => {
     if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
@@ -45,6 +73,8 @@ const closeModalTambah = () => {
 // Modal Ubah Supplier
 const showModalUbah = ref(false);
 const openModalUbah = () => {
+    editSupplierForm.name = selectedSupplier.value.name;
+    editSupplierForm.whatsapp_number = selectedSupplier.value.whatsapp_number;
     showModalUbah.value = true;
 };
 const closeModalUbah = () => {
@@ -68,6 +98,17 @@ const openModalKeluar = () => {
 const closeModalKeluar = () => {
     showModalKeluar.value = false;
 };
+
+const deleteSupplier = () => {
+    router.delete('/supplier/delete/' + selectedSupplier.value.id, {
+        onSuccess: () => {
+            closeModalHapus()
+            closeModalDetail()
+            router.visit('/admin/supplier')
+        }
+    })
+}
+
 </script>
 
 <template>
@@ -101,7 +142,7 @@ const closeModalKeluar = () => {
             <div>
                 <h1 class="text-textDark text-lg font-semibold">Daftar Supplier</h1>
                 <div class="grid grid-cols-1 md:grid-cols-3 md:gap-x-4">
-                    <div v-for="supplier in $page.props.suppliers" @click="openModalDetail(supplier)" type="button"
+                    <div v-for="supplier in $page.props.suppliers" @click="openModalDetail(supplier)"
                         class="col-span-1 bg-white p-6 mt-4 rounded-3xl flex items-center gap-4 text-start cursor-pointer">
                         <div class="h-14 w-14 rounded-full overflow-hidden">
                             <img src="/assets/images/user.png" alt="user">
@@ -145,8 +186,8 @@ const closeModalKeluar = () => {
                             <h2 class="text-textDark">{{ selectedSupplier?.whatsapp_number }}</h2>
                         </div>
                         <div class="mt-2">
-                        <p class="text-textGrayDark text-xs">Produk</p>
-                            <h2 class="text-textDark">{{ selectedSupplier?.items }}</h2>
+                            <p class="text-textGrayDark text-xs">Produk</p>
+                            <h2 class="text-textDark">{{ selectedSupplier?.items || "Belum ada produk" }}</h2>
                         </div>
                     </div>
                 </div>
@@ -189,7 +230,7 @@ const closeModalKeluar = () => {
                     <div class="col-span-1">
                         <label for="nama-supplier" class="text-textDark">Nama Supplier</label>
                         <div class="relative mt-2">
-                            <input type="text" id="nama-supplier"
+                            <input type="text" id="nama-supplier" v-model="newSupplier.name"
                                 class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                                 placeholder="Masukkan Nama Supplier" required />
                             <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4 pt-1">
@@ -202,14 +243,14 @@ const closeModalKeluar = () => {
                         <div class="relative mt-2">
                             <input type="number" id="nomor-whatsapp"
                                 class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
-                                placeholder="Masukkan Nomor WhatsApp" required />
+                                v-model="newSupplier.whatsapp_number" placeholder="Masukkan Nomor WhatsApp" required />
                             <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4 pt-1">
                                 <p class="text-textDark text-xl"><i class="fi fi-brands-whatsapp"></i></p>
                             </div>
                         </div>
                     </div>
                     <div class="flex justify-end items-end mt-4">
-                        <button type="submit"
+                        <button type="submit" @click="saveNewSupplier"
                             class="bg-primary px-12 py-3 rounded-full cursor-pointer translate-x-1.5 hover:brightness-90 duration-300">
                             <div class="flex justify-center items-center gap-2">
                                 <p class="text-textDark text-lg translate-y-0.5"><i class="fi fi-rr-disk"></i></p>
@@ -241,7 +282,7 @@ const closeModalKeluar = () => {
                     <div class="col-span-1">
                         <label for="nama-supplier" class="text-textDark">Nama Supplier</label>
                         <div class="relative mt-2">
-                            <input type="name" id="nama-supplier"
+                            <input type="name" id="nama-supplier" v-model="editSupplierForm.name"
                                 class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                                 placeholder="Masukkan Nama Supplier" required />
                             <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4 pt-1">
@@ -252,7 +293,7 @@ const closeModalKeluar = () => {
                     <div class="col-span-1">
                         <label for="nomor-whatsapp" class="text-textDark">Nomor WhatsApp</label>
                         <div class="relative mt-2">
-                            <input type="number" id="nomor-whatsapp"
+                            <input type="number" id="nomor-whatsapp" v-model="editSupplierForm.whatsapp_number"
                                 class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                                 placeholder="Masukkan Nomor WhatsApp" required />
                             <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4 pt-1">
@@ -261,7 +302,7 @@ const closeModalKeluar = () => {
                         </div>
                     </div>
                     <div class="flex justify-end items-end mt-4">
-                        <button type="submit"
+                        <button type="submit" @click="saveEditedSupplier"
                             class="bg-primary px-12 py-3 rounded-full cursor-pointer translate-x-1.5 hover:brightness-90 duration-300">
                             <div class="flex justify-center items-center gap-2">
                                 <p class="text-textDark text-lg translate-y-0.5"><i class="fi fi-rr-disk"></i></p>
@@ -290,7 +331,7 @@ const closeModalKeluar = () => {
                 <div class="flex justify-between mt-4 gap-2">
                     <button @click="closeModalHapus"
                         class="w-full text-secondary py-3 rounded-full font-medium cursor-pointer">Batal</button>
-                    <button
+                    <button @click="deleteSupplier"
                         class="w-full bg-primary text-textDark py-3 rounded-full font-medium cursor-pointer hover:brightness-90 duration-300">Ya,
                         Hapus</button>
                 </div>
@@ -315,7 +356,8 @@ const closeModalKeluar = () => {
                     <button @click="closeModalKeluar"
                         class="w-full text-secondary py-3 rounded-full font-medium cursor-pointer">Batal</button>
                     <button
-                        class="w-full bg-primary text-textDark py-3 rounded-full font-medium cursor-pointer hover:brightness-90 duration-300" @click="$inertia.post('/logout')">Keluar</button>
+                        class="w-full bg-primary text-textDark py-3 rounded-full font-medium cursor-pointer hover:brightness-90 duration-300"
+                        @click="$inertia.post('/logout')">Keluar</button>
                 </div>
             </div>
         </Transition>

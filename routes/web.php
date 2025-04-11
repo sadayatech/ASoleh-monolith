@@ -17,6 +17,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -113,4 +114,8 @@ Route::middleware('auth')->group(function () {
     Route::put('item/update/{item}', [ItemController::class, 'update'])->name('update.item');
     Route::post('item/store', [ItemController::class, 'store'])->name('store.item');
     Route::delete('item/delete/{item}', [ItemController::class, 'destroy'])->name('delete.item');
+    // Supplier
+    Route::post('supplier/store', [SupplierController::class, 'store'])->name('store.supplier');
+    Route::put('supplier/update/{supplier}', [SupplierController::class, 'update'])->name('update.supplier');
+    Route::delete('supplier/delete/{supplier}', [SupplierController::class, 'destroy'])->name('delete.supplier');
 });

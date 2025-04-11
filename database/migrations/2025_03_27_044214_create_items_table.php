@@ -27,6 +27,7 @@ return new class extends Migration
             $table->integer('sold')->default(0);
             $table->foreignIdFor(Supplier::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
