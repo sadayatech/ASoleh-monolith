@@ -16,7 +16,7 @@ createInertiaApp({
         const page = await resolvePageComponent(`./pages/${name}.vue`, pages)
 
         // 💡 Set layout based on folder name
-        if (name.startsWith('admin/') || name.startsWith('kasir/')) {
+        if (name.startsWith('admin/') || name.startsWith('kasir/')|| name.startsWith('pelayan/')) {
             page.default.layout ??= AdminLayout
         } else {
             page.default.layout ??= UserLayout
@@ -29,7 +29,12 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .mount(el);
-    }
+    },
+    progress: {
+        color: "#f1bd2c",
+        showSpinner: true,
+        delay: 0,
+    },
 }).then(() => {
     document.getElementById('app').removeAttribute('data-page');
     document.getElementById('app').removeAttribute('data-v-app');

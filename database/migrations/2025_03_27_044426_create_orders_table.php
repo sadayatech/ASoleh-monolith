@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('transaction_code')->unique();
             $table->string('consumer_name');
+            $table->string('whatsapp_number');
             $table->boolean('user_has_account')->default(false);
             $table->foreignIdFor(User::class)->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->enum('payment_method', ['qris', 'cash']);

@@ -13,7 +13,7 @@
 
     <title inertia>{{ config('app.name', 'SPW Gridas') }}</title>
 
-    @routes
+    {{-- @routes --}}
     @vite(['resources/js/app.js'])
     @inertiaHead
 </head>

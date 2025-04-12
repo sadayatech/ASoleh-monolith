@@ -38,7 +38,8 @@ Route::get('/pusat-bantuan', fn() => Inertia::render('PusatBantuan'))->name('pus
 Route::post('/upload-bukti/{order}', [OrderController::class, 'uploadBukti']);
 Route::get('/transaksi', [OrderController::class, 'index'])->name('transaksi');
 Route::get('/underconstruction', fn() => Inertia::render('UnderConstruction'));
-
+Route::patch('/cart/{cart}', [CartController::class, 'update'])->name('keranjang.update');
+Route::delete('/cart/{cart}', [CartController::class, 'destroy'])->name('keranjang.destroy');
 /*
 |--------------------------------------------------------------------------
 | Guest Only Routes
@@ -74,22 +75,25 @@ Route::middleware('auth')->group(function () {
     Route::get('/profil', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/pengaturan-akun', fn() => Inertia::render('PengaturanAkun'))->name('pengaturan-akun');
-    Route::get('/admin/dashboard', [DashboardController::class, 'render_home'])->name('dashboard');
-    Route::get('/admin/menu', [DashboardController::class, 'render_menu'])->name('dashboard.menu');
-    Route::get('/admin/supplier', [DashboardController::class, 'render_supplier'])->name('dashboard.supplier');
-    Route::get('/admin/users', [DashboardController::class, 'render_users'])->name('dashboard.users');
+    Route::get('/admin/dashboard', [DashboardController::class, 'render_home'])->middleware('role:admin')->name('dashboard');
+    Route::get('/admin/menu', [DashboardController::class, 'render_menu'])->middleware('role:admin')->name('dashboard.menu');
+    Route::get('/admin/supplier', [DashboardController::class, 'render_supplier'])->middleware('role:admin')->name('dashboard.supplier');
+    Route::get('/admin/users', [DashboardController::class, 'render_users'])->middleware('role:admin')->name('dashboard.users');
 
     // Kasir
-    Route::get('/kasir/dashboard', fn() => Inertia::render('kasir/HomeDashboard'));
-    Route::get('/kasir/pesanan', fn() => Inertia::render('kasir/Pesanan'));
-    Route::get('/kasir/riwayat', fn() => Inertia::render('kasir/Riwayat'));
-    Route::get('/kasir/pengaturan', fn() => Inertia::render('kasir/Pengaturan'));
-    Route::get('/kasir/berhasil', fn() => Inertia::render('kasir/Berhasil'));
+    Route::get('/kasir/dashboard', [DashboardController::class, 'render_cashier_dashboard'])->name('kasir.dashboard')->middleware('role:kasir,admin');
+    Route::get('/kasir/pesanan', [DashboardController::class, 'render_cashier_orders'])->name('kasir.pesanan')->middleware('role:kasir,admin');
+    Route::get('/kasir/riwayat', [DashboardController::class, 'render_cashier_history'])->name('kasir.riwayat')->middleware('role:kasir,admin');
+    Route::get('/kasir/pengaturan', fn() => Inertia::render('kasir/Pengaturan'))->middleware('role:kasir,admin');
+    Route::get('/kasir/berhasil', fn() => Inertia::render('kasir/Berhasil'))->middleware('role:kasir,admin');
+    Route::post('/kasir/cart/add', [CartController::class, 'cashier_add_to_cart'])->name('kasir.keranjang.add')->middleware('role:kasir,admin');
+    Route::patch('/pesanan/{order}', [OrderController::class, 'updateOrderStatus'])->name('kasir.update_order_status')->middleware('role:kasir,admin');
+
 
     // Pelayan
-    Route::get('/pelayan/dashboard', fn() => Inertia::render('pelayan/HomeDashboard'));
-    Route::get('/pelayan/supplier', fn() => Inertia::render('pelayan/Supplier'));
-    Route::get('/pelayan/pengaturan', fn() => Inertia::render('pelayan/Pengaturan'));
+    Route::get('/pelayan/dashboard', fn() => Inertia::render('pelayan/HomeDashboard'))->middleware('role:staff');
+    Route::get('/pelayan/supplier', fn() => Inertia::render('pelayan/Supplier'))->middleware('role:staff');
+    Route::get('/pelayan/pengaturan', fn() => Inertia::render('pelayan/Pengaturan'))->middleware('role:staff');
 
 
     // Email Verification
@@ -108,14 +112,14 @@ Route::middleware('auth')->group(function () {
 
     // Logout
     Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
-    
+
     // Item
-    Route::post('item/toggle/{item}', [ItemController::class, 'toggleActiveState'])->name('toggle.item');
-    Route::put('item/update/{item}', [ItemController::class, 'update'])->name('update.item');
-    Route::post('item/store', [ItemController::class, 'store'])->name('store.item');
-    Route::delete('item/delete/{item}', [ItemController::class, 'destroy'])->name('delete.item');
+    Route::post('item/toggle/{item}', [ItemController::class, 'toggleActiveState'])->name('toggle.item')->middleware('role:admin.staff');
+    Route::put('item/update/{item}', [ItemController::class, 'update'])->name('update.item')->middleware('role:admin.staff');
+    Route::post('item/store', [ItemController::class, 'store'])->name('store.item')->middleware('role:admin.staff');
+    Route::delete('item/delete/{item}', [ItemController::class, 'destroy'])->name('delete.item')->middleware('role:admin.staff');
     // Supplier
-    Route::post('supplier/store', [SupplierController::class, 'store'])->name('store.supplier');
-    Route::put('supplier/update/{supplier}', [SupplierController::class, 'update'])->name('update.supplier');
-    Route::delete('supplier/delete/{supplier}', [SupplierController::class, 'destroy'])->name('delete.supplier');
+    Route::post('supplier/store', [SupplierController::class, 'store'])->name('store.supplier')->middleware('role:admin.staff');
+    Route::put('supplier/update/{supplier}', [SupplierController::class, 'update'])->name('update.supplier')->middleware('role:admin.staff');
+    Route::delete('supplier/delete/{supplier}', [SupplierController::class, 'destroy'])->name('delete.supplier')->middleware('role:admin.staff');
 });

@@ -83,7 +83,7 @@ const closeModalKeluar = () => {
             <div class="relative" ref="dropdownRef">
                 <button @click="toggleDropdown" class="flex items-center gap-4 cursor-pointer">
                     <div class="h-12 w-12 rounded-full overflow-hidden">
-                        <img src="/src/assets/images/user.png" alt="user">
+                        <img src="/assets/images/user.png" alt="user">
                     </div>
                     <div class="hidden md:inline-flex flex-col text-left">
                         <h2 class="text-textDark font-semibold">Pelayan</h2>
@@ -140,7 +140,7 @@ const closeModalKeluar = () => {
                 <div class="grid grid-cols-1 md:grid-cols-3 md:gap-x-4">
                     <button @click="openModalDetail" type="button" class="col-span-1 bg-primaryThin p-4 mt-4 rounded-3xl flex gap-4 text-start cursor-pointer">
                         <div class="w-[calc(50%-56px)] h-[12vh] sm:w-[8vw] rounded-2xl overflow-hidden relative">
-                            <img src="/src/assets/images/Risol.jpeg" class="absolute top-0 left-0 w-full h-full object-cover" alt="">
+                            <img src="/assets/images/Risol.jpeg" class="absolute top-0 left-0 w-full h-full object-cover" alt="">
                         </div>
                         <div class="my-auto">
                             <h1 class="line-clamp-1">Risol Ayam Pro Max</h1>
@@ -153,7 +153,7 @@ const closeModalKeluar = () => {
                     </button>
                     <button @click="openModalDetail" type="button" class="col-span-1 bg-primaryThin p-4 mt-4 rounded-3xl flex gap-4 text-start cursor-pointer">
                         <div class="w-[calc(50%-56px)] h-[12vh] sm:w-[8vw] rounded-2xl overflow-hidden relative">
-                            <img src="/src/assets/images/Risol.jpeg" class="absolute top-0 left-0 w-full h-full object-cover" alt="">
+                            <img src="/assets/images/Risol.jpeg" class="absolute top-0 left-0 w-full h-full object-cover" alt="">
                         </div>
                         <div class="my-auto">
                             <h1 class="line-clamp-1">Risol Ayam Pro Max</h1>
@@ -166,7 +166,7 @@ const closeModalKeluar = () => {
                     </button>
                     <button @click="openModalDetail" type="button" class="col-span-1 bg-primaryThin p-4 mt-4 rounded-3xl flex gap-4 text-start cursor-pointer">
                         <div class="w-[calc(50%-56px)] h-[12vh] sm:w-[8vw] rounded-2xl overflow-hidden relative">
-                            <img src="/src/assets/images/Risol.jpeg" class="absolute top-0 left-0 w-full h-full object-cover" alt="">
+                            <img src="/assets/images/Risol.jpeg" class="absolute top-0 left-0 w-full h-full object-cover" alt="">
                         </div>
                         <div class="my-auto">
                             <h1 class="line-clamp-1">Risol Ayam Pro Max</h1>
@@ -179,7 +179,7 @@ const closeModalKeluar = () => {
                     </button>
                     <button @click="openModalDetail" type="button" class="col-span-1 bg-primaryThin p-4 mt-4 rounded-3xl flex gap-4 text-start cursor-pointer">
                         <div class="w-[calc(50%-56px)] h-[12vh] sm:w-[8vw] rounded-2xl overflow-hidden relative">
-                            <img src="/src/assets/images/Risol.jpeg" class="absolute top-0 left-0 w-full h-full object-cover" alt="">
+                            <img src="/assets/images/Risol.jpeg" class="absolute top-0 left-0 w-full h-full object-cover" alt="">
                         </div>
                         <div class="my-auto">
                             <h1 class="line-clamp-1">Risol Ayam Pro Max</h1>
@@ -212,7 +212,7 @@ const closeModalKeluar = () => {
                 </div>
                 <div class="md:flex gap-4 mt-4">
                     <div class="relative w-36 h-36 md:w-[calc(50%-56px)] md:h-auto rounded-full md:rounded-3xl mx-auto overflow-hidden">
-                        <img src="/src/assets/images/Risol.jpeg" class="absolute top-0 left-0 w-full h-full object-cover" alt="">
+                        <img src="/assets/images/Risol.jpeg" class="absolute top-0 left-0 w-full h-full object-cover" alt="">
                     </div>
                     <div class="w-[56%] text-start mt-4 md:mt-0">
                         <h1 class="line-clamp-1">Risol Ayam Pro Max</h1>

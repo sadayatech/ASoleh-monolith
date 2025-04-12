@@ -111,4 +111,58 @@ class DashboardController extends Controller
     {
         return Inertia::render('admin/Laporan');
     }
+    public function render_cashier_dashboard(Request $request)
+    {
+        $search = $request->input('search');
+
+        $itemsQuery = Item::query();
+
+        if ($search) {
+            $itemsQuery->where('name', 'like', '%' . $search . '%');
+        }
+
+        $items = $itemsQuery->latest()->get();
+        $carts = auth()->user()->carts->load('item');
+        return Inertia::render('kasir/HomeDashboard', [
+            'items' => $items,
+            'carts' => $carts,
+            'total' => $carts->reduce(function ($carry, $cart) {
+                return $carry + ($cart->item->price * $cart->amount);
+            }, 0),
+            'filters' => [
+                'search' => $search,
+            ],
+        ]);
+    }
+    public function render_cashier_orders(Request $request)
+    {
+        $search = $request->input('search');
+        $ordersQuery = Order::query()->with(['items.item', 'payment'])->whereNot('status', 'done');
+        if ($search) {
+            $ordersQuery->where('invoice_number', 'like', '%' . $search . '%');
+        }
+        $orders = $ordersQuery->latest()->get();
+        return Inertia::render('kasir/Pesanan', [
+            'orders' => $orders,
+            'filters' => [
+                'search' => $search,
+            ],
+        ]);
+    }
+    public function render_cashier_history(Request $request)
+    {
+        $search = $request->input('search');
+        $ordersQuery = Order::query()->with(['items.item', 'payment'])->where('status', 'done');
+        if ($search) {
+            $ordersQuery->where('invoice_number', 'like', '%' . $search . '%');
+        }
+        $orders = $ordersQuery->latest()->get();
+        return Inertia::render('kasir/Riwayat', [
+            'orders' => $orders,
+            'filters' => [
+                'search' => $search,
+            ],
+        ]);
+    }
+    
 }

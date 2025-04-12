@@ -40,7 +40,8 @@ export default defineConfig({
                     if (id.includes('node_modules')) {
                         if (id.includes('vue')) return 'vue'
                         if (id.includes('axios')) return 'axios'
-                        if (id.includes('apexcharts')) return 'apexcharts'
+                        if (id.includes('vue3-apexcharts')) return 'vue3_apexcharts'
+                        if (!(id.includes('vue3-apexcharts')) && id.includes('apexcharts')) return 'apexcharts'
                         return 'vendor'
                     }
                 },

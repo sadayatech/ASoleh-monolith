@@ -76,7 +76,7 @@ const closeModalKeluar = () => {
             <div class="relative" ref="dropdownRef">
                 <button @click="toggleDropdown" class="flex items-center gap-4 cursor-pointer">
                     <div class="h-12 w-12 rounded-full overflow-hidden">
-                        <img src="/src/assets/images/user.png" alt="user">
+                        <img src="/assets/images/user.png" alt="user">
                     </div>
                     <div class="hidden md:inline-flex flex-col text-left">
                         <h2 class="text-textDark font-semibold">Admin</h2>
@@ -94,14 +94,14 @@ const closeModalKeluar = () => {
                         v-if="isDropdownOpen"
                         class="absolute right-0 z-10 mt-2 w-56 bg-white rounded-2xl shadow-lg"
                         >
-                        <router-link to="/admin/pengguna" class="flex md:hidden items-center py-2.5 px-4 gap-4 hover:bg-bgGray duration-300 cursor-pointer">
+                        <Link href="/admin/pengguna" class="flex md:hidden items-center py-2.5 px-4 gap-4 hover:bg-bgGray duration-300 cursor-pointer">
                             <p class="text-textDark text-lg"><i class="fi fi-rr-users"></i></p>
                             <p class="text-textDark">Pengguna</p>
-                        </router-link>
-                        <router-link to="/admin/pengaturan" class="flex md:hidden items-center py-2.5 px-4 gap-4 hover:bg-bgGray duration-300 cursor-pointer">
+                        </Link>
+                        <Link href="/admin/pengaturan" class="flex md:hidden items-center py-2.5 px-4 gap-4 hover:bg-bgGray duration-300 cursor-pointer">
                             <p class="text-textDark text-lg"><i class="fi fi-rr-settings"></i></p>
                             <p class="text-textDark">Pengaturan</p>
-                        </router-link>
+                        </Link>
                         <!-- Garis Pemisah -->
                         <div class="border-t md:border-none border-textGray mt-1"></div>
                         <button @click="openModalKeluar" class="flex items-center p-4 gap-4 w-full hover:bg-bgGray duration-300 cursor-pointer">
@@ -139,7 +139,7 @@ const closeModalKeluar = () => {
                 <div class="grid grid-cols-1 md:grid-cols-3 md:gap-x-4">
                     <button @click="openModalDetail" type="button" class="col-span-1 bg-white p-6 mt-4 rounded-3xl flex items-center gap-4 text-start cursor-pointer">
                         <div class="h-14 w-14 rounded-full overflow-hidden">
-                            <img src="/src/assets/images/user.png" alt="user">
+                            <img src="/assets/images/user.png" alt="user">
                         </div>
                         <div>
                             <h1 class="line-clamp-1 text-textDark font-semibold">Nama Supplier</h1>
@@ -151,7 +151,7 @@ const closeModalKeluar = () => {
                     </button>
                     <button @click="openModalDetail" type="button" class="col-span-1 bg-white p-6 mt-4 rounded-3xl flex items-center gap-4 text-start cursor-pointer">
                         <div class="h-14 w-14 rounded-full overflow-hidden">
-                            <img src="/src/assets/images/user.png" alt="user">
+                            <img src="/assets/images/user.png" alt="user">
                         </div>
                         <div>
                             <h1 class="line-clamp-1 text-textDark font-semibold">Nama Supplier</h1>
@@ -163,7 +163,7 @@ const closeModalKeluar = () => {
                     </button>
                     <button @click="openModalDetail" type="button" class="col-span-1 bg-white p-6 mt-4 rounded-3xl flex items-center gap-4 text-start cursor-pointer">
                         <div class="h-14 w-14 rounded-full overflow-hidden">
-                            <img src="/src/assets/images/user.png" alt="user">
+                            <img src="/assets/images/user.png" alt="user">
                         </div>
                         <div>
                             <h1 class="line-clamp-1 text-textDark font-semibold">Nama Supplier</h1>
@@ -175,7 +175,7 @@ const closeModalKeluar = () => {
                     </button>
                     <button @click="openModalDetail" type="button" class="col-span-1 bg-white p-6 mt-4 rounded-3xl flex items-center gap-4 text-start cursor-pointer">
                         <div class="h-14 w-14 rounded-full overflow-hidden">
-                            <img src="/src/assets/images/user.png" alt="user">
+                            <img src="/assets/images/user.png" alt="user">
                         </div>
                         <div>
                             <h1 class="line-clamp-1 text-textDark font-semibold">Nama Supplier</h1>

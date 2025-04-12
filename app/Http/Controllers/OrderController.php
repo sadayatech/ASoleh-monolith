@@ -162,4 +162,16 @@ class OrderController extends Controller
         );
         return back()->with('message', 'Bukti pembayaran berhasil diupload!');
     }
+    public function updateOrderStatus(Request $request, Order $order)
+    {
+        $request->validate([
+            'status' => 'required|in:paid,unpaid,under-review,rejected,done',
+        ]);
+
+        $order->update([
+            'status' => $request->status,
+        ]);
+
+        return redirect()->back()->with('message', 'Status transaksi berhasil diperbarui!');
+    }
 }
