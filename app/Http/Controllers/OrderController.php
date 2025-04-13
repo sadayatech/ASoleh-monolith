@@ -23,6 +23,8 @@ class OrderController extends Controller
             'whatsapp_number' => 'required|max:255',
             'notes' => 'nullable|string|max:255',
             'payment_method' => 'required|in:qris,cash',
+            'carts' => 'nullable|array',
+            'source' => 'nullable|string',
         ]);
         if (Str::startsWith($data['whatsapp_number'], '08')) {
             $data['whatsapp_number'] = preg_replace('/^08/', '628', $data['whatsapp_number']);
@@ -30,10 +32,8 @@ class OrderController extends Controller
             $data['whatsapp_number'] = '62' . $data['whatsapp_number'];
         }
 
-        // Ambil cart berdasarkan user login / guest
-        $carts = Auth::check()
-            ? Cart::with('item')->where('user_id', Auth::id())->get()
-            : collect(json_decode($request->cookie('cart', '[]'), true))->map(function ($cartItem) {
+        if ($request->has('carts')) {
+            $carts = collect($request->input('carts'))->map(function ($cartItem) {
                 $item = Item::find($cartItem['item_id']);
 
                 return $item ? (object) [
@@ -41,19 +41,30 @@ class OrderController extends Controller
                     'amount' => $cartItem['amount'],
                 ] : null;
             })->filter();
+        } else {
+            $carts = Auth::check()
+                ? Cart::with('item')->where('user_id', Auth::id())->get()
+                : collect(json_decode($request->cookie('cart', '[]'), true))->map(function ($cartItem) {
+                    $item = Item::find($cartItem['item_id']);
 
+                    return $item ? (object) [
+                        'item' => $item,
+                        'amount' => $cartItem['amount'],
+                    ] : null;
+                })->filter();
+        }
         if ($carts->isEmpty()) {
-            return redirect()->back()->with('error', 'Keranjang kosong.');
+            return redirect()->back()->withErrors(['checkout_error' => 'Keranjang kosong.']);
         }
 
         // Hitung total belanja
-        $total = $carts->sum(fn ($cart) => $cart->item->price * $cart->amount);
+        $total = $carts->sum(fn($cart) => $cart->item->price * $cart->amount);
 
         DB::beginTransaction();
         try {
             $order = Order::create([
                 'user_id' => Auth::id(),
-                'transaction_code' => 'TRX'.now()->format('Ymd').'-'.random_int(100000, 999999),
+                'transaction_code' => 'SPW' . now()->format('Ymd') . '-' . random_int(100000, 999999),
                 'consumer_name' => $data['consumer_name'],
                 'user_has_account' => Auth::check(),
                 'whatsapp_number' => $data['whatsapp_number'],
@@ -103,6 +114,11 @@ class OrderController extends Controller
             }
 
             DB::commit();
+
+
+            if ($request->input('source') === 'cashier') {
+                return redirect('/kasir/berhasil')->with('success', 'Pesanan berhasil ditambahkan, silahkan lanjut dihalaman pesanan.');
+            }
 
             return Inertia::render('Berhasil', [
                 'order' => $order,

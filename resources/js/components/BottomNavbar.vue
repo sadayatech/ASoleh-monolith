@@ -2,7 +2,6 @@
 import { usePage } from "@inertiajs/vue3";
 const route = { path: usePage().url };
 import { Link } from "@inertiajs/vue3";
-
 </script>
 
 <template>

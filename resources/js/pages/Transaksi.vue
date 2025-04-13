@@ -69,7 +69,11 @@ onUnmounted(() => {
                         <div class="flex justify-between">
                             <div>
                                 <h2 class="text-textDark line-clamp-2 truncate">
-                                    {{ order.items.map((item) => item.item.name).join(", ") }}
+                                    {{
+                                        order.items
+                                            .map((item) => item.item.name)
+                                            .join(", ")
+                                    }}
                                 </h2>
                             </div>
                             <div class="text-end">
@@ -81,7 +85,13 @@ onUnmounted(() => {
                                     }}
                                 </h2>
                                 <p class="text-textGrayDark text-sm">
-                                    {{ order.items.reduce((sum, item) => sum + item.quantity, 0) }} Item
+                                    {{
+                                        order.items.reduce(
+                                            (sum, item) => sum + item.quantity,
+                                            0,
+                                        )
+                                    }}
+                                    Item
                                 </p>
                             </div>
                         </div>

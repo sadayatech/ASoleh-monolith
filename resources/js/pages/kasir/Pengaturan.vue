@@ -1,10 +1,9 @@
 <script setup>
-import UnderConstruction from '@/pages/UnderConstruction.vue'
+import UnderConstruction from "@/pages/UnderConstruction.vue";
 </script>
 
 <template>
     <UnderConstruction />
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -2,7 +2,6 @@
 import { ref } from "vue";
 import { Head, Link, router, usePage } from "@inertiajs/vue3";
 const showModal = ref(false);
-console.log(usePage().props);
 const total = usePage().props.total;
 const carts = ref(JSON.parse(JSON.stringify(usePage().props.carts))); // clone to avoid mutating props
 const itemToDelete = ref(null); // Simpan item yang akan dihapus

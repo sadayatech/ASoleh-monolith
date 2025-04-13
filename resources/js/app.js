@@ -4,19 +4,18 @@ import "./bootstrap";
 import { createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createApp, h } from "vue";
-import AdminLayout from './layouts/AdminLayout.vue';
-import UserLayout from './layouts/UserLayout.vue';
+import AdminLayout from "./layouts/AdminLayout.vue";
+import UserLayout from "./layouts/UserLayout.vue";
 const appName = import.meta.env.VITE_APP_NAME || "SPW Gridas";
-import 'notivue/notification.css';
-import 'notivue/animations.css';
+import "notivue/notification.css";
+import "notivue/animations.css";
 import { createNotivue } from "notivue";
 
-
 const notivue = createNotivue({
-    position: 'top-center',
+    position: "top-center",
     duration: 3000,
     max: 3,
-    theme: 'material',
+    theme: "material",
     closeButton: true,
     draggable: true,
     pauseOnHover: true,
@@ -24,12 +23,16 @@ const notivue = createNotivue({
 createInertiaApp({
     title: (title) => `${title} | ${appName}`,
 
-    resolve: async name => {
-        const pages = import.meta.glob('./pages/**/*.vue', { eager: false });
+    resolve: async (name) => {
+        const pages = import.meta.glob("./pages/**/*.vue", { eager: false });
         const page = await resolvePageComponent(`./pages/${name}.vue`, pages);
 
         // 💡 Set layout based on folder name
-        if (name.startsWith('admin/') || name.startsWith('kasir/') || name.startsWith('pelayan/')) {
+        if (
+            name.startsWith("admin/") ||
+            name.startsWith("kasir/") ||
+            name.startsWith("pelayan/")
+        ) {
             page.default.layout ??= AdminLayout;
         } else {
             page.default.layout ??= UserLayout;
@@ -50,6 +53,8 @@ createInertiaApp({
         delay: 0,
     },
 }).then(() => {
-    document.getElementById('app').removeAttribute('data-page');
-    document.getElementById('app').removeAttribute('data-v-app');
-});;
+    if (document) {
+        document.getElementById("app").removeAttribute("data-page");
+        document.getElementById("app").removeAttribute("data-v-app");
+    }
+});
