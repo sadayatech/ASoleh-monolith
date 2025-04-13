@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Category::class)->constrained()->noActionOnDelete();
             $table->string('image')->nullable();
             $table->string('name');
             $table->string('slug');
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->boolean('status')->default(true);
             $table->integer('stock')->default(10);
             $table->integer('sold')->default(0);
-            $table->foreignIdFor(Supplier::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Supplier::class)->constrained()->noActionOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

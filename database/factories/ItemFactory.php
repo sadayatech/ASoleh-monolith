@@ -25,7 +25,7 @@ class ItemFactory extends Factory
         ]);
          */
         return [
-            'name' => $this->faker->word(),
+            'name' => $this->faker->words(3, true),
             'description' => $this->faker->sentence(),
             'price' => $this->faker->randomNumber(6, 1, 100),
             'supplier_price' => $this->faker->randomNumber(6, 1, 100),

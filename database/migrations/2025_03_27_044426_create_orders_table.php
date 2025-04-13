@@ -17,14 +17,15 @@ return new class extends Migration
             $table->string('transaction_code')->unique();
             $table->string('consumer_name');
             $table->string('whatsapp_number');
+            $table->string('email');
             $table->boolean('user_has_account')->default(false);
-            $table->foreignIdFor(User::class)->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(User::class)->nullable()->constrained()->noActionOnDelete()->cascadeOnUpdate();
             $table->enum('payment_method', ['qris', 'cash']);
             $table->enum('status', ['paid', 'unpaid', 'under-review', 'rejected', 'done'])->default('unpaid');
             $table->text('notes')->nullable();
             $table->unsignedInteger('total_amount');
-            $table->unsignedInteger('cash_given');
-            $table->unsignedInteger('change');
+            $table->unsignedInteger('cash_given')->nullable();
+            $table->unsignedInteger('change')->nullable();
             
             $table->softDeletes();
             $table->timestamps();

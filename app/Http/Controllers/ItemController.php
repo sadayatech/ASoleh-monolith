@@ -25,7 +25,7 @@ class ItemController extends Controller
 
         Item::create($data);
 
-        return redirect()->back()->with('success', 'Item created successfully');
+        return redirect()->back()->with('success', 'Menu baru berhasil dibuat!');
     }
 
 
@@ -38,7 +38,7 @@ class ItemController extends Controller
         $item->update([
             'status' => $request->status,
         ]);
-        return redirect()->back()->with('success', 'Item state updated successfully');
+        return redirect()->back()->with('success', 'Ubah status menu berhasil!');
     }
 
     public function update(Item $item, Request $request) {
@@ -62,10 +62,10 @@ class ItemController extends Controller
         
         $item->update($data);
 
-        return redirect()->back()->with('success', 'Item updated successfully');
+        return redirect()->back()->with('success', 'Menu berhasil diperbarui!');
     }
     public function destroy(Item $item) {
         $item->delete();
-        return redirect()->back()->with('success', 'Item deleted successfully');
+        return redirect()->back()->with('success', 'Menu berhasil dihapus!');
     }
 }

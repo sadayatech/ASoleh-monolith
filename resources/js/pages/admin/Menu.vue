@@ -1,15 +1,16 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
-import Sidebar from './components/Sidebar.vue'
-import { router, useForm, usePage } from '@inertiajs/vue3'
-import HeaderDashboard from './components/HeaderDashboard.vue'
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
+import Sidebar from './components/Sidebar.vue';
+import { router, useForm, usePage } from '@inertiajs/vue3';
+import HeaderDashboard from './components/HeaderDashboard.vue';
+import { push } from 'notivue';
 
 
-const page = usePage()
-console.log(page.props)
+const page = usePage();
+console.log(page.props);
 // Dropdown Profil
-const product = ref({})
-const isDropdownOpen = ref(false)
+const product = ref({});
+const isDropdownOpen = ref(false);
 const newProduct = useForm({
     name: '',
     supplier_price: 0,
@@ -22,14 +23,17 @@ const newProduct = useForm({
 });
 
 
+
 const saveNewProduct = () => {
     newProduct.post('/item/store', {
         onSuccess: () => {
-            newProduct.reset()
-            closeModalTambah()
+
+            newProduct.reset();
+            closeModalTambah();
+            push.success(page.props.flash.success);
         }
-    })
-}
+    });
+};
 
 const editProductForm = useForm({
     _method: 'PUT',
@@ -42,45 +46,46 @@ const editProductForm = useForm({
     supplier_id: null,
     status: null,
     id: null,
-})
+});
 
 
 const submitEdit = () => editProductForm.post('/item/update/' + editProductForm.id, {
     onSuccess: () => {
-        editProductForm.reset()
-        closeModalUbah()
-        router.visit('/admin/menu')
+        editProductForm.reset();
+        closeModalUbah();
+        router.visit('/admin/menu');
+        push.success(page.props.flash.success);
     },
     onError: (error) => {
-        console.warn('error', error)
+        console.warn('error', error);
     }
 });
-const dropdownRef = ref(null)
+const dropdownRef = ref(null);
 const toggleDropdown = () => {
-    isDropdownOpen.value = !isDropdownOpen.value
-}
+    isDropdownOpen.value = !isDropdownOpen.value;
+};
 const handleClickOutside = (event) => {
     if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
-        isDropdownOpen.value = false
+        isDropdownOpen.value = false;
     }
-}
+};
 onMounted(() => {
-    document.addEventListener('click', handleClickOutside)
-})
+    document.addEventListener('click', handleClickOutside);
+});
 onBeforeUnmount(() => {
-    document.removeEventListener('click', handleClickOutside)
-})
+    document.removeEventListener('click', handleClickOutside);
+});
 
 
 const deleteProduct = () => {
     router.delete('/item/delete/' + product.value.id, {
         onSuccess: () => {
-            closeModalHapus()
-            closeModalDetail()
-            router.visit('/admin/menu')
+            closeModalHapus();
+            closeModalDetail();
+            router.visit('/admin/menu');
         }
-    })
-}
+    });
+};
 // Modal Detail Menu
 const showModalDetail = ref(false);
 const openModalDetail = (item) => {
@@ -95,7 +100,15 @@ const closeModalDetail = () => {
 const statusText = computed(() => (product.value && product.value.status ? 'Aktif' : 'Nonaktif'));
 function toggle() {
     product.value.status = !product.value.status;
-    router.post(`/item/toggle/${product.value.id}`, { status: product.value.status }, {})
+    router.post(`/item/toggle/${product.value.id}`, { status: product.value.status }, {
+        onSuccess: () => {
+            push.success('Status menu berhasil diubah');
+        },
+        onError: (error) => {
+            console.error('Error toggling status:', error);
+            push.error('Gagal mengubah status menu');
+        }
+    });
 }
 
 // Modal Tambah Menu
@@ -110,13 +123,13 @@ const closeModalTambah = () => {
 // Modal Ubah Menu
 const showModalUbah = ref(false);
 const openModalUbah = () => {
-    editProductForm.name = product.value?.name
-    editProductForm.price = product.value?.price
-    editProductForm.stock = product.value?.stock
-    editProductForm.supplier_id = product.value?.supplier_id
-    editProductForm.supplier_price = product.value?.supplier_price
-    editProductForm.status = product.value?.status
-    editProductForm.id = product.value?.id
+    editProductForm.name = product.value?.name;
+    editProductForm.price = product.value?.price;
+    editProductForm.stock = product.value?.stock;
+    editProductForm.supplier_id = product.value?.supplier_id;
+    editProductForm.supplier_price = product.value?.supplier_price;
+    editProductForm.status = product.value?.status;
+    editProductForm.id = product.value?.id;
     showModalUbah.value = true;
 };
 const closeModalUbah = () => {
@@ -141,8 +154,8 @@ const closeModalKeluar = () => {
     showModalKeluar.value = false;
 };
 const con = function () {
-    console.log(editProductForm)
-}
+    console.log(editProductForm);
+};
 </script>
 
 <template>
@@ -569,8 +582,7 @@ const con = function () {
                 <div class="flex justify-between mt-4 gap-2">
                     <button @click="closeModalHapus"
                         class="w-full text-secondary py-3 rounded-full font-medium cursor-pointer">Batal</button>
-                    <button
-                        @click="deleteProduct"
+                    <button @click="deleteProduct"
                         class="w-full bg-primary text-textDark py-3 rounded-full font-medium cursor-pointer hover:brightness-90 duration-300">Ya,
                         Hapus</button>
                 </div>

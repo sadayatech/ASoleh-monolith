@@ -114,12 +114,12 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
 
     // Item
-    Route::post('item/toggle/{item}', [ItemController::class, 'toggleActiveState'])->name('toggle.item')->middleware('role:admin.staff');
-    Route::put('item/update/{item}', [ItemController::class, 'update'])->name('update.item')->middleware('role:admin.staff');
-    Route::post('item/store', [ItemController::class, 'store'])->name('store.item')->middleware('role:admin.staff');
-    Route::delete('item/delete/{item}', [ItemController::class, 'destroy'])->name('delete.item')->middleware('role:admin.staff');
+    Route::post('item/toggle/{item}', [ItemController::class, 'toggleActiveState'])->name('toggle.item')->middleware('role:admin,staff');
+    Route::put('item/update/{item}', [ItemController::class, 'update'])->name('update.item')->middleware('role:admin,staff');
+    Route::post('item/store', [ItemController::class, 'store'])->name('store.item')->middleware('role:admin,staff');
+    Route::delete('item/delete/{item}', [ItemController::class, 'destroy'])->name('delete.item')->middleware('role:admin,staff');
     // Supplier
-    Route::post('supplier/store', [SupplierController::class, 'store'])->name('store.supplier')->middleware('role:admin.staff');
-    Route::put('supplier/update/{supplier}', [SupplierController::class, 'update'])->name('update.supplier')->middleware('role:admin.staff');
-    Route::delete('supplier/delete/{supplier}', [SupplierController::class, 'destroy'])->name('delete.supplier')->middleware('role:admin.staff');
+    Route::post('supplier/store', [SupplierController::class, 'store'])->name('store.supplier')->middleware('role:admin,staff');
+    Route::put('supplier/update/{supplier}', [SupplierController::class, 'update'])->name('update.supplier')->middleware('role:admin,staff');
+    Route::delete('supplier/delete/{supplier}', [SupplierController::class, 'destroy'])->name('delete.supplier')->middleware('role:admin,staff');
 });

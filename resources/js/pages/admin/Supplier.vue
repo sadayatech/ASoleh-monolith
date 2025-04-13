@@ -1,8 +1,9 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import Sidebar from './components/Sidebar.vue'
-import { Link, router, useForm } from '@inertiajs/vue3';
+import { Link, router, useForm, usePage } from '@inertiajs/vue3';
 import HeaderDashboard from './components/HeaderDashboard.vue'
+import { push } from 'notivue';
 
 // Dropdown Profil
 const selectedSupplier = ref({});
@@ -17,8 +18,10 @@ const saveNewSupplier = () => {
         onSuccess: () => {
             newSupplier.reset()
             closeModalTambah()
+            push.success(usePage().props.flash.success)
         },
         onError: () => {
+            push.error('Gagal menyimpan supplier')
             console.log('Error saving supplier')
         }
     })
@@ -33,8 +36,10 @@ const saveEditedSupplier = () => {
         onSuccess: () => {
             editSupplierForm.reset()
             closeModalUbah()
+            push.success(usePage().props.flash.success)
         },
         onError: () => {
+            push.error('Gagal menyimpan perubahan supplier')
             console.log('Error saving edited supplier')
         }
     })
@@ -104,6 +109,7 @@ const deleteSupplier = () => {
         onSuccess: () => {
             closeModalHapus()
             closeModalDetail()
+            push.success(usePage().props.flash.success)
             router.visit('/admin/supplier')
         }
     })

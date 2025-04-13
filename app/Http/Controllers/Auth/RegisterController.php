@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -30,10 +31,10 @@ class RegisterController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
-            'whatsapp_number' => 'required|max:15|starts_with:"62"|unique:'.User::class,
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
+            'whatsapp_number' => 'required|max:15|unique:' . User::class,
             'password' => ['required', Rules\Password::defaults()],
         ], [
             'name.required' => 'Nama wajib diisi.',
@@ -51,6 +52,13 @@ class RegisterController extends Controller
             'whatsapp_number.unique' => 'Nomor WhatsApp sudah terdaftar.',
             'password.required' => 'Kata sandi wajib diisi.',
         ]);
+
+
+        if (Str::startsWith($data['whatsapp_number'], '08')) {
+            $data['whatsapp_number'] = preg_replace('/^08/', '628', $data['whatsapp_number']);
+        } elseif (Str::startsWith($data['whatsapp_number'], '8')) {
+            $data['whatsapp_number'] = '62' . $data['whatsapp_number'];
+        }
 
         $user = User::create([
             'name' => $request->name,

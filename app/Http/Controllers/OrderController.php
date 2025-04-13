@@ -9,19 +9,26 @@ use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
+
 
 class OrderController extends Controller
 {
     public function checkout(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'consumer_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'whatsapp_number' => 'required|starts_with:"62"|max:255',
+            'whatsapp_number' => 'required|max:255',
             'notes' => 'nullable|string|max:255',
             'payment_method' => 'required|in:qris,cash',
         ]);
+        if (Str::startsWith($data['whatsapp_number'], '08')) {
+            $data['whatsapp_number'] = preg_replace('/^08/', '628', $data['whatsapp_number']);
+        } elseif (Str::startsWith($data['whatsapp_number'], '8')) {
+            $data['whatsapp_number'] = '62' . $data['whatsapp_number'];
+        }
 
         // Ambil cart berdasarkan user login / guest
         $carts = Auth::check()
@@ -47,10 +54,12 @@ class OrderController extends Controller
             $order = Order::create([
                 'user_id' => Auth::id(),
                 'transaction_code' => 'TRX'.now()->format('Ymd').'-'.random_int(100000, 999999),
-                'consumer_name' => $request->consumer_name,
+                'consumer_name' => $data['consumer_name'],
                 'user_has_account' => Auth::check(),
-                'payment_method' => $request->payment_method,
-                'notes' => $request->notes,
+                'whatsapp_number' => $data['whatsapp_number'],
+                'email' => $data['email'],
+                'payment_method' => $data['payment_method'],
+                'notes' => $data['notes'],
                 'total_amount' => $total,
             ]);
 

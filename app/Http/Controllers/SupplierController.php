@@ -22,7 +22,7 @@ class SupplierController extends Controller
             $data['image'] = $request->file('image')->store('media', 'public');
         }
         Supplier::create($data);
-        return redirect()->back()->with('success', 'Supplier created successfully');
+        return redirect()->back()->with('success', 'Supplier berhasil ditambahkan!');
     }
 
     public function update(Supplier $supplier, Request $request)
@@ -44,7 +44,7 @@ class SupplierController extends Controller
         $supplier->update($data);
 
 
-        return redirect()->back()->with('success', 'Supplier updated successfully');
+        return redirect()->back()->with('success', 'Supplier berhasil diubah!');
     }
 
     public function destroy(Supplier $supplier)
@@ -54,6 +54,6 @@ class SupplierController extends Controller
         }
         $supplier->delete();
 
-        return redirect()->back()->with('success', 'Supplier deleted successfully');
+        return redirect()->back()->with('success', 'Supplier berhasil dihapus!');
     }
 }
