@@ -14,6 +14,15 @@ class Item extends Model
 
     protected $guarded = [];
 
+
+    protected static function booted()
+    {
+        static::updating(function ($item) {
+            if ($item->isDirty('stock') && $item->stock == 0) {
+                $item->status = 0;
+            }
+        });
+    }
     protected $casts = [
         'price' => 'float',
         'stock' => 'integer',

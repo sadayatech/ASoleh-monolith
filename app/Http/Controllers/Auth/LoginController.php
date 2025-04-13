@@ -33,7 +33,21 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect(route(auth()->user()->role === 'customer' ? 'home' : 'dashboard', absolute: false));
+        $rto = '/';
+        switch (auth()->user()->role) {
+            case 'customer':
+                $rto = '/';
+            case 'admin':
+                $rto = '/admin/dashboard';
+            case 'cashier':
+                $rto = '/kasir/dashboard';
+            case 'staff':
+                $rto = '/pelayan/dashboard';
+            default:
+                $rto = '/';
+                break;
+        }
+        return redirect($rto);
     }
 
     /**

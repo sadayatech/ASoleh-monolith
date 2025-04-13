@@ -5,7 +5,7 @@
         "build": "vite build",
         "watch": "vite build --watch",
         "format": "eslint && npx prettier --write ./resources/js/",
-        "dev": "vite --host"
+        "dev": "vite"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^2.0.0",

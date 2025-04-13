@@ -52,8 +52,8 @@ class CartController extends Controller
     public function addToCart(Request $request)
     {
         $request->validate([
-            'item_id' => 'required|exists:items,id',
-            'amount' => 'required|gte:1',
+            'item_id' => ['required', 'exists:items,id'],
+            'amount' => ['required', 'gte:1'],
         ]);
 
         $item = Item::findOrFail($request->item_id);
@@ -105,11 +105,7 @@ class CartController extends Controller
         return Redirect::route('cart.index');
     }
 
-    public function destroy(Cart $cart)
-    {
-        $cart->delete();
-        return Redirect::back()->with(['success' => 'Produk berhasil dihapus dari keranjang']);
-    }
+
 
     public function checkout(Request $request)
     {
@@ -149,17 +145,18 @@ class CartController extends Controller
         return redirect()->back()->with(['success' => 'Produk berhasil ditambahkan ke keranjang']);
     }
 
-    public function update(Cart $cart, Request $request)
+    public function update(string $cart_id, Request $request)
     {
-        $this->validateStock($request->amount, $cart->item->stock);
 
         if (Auth::check()) {
+            $cart = Cart::with('item')->findOrFail($cart_id);
+            $this->validateStock($request->amount, $cart->item->stock);
             $cart->update(['amount' => $request->amount]);
-
             return redirect()->back()->with(['success' => 'Keranjang berhasil diperbarui']);
         } else {
             $cart_cookie = json_decode($request->cookie('cart', '[]'), true);
-            $cart_key = array_search($cart->item_id, array_column($cart_cookie, 'item_id'));
+            $this->validateStock($request->amount, Item::findOrFail($cart_id)->stock);
+            $cart_key = array_search($cart_id, array_column($cart_cookie, 'item_id'));
 
             if ($cart_key !== false) {
                 $cart_cookie[$cart_key]['amount'] = $request->amount;
@@ -173,15 +170,15 @@ class CartController extends Controller
         }
     }
 
-    public function destroy_cart(Request $request, Cart $cart)
+    public function destroy(Request $request, string $id)
     {
         if (Auth::check()) {
-            $cart->delete();
+            Cart::findOrFail($id)->delete();
             return redirect()->back()->with(['success' => 'Produk berhasil dihapus dari keranjang']);
         }
 
         $cart_cookie = json_decode($request->cookie('cart', '[]'), true);
-        $cart_key = array_search($cart->item_id, array_column($cart_cookie, 'item_id'));
+        $cart_key = array_search($id, array_column($cart_cookie, 'item_id'));
 
         if ($cart_key !== false) {
             unset($cart_cookie[$cart_key]);
