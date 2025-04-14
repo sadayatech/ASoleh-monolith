@@ -184,7 +184,7 @@ import { ref, onMounted, onBeforeUnmount } from "vue";
 import Sidebar from "./components/Sidebar.vue";
 import VueApexCharts from "vue3-apexcharts";
 import { Link } from "@inertiajs/vue3";
-import HeaderDashboard from "./components/HeaderDashboard.vue";
+import HeaderDashboard from "@/components/HeaderDashboard.vue";
 
 // Modal Konfirmasi Keluar
 const showModalKeluar = ref(false);

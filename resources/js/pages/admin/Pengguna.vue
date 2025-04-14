@@ -2,7 +2,7 @@
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import Sidebar from "./components/Sidebar.vue";
 import { Link, useForm } from "@inertiajs/vue3";
-import HeaderDashboard from "./components/HeaderDashboard.vue";
+import HeaderDashboard from "@/components/HeaderDashboard.vue";
 
 // Dropdown Profil
 const isDropdownOpen = ref(false);
