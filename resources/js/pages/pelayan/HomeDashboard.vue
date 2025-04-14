@@ -1,9 +1,60 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
 import Sidebar from "./components/Sidebar.vue";
+import { router, useForm, usePage } from "@inertiajs/vue3";
+import HeaderDashboard from "@/components/HeaderDashboard.vue";
+import { push } from "notivue";
 
+const page = usePage();
 // Dropdown Profil
+const product = ref({});
 const isDropdownOpen = ref(false);
+const newProduct = useForm({
+    name: "",
+    supplier_price: 0,
+    price: 0,
+    stock: 0,
+    category_id: 1, // change this to the correct category id later
+    image: null,
+    supplier_id: "placeholder",
+    status: "placeholder",
+});
+
+const saveNewProduct = () => {
+    newProduct.post("/item/store", {
+        onSuccess: () => {
+            newProduct.reset();
+            closeModalTambah();
+            push.success(page.props.flash.success);
+        },
+    });
+};
+
+const editProductForm = useForm({
+    _method: "PUT",
+    name: null,
+    category_id: 1, // change this to the correct category id later
+    supplier_price: null,
+    price: null,
+    stock: null,
+    image: null,
+    supplier_id: null,
+    status: null,
+    id: null,
+});
+
+const submitEdit = () =>
+    editProductForm.post("/item/update/" + editProductForm.id, {
+        onSuccess: () => {
+            editProductForm.reset();
+            closeModalUbah();
+            router.visit("/admin/menu");
+            push.success(page.props.flash.success);
+        },
+        onError: (error) => {
+            console.warn("error", error);
+        },
+    });
 const dropdownRef = ref(null);
 const toggleDropdown = () => {
     isDropdownOpen.value = !isDropdownOpen.value;
@@ -20,20 +71,44 @@ onBeforeUnmount(() => {
     document.removeEventListener("click", handleClickOutside);
 });
 
+const deleteProduct = () => {
+    router.delete("/item/delete/" + product.value.id, {
+        onSuccess: () => {
+            closeModalHapus();
+            closeModalDetail();
+            router.visit("/admin/menu");
+        },
+    });
+};
 // Modal Detail Menu
 const showModalDetail = ref(false);
-const openModalDetail = () => {
+const openModalDetail = (item) => {
     showModalDetail.value = true;
+    product.value = item;
 };
 const closeModalDetail = () => {
     showModalDetail.value = false;
 };
 
 // Toggle Aktif/Non Aktif Menu
-const isActive = ref(false);
-const statusText = computed(() => (isActive.value ? "Aktif" : "Nonaktif"));
+const statusText = computed(() =>
+    product.value && product.value.status ? "Aktif" : "Nonaktif",
+);
 function toggle() {
-    isActive.value = !isActive.value;
+    product.value.status = !product.value.status;
+    router.post(
+        `/item/toggle/${product.value.id}`,
+        { status: product.value.status },
+        {
+            onSuccess: () => {
+                push.success("Status menu berhasil diubah");
+            },
+            onError: (error) => {
+                console.error("Gagal mengubah status menu", error);
+                push.error("Gagal mengubah status menu");
+            },
+        },
+    );
 }
 
 // Modal Tambah Menu
@@ -48,6 +123,13 @@ const closeModalTambah = () => {
 // Modal Ubah Menu
 const showModalUbah = ref(false);
 const openModalUbah = () => {
+    editProductForm.name = product.value?.name;
+    editProductForm.price = product.value?.price;
+    editProductForm.stock = product.value?.stock;
+    editProductForm.supplier_id = product.value?.supplier_id;
+    editProductForm.supplier_price = product.value?.supplier_price;
+    editProductForm.status = product.value?.status;
+    editProductForm.id = product.value?.id;
     showModalUbah.value = true;
 };
 const closeModalUbah = () => {
@@ -75,53 +157,9 @@ const closeModalKeluar = () => {
 
 <template>
     <div
-        class="bg-bgGray min-h-screen md:ps-[150px] p-4 md:pe-4 pt-[18px] pb-24 md:pb-0"
+        class="bg-bgGray min-h-screen md:ps-[150px] p-4 md:pe-4 pt-[18px] pb-24"
     >
-        <div class="bg-white p-4 rounded-2xl flex justify-between items-center">
-            <div>
-                <h1 class="text-lg font-semibold">SPW Gridas</h1>
-            </div>
-            <!-- Dropdown -->
-            <div class="relative" ref="dropdownRef">
-                <button
-                    @click="toggleDropdown"
-                    class="flex items-center gap-4 cursor-pointer"
-                >
-                    <div class="h-12 w-12 rounded-full overflow-hidden">
-                        <img src="/assets/images/user.png" alt="user" />
-                    </div>
-                    <div class="hidden md:inline-flex flex-col text-left">
-                        <h2 class="text-textDark font-semibold">Pelayan</h2>
-                        <p class="text-textDark text-sm">pelayan@gmail.com</p>
-                    </div>
-                    <div>
-                        <p
-                            class="hidden md:block text-textDark transition-transform duration-200"
-                            :class="isDropdownOpen ? 'rotate-180' : ''"
-                        >
-                            <i class="fi fi-sr-angle-down"></i>
-                        </p>
-                    </div>
-                </button>
-
-                <Transition name="fade">
-                    <div
-                        v-if="isDropdownOpen"
-                        class="absolute right-0 z-10 mt-2 w-56 bg-white rounded-2xl shadow-lg"
-                    >
-                        <button
-                            @click="openModalKeluar"
-                            class="flex items-center p-4 gap-4 w-full hover:bg-bgGray duration-300 cursor-pointer"
-                        >
-                            <p class="text-secondary text-lg">
-                                <i class="fi fi-rr-sign-out-alt"></i>
-                            </p>
-                            <p class="text-secondary">Keluar</p>
-                        </button>
-                    </div>
-                </Transition>
-            </div>
-        </div>
+        <HeaderDashboard @openModalKeluar="openModalKeluar" />
 
         <section class="mt-4 w-full">
             <div class="md:flex justify-between">
@@ -167,106 +205,40 @@ const closeModalKeluar = () => {
                     Daftar Menu Hari Ini
                 </h1>
                 <div class="grid grid-cols-1 md:grid-cols-3 md:gap-x-4">
-                    <button
-                        @click="openModalDetail"
+                    <div
+                        v-for="item in $page.props.items"
+                        :key="$index"
+                        @click="openModalDetail(item)"
                         type="button"
-                        class="col-span-1 bg-primaryThin p-4 mt-4 rounded-3xl flex gap-4 text-start cursor-pointer"
+                        class="col-span-1 p-4 mt-4 rounded-3xl flex gap-4 text-start cursor-pointer"
+                        :class="item.status ? 'bg-primaryThin' : 'bg-white'"
                     >
                         <div
                             class="w-[calc(50%-56px)] h-[12vh] sm:w-[8vw] rounded-2xl overflow-hidden relative"
                         >
                             <img
-                                src="/assets/images/Risol.jpeg"
+                                :src="item.image"
                                 class="absolute top-0 left-0 w-full h-full object-cover"
                                 alt=""
                             />
                         </div>
                         <div class="my-auto">
-                            <h1 class="line-clamp-1">Risol Ayam Pro Max</h1>
-                            <h2 class="font-bold">Rp2.000</h2>
-                            <p class="text-xs text-textDark mt-1">Stok: 24</p>
+                            <h1 class="line-clamp-1">{{ item.name }}</h1>
+                            <h2 class="font-bold">
+                                Rp{{
+                                    Number(item.price).toLocaleString("id-ID")
+                                }}
+                            </h2>
+                            <p class="text-xs text-textDark mt-1">
+                                Stok: {{ item.stock }}
+                            </p>
                         </div>
                         <div class="flex items-center ml-auto my-auto">
                             <p class="text-textDark">
                                 <i class="fi fi-rr-angle-right"></i>
                             </p>
                         </div>
-                    </button>
-                    <button
-                        @click="openModalDetail"
-                        type="button"
-                        class="col-span-1 bg-primaryThin p-4 mt-4 rounded-3xl flex gap-4 text-start cursor-pointer"
-                    >
-                        <div
-                            class="w-[calc(50%-56px)] h-[12vh] sm:w-[8vw] rounded-2xl overflow-hidden relative"
-                        >
-                            <img
-                                src="/assets/images/Risol.jpeg"
-                                class="absolute top-0 left-0 w-full h-full object-cover"
-                                alt=""
-                            />
-                        </div>
-                        <div class="my-auto">
-                            <h1 class="line-clamp-1">Risol Ayam Pro Max</h1>
-                            <h2 class="font-bold">Rp2.000</h2>
-                            <p class="text-xs text-textDark mt-1">Stok: 24</p>
-                        </div>
-                        <div class="flex items-center ml-auto my-auto">
-                            <p class="text-textDark">
-                                <i class="fi fi-rr-angle-right"></i>
-                            </p>
-                        </div>
-                    </button>
-                    <button
-                        @click="openModalDetail"
-                        type="button"
-                        class="col-span-1 bg-primaryThin p-4 mt-4 rounded-3xl flex gap-4 text-start cursor-pointer"
-                    >
-                        <div
-                            class="w-[calc(50%-56px)] h-[12vh] sm:w-[8vw] rounded-2xl overflow-hidden relative"
-                        >
-                            <img
-                                src="/assets/images/Risol.jpeg"
-                                class="absolute top-0 left-0 w-full h-full object-cover"
-                                alt=""
-                            />
-                        </div>
-                        <div class="my-auto">
-                            <h1 class="line-clamp-1">Risol Ayam Pro Max</h1>
-                            <h2 class="font-bold">Rp2.000</h2>
-                            <p class="text-xs text-textDark mt-1">Stok: 24</p>
-                        </div>
-                        <div class="flex items-center ml-auto my-auto">
-                            <p class="text-textDark">
-                                <i class="fi fi-rr-angle-right"></i>
-                            </p>
-                        </div>
-                    </button>
-                    <button
-                        @click="openModalDetail"
-                        type="button"
-                        class="col-span-1 bg-primaryThin p-4 mt-4 rounded-3xl flex gap-4 text-start cursor-pointer"
-                    >
-                        <div
-                            class="w-[calc(50%-56px)] h-[12vh] sm:w-[8vw] rounded-2xl overflow-hidden relative"
-                        >
-                            <img
-                                src="/assets/images/Risol.jpeg"
-                                class="absolute top-0 left-0 w-full h-full object-cover"
-                                alt=""
-                            />
-                        </div>
-                        <div class="my-auto">
-                            <h1 class="line-clamp-1">Risol Ayam Pro Max</h1>
-                            <h2 class="font-bold">Rp2.000</h2>
-                            <p class="text-xs text-textDark mt-1">Stok: 24</p>
-                        </div>
-                        <div class="flex items-center ml-auto my-auto">
-                            <p class="text-textDark">
-                                <i class="fi fi-rr-angle-right"></i>
-                            </p>
-                        </div>
-                    </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -301,20 +273,26 @@ const closeModalKeluar = () => {
                         class="relative w-36 h-36 md:w-[calc(50%-56px)] md:h-auto rounded-full md:rounded-3xl mx-auto overflow-hidden"
                     >
                         <img
-                            src="/assets/images/Risol.jpeg"
+                            :src="product?.image"
                             class="absolute top-0 left-0 w-full h-full object-cover"
                             alt=""
                         />
                     </div>
                     <div class="w-[56%] text-start mt-4 md:mt-0">
-                        <h1 class="line-clamp-1">Risol Ayam Pro Max</h1>
+                        <h1 class="line-clamp-1">{{ product?.name }}</h1>
                         <div class="mt-2">
                             <p class="text-textGrayDark text-xs">Harga</p>
-                            <h2 class="text-textDark font-bold">Rp2.000</h2>
+                            <h2 class="text-textDark font-bold">
+                                Rp{{
+                                    Number(product?.price).toLocaleString(
+                                        "id-ID",
+                                    )
+                                }}
+                            </h2>
                         </div>
                         <div class="mt-2">
                             <p class="text-textGrayDark text-xs">Stok</p>
-                            <h2 class="text-textDark">24</h2>
+                            <h2 class="text-textDark">{{ product.stock }}</h2>
                         </div>
                         <div class="mt-2">
                             <p class="text-textGrayDark text-xs">Status</p>
@@ -323,13 +301,15 @@ const closeModalKeluar = () => {
                                     @click="toggle"
                                     :class="[
                                         'w-[52px] h-7 rounded-full flex items-center transition-colors duration-300 p-1 cursor-pointer',
-                                        isActive ? 'bg-green' : 'bg-textGray',
+                                        product?.status
+                                            ? 'bg-green'
+                                            : 'bg-textGray',
                                     ]"
                                 >
                                     <div
                                         class="w-5 h-5 bg-white rounded-full shadow-md transform transition-transform duration-300 text-sm"
                                         :class="
-                                            isActive
+                                            product?.status
                                                 ? 'translate-x-6'
                                                 : 'translate-x-0'
                                         "
@@ -337,7 +317,7 @@ const closeModalKeluar = () => {
                                         <i
                                             :class="[
                                                 'text-xs transition-opacity duration-200',
-                                                isActive
+                                                product?.status
                                                     ? 'fi fi-rr-check text-green'
                                                     : 'fi fi-rr-cross text-secondary',
                                             ]"
@@ -347,7 +327,7 @@ const closeModalKeluar = () => {
 
                                 <p
                                     :class="
-                                        isActive
+                                        product?.status
                                             ? 'text-green'
                                             : 'text-textGrayDark'
                                     "
@@ -426,7 +406,11 @@ const closeModalKeluar = () => {
                                     type="file"
                                     id="uploadFotoMenu"
                                     class="hidden"
-                                    @change="updateFileName"
+                                    @change="
+                                        updateFileName;
+                                        newProduct.image =
+                                            $event.target.files[0];
+                                    "
                                     ref="fileInput"
                                 />
                                 <label
@@ -455,6 +439,7 @@ const closeModalKeluar = () => {
                                 <input
                                     type="text"
                                     id="nama-menu"
+                                    v-model="newProduct.name"
                                     class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                                     placeholder="Masukkan Nama Menu"
                                     required
@@ -478,6 +463,7 @@ const closeModalKeluar = () => {
                                 <input
                                     type="number"
                                     id="harga-supplier"
+                                    v-model="newProduct.supplier_price"
                                     class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                                     placeholder="Masukkan Harga Supplier"
                                     required
@@ -501,6 +487,7 @@ const closeModalKeluar = () => {
                                 <input
                                     type="number"
                                     id="harga-jual"
+                                    v-model="newProduct.price"
                                     class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                                     placeholder="Masukkan Harga Jual"
                                     required
@@ -522,6 +509,7 @@ const closeModalKeluar = () => {
                                 <input
                                     type="number"
                                     id="stok"
+                                    v-model="newProduct.stock"
                                     class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                                     placeholder="Masukkan Stok"
                                     required
@@ -544,17 +532,22 @@ const closeModalKeluar = () => {
                             <div class="relative mt-2">
                                 <select
                                     id="supplier"
+                                    v-model="newProduct.supplier_id"
                                     class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none appearance-none cursor-pointer"
                                     required
                                 >
-                                    <option value="" disabled selected>
+                                    <option
+                                        value="placeholder"
+                                        disabled
+                                        selected
+                                    >
                                         Pilih Supplier
                                     </option>
-                                    <option value="supplier1">
-                                        Supplier 1
-                                    </option>
-                                    <option value="supplier2">
-                                        Supplier 2
+                                    <option
+                                        v-for="s in $page.props.suppliers"
+                                        :value="s.id"
+                                    >
+                                        {{ s.name }}
                                     </option>
                                 </select>
                                 <div
@@ -575,14 +568,19 @@ const closeModalKeluar = () => {
                             <div class="relative mt-2">
                                 <select
                                     id="status"
+                                    v-model="newProduct.status"
                                     class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none appearance-none cursor-pointer"
                                     required
                                 >
-                                    <option value="" disabled selected>
+                                    <option
+                                        value="placeholder"
+                                        disabled
+                                        selected
+                                    >
                                         Pilih Status
                                     </option>
-                                    <option value="aktif">Aktif</option>
-                                    <option value="nonaktif">Nonaktif</option>
+                                    <option value="1">Aktif</option>
+                                    <option value="0">Nonaktif</option>
                                 </select>
                                 <div
                                     class="absolute inset-y-0 left-0 flex items-center pointer-events-none ps-4"
@@ -598,6 +596,7 @@ const closeModalKeluar = () => {
                         <div class="md:col-span-2 flex justify-end">
                             <button
                                 type="submit"
+                                @click="saveNewProduct"
                                 class="bg-primary px-12 py-3 rounded-full cursor-pointer translate-x-1.5 hover:brightness-90 duration-300"
                             >
                                 <div
@@ -658,7 +657,11 @@ const closeModalKeluar = () => {
                                     type="file"
                                     id="uploadFotoMenu"
                                     class="hidden"
-                                    @change="updateFileName"
+                                    @change="
+                                        updateFileName;
+                                        editProductForm.image =
+                                            $event.target.files[0];
+                                    "
                                     ref="fileInput"
                                 />
                                 <label
@@ -686,6 +689,7 @@ const closeModalKeluar = () => {
                             <div class="relative mt-2">
                                 <input
                                     type="text"
+                                    v-model="editProductForm.name"
                                     id="nama-menu"
                                     class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                                     placeholder="Masukkan Nama Menu"
@@ -709,6 +713,7 @@ const closeModalKeluar = () => {
                             <div class="relative mt-2">
                                 <input
                                     type="number"
+                                    v-model="editProductForm.supplier_price"
                                     id="harga-supplier"
                                     class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                                     placeholder="Masukkan Harga Supplier"
@@ -733,6 +738,7 @@ const closeModalKeluar = () => {
                                 <input
                                     type="number"
                                     id="harga-jual"
+                                    v-model="editProductForm.price"
                                     class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                                     placeholder="Masukkan Harga Jual"
                                     required
@@ -753,6 +759,7 @@ const closeModalKeluar = () => {
                             <div class="relative mt-2">
                                 <input
                                     type="number"
+                                    v-model="editProductForm.stock"
                                     id="stok"
                                     class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                                     placeholder="Masukkan Stok"
@@ -776,17 +783,18 @@ const closeModalKeluar = () => {
                             <div class="relative mt-2">
                                 <select
                                     id="supplier"
+                                    v-model="editProductForm.supplier_id"
                                     class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none appearance-none cursor-pointer"
                                     required
                                 >
-                                    <option value="" disabled selected>
+                                    <option value="" disabled>
                                         Pilih Supplier
                                     </option>
-                                    <option value="supplier1">
-                                        Supplier 1
-                                    </option>
-                                    <option value="supplier2">
-                                        Supplier 2
+                                    <option
+                                        v-for="s in $page.props.suppliers"
+                                        :value="s.id"
+                                    >
+                                        {{ s.name }}
                                     </option>
                                 </select>
                                 <div
@@ -807,14 +815,15 @@ const closeModalKeluar = () => {
                             <div class="relative mt-2">
                                 <select
                                     id="status"
+                                    v-model="editProductForm.status"
                                     class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none appearance-none cursor-pointer"
                                     required
                                 >
                                     <option value="" disabled selected>
                                         Pilih Status
                                     </option>
-                                    <option value="aktif">Aktif</option>
-                                    <option value="nonaktif">Nonaktif</option>
+                                    <option value="1">Aktif</option>
+                                    <option value="0">Nonaktif</option>
                                 </select>
                                 <div
                                     class="absolute inset-y-0 left-0 flex items-center pointer-events-none ps-4"
@@ -830,6 +839,7 @@ const closeModalKeluar = () => {
                         <div class="md:col-span-2 flex justify-end">
                             <button
                                 type="submit"
+                                @click="submitEdit"
                                 class="bg-primary px-12 py-3 rounded-full cursor-pointer translate-x-1.5 hover:brightness-90 duration-300"
                             >
                                 <div
@@ -876,6 +886,7 @@ const closeModalKeluar = () => {
                         Batal
                     </button>
                     <button
+                        @click="deleteProduct"
                         class="w-full bg-primary text-textDark py-3 rounded-full font-medium cursor-pointer hover:brightness-90 duration-300"
                     >
                         Ya, Hapus
@@ -936,6 +947,7 @@ const closeModalKeluar = () => {
 .fade-leave-to {
     opacity: 0;
 }
+
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;

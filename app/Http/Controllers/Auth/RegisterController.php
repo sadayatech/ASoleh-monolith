@@ -59,14 +59,19 @@ class RegisterController extends Controller
         switch (auth()->user()->role) {
             case 'customer':
                 $rto = '/';
+                break;
             case 'admin':
                 $rto = '/admin/dashboard';
+                break;
             case 'cashier':
                 $rto = '/kasir/dashboard';
+                break;
             case 'staff':
                 $rto = '/pelayan/dashboard';
+                break;
             default:
                 $rto = '/';
+                break;
                 break;
         }
         return redirect($rto);

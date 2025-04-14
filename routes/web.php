@@ -91,9 +91,9 @@ Route::middleware('auth')->group(function () {
 
 
     // Pelayan
-    Route::get('/pelayan/dashboard', fn() => Inertia::render('pelayan/HomeDashboard'))->middleware('role:staff');
-    Route::get('/pelayan/supplier', fn() => Inertia::render('pelayan/Supplier'))->middleware('role:staff');
-    Route::get('/pelayan/pengaturan', fn() => Inertia::render('pelayan/Pengaturan'))->middleware('role:staff');
+    Route::get('/pelayan/dashboard', [DashboardController::class, 'render_menu'])->middleware('role:staff,admin');
+    Route::get('/pelayan/supplier', [DashboardController::class, 'render_supplier'])->middleware('role:staff,admin');
+    Route::get('/pelayan/pengaturan', fn() => Inertia::render('pelayan/Pengaturan'))->middleware('role:staff,admin');
 
 
     // Email Verification

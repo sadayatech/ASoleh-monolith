@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -35,19 +36,21 @@ class LoginController extends Controller
 
         $rto = '/';
         switch (auth()->user()->role) {
-            case 'customer':
-                $rto = '/';
-            case 'admin':
-                $rto = '/admin/dashboard';
-            case 'cashier':
-                $rto = '/kasir/dashboard';
-            case 'staff':
-                $rto = '/pelayan/dashboard';
-            default:
-                $rto = '/';
+            case "customer":
+                $rto = "/";
+                break;
+            case "admin":
+                $rto = "/admin/dashboard";
+                break;
+            case "cashier":
+                $rto = "/kasir/dashboard";
+                break;
+            case "staff":
+                $rto = "/pelayan/dashboard";
                 break;
         }
-        return redirect($rto);
+
+        return Redirect::to($rto);
     }
 
     /**

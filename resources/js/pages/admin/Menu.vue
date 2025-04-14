@@ -1,8 +1,9 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from "vue";
-import Sidebar from "./components/Sidebar.vue";
+import AdminSidebar from "./components/Sidebar.vue";
+import PelayanSidebar from "../pelayan/components/Sidebar.vue";
 import { router, useForm, usePage } from "@inertiajs/vue3";
-import HeaderDashboard from "./components/HeaderDashboard.vue";
+import HeaderDashboard from "@/components/HeaderDashboard.vue";
 import { push } from "notivue";
 
 const page = usePage();
@@ -934,7 +935,8 @@ const closeModalKeluar = () => {
     </div>
 
     <!-- Sidebar -->
-    <Sidebar />
+    <AdminSidebar v-if="$page.url === '/admin/menu'" />
+    <PelayanSidebar v-else-if="$page.url === '/pelayan/dashboard'" />
 </template>
 
 <style scoped>

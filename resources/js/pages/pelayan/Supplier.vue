@@ -1,12 +1,48 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import Sidebar from "./components/Sidebar.vue";
+import { router, useForm, usePage } from "@inertiajs/vue3";
+import HeaderDashboard from "@/components/HeaderDashboard.vue";
+import { push } from "notivue";
 
 // Dropdown Profil
+const selectedSupplier = ref({});
 const isDropdownOpen = ref(false);
 const dropdownRef = ref(null);
-const toggleDropdown = () => {
-    isDropdownOpen.value = !isDropdownOpen.value;
+const newSupplier = useForm({
+    name: "",
+    whatsapp_number: "",
+});
+const saveNewSupplier = () => {
+    newSupplier.post("/supplier/store", {
+        onSuccess: () => {
+            newSupplier.reset();
+            closeModalTambah();
+            push.success(usePage().props.flash.success);
+        },
+        onError: () => {
+            push.error("Gagal menyimpan supplier");
+            console.log("Error saving supplier");
+        },
+    });
+};
+
+const editSupplierForm = useForm({
+    name: selectedSupplier.value.name,
+    whatsapp_number: selectedSupplier.value.whatsapp_number,
+});
+const saveEditedSupplier = () => {
+    editSupplierForm.put(`/supplier/update/${selectedSupplier.value.id}`, {
+        onSuccess: () => {
+            editSupplierForm.reset();
+            closeModalUbah();
+            push.success(usePage().props.flash.success);
+        },
+        onError: (error) => {
+            push.error("Gagal menyimpan perubahan supplier");
+            console.error("Error saving edited supplier", error);
+        },
+    });
 };
 const handleClickOutside = (event) => {
     if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
@@ -22,7 +58,8 @@ onBeforeUnmount(() => {
 
 // Modal Detail Supplier
 const showModalDetail = ref(false);
-const openModalDetail = () => {
+const openModalDetail = (supplier) => {
+    selectedSupplier.value = supplier;
     showModalDetail.value = true;
 };
 const closeModalDetail = () => {
@@ -41,6 +78,8 @@ const closeModalTambah = () => {
 // Modal Ubah Supplier
 const showModalUbah = ref(false);
 const openModalUbah = () => {
+    editSupplierForm.name = selectedSupplier.value.name;
+    editSupplierForm.whatsapp_number = selectedSupplier.value.whatsapp_number;
     showModalUbah.value = true;
 };
 const closeModalUbah = () => {
@@ -64,79 +103,24 @@ const openModalKeluar = () => {
 const closeModalKeluar = () => {
     showModalKeluar.value = false;
 };
+
+const deleteSupplier = () => {
+    router.delete("/supplier/delete/" + selectedSupplier.value.id, {
+        onSuccess: () => {
+            closeModalHapus();
+            closeModalDetail();
+            push.success(usePage().props.flash.success);
+            router.visit("/admin/supplier");
+        },
+    });
+};
 </script>
 
 <template>
     <div
         class="bg-bgGray min-h-screen md:ps-[150px] p-4 md:pe-4 pt-[18px] pb-24 md:pb-0"
     >
-        <div class="bg-white p-4 rounded-2xl flex justify-between items-center">
-            <div>
-                <h1 class="text-lg font-semibold">SPW Gridas</h1>
-            </div>
-            <!-- Dropdown -->
-            <div class="relative" ref="dropdownRef">
-                <button
-                    @click="toggleDropdown"
-                    class="flex items-center gap-4 cursor-pointer"
-                >
-                    <div class="h-12 w-12 rounded-full overflow-hidden">
-                        <img src="/assets/images/user.png" alt="user" />
-                    </div>
-                    <div class="hidden md:inline-flex flex-col text-left">
-                        <h2 class="text-textDark font-semibold">Admin</h2>
-                        <p class="text-textDark text-sm">admin@gmail.com</p>
-                    </div>
-                    <div>
-                        <p
-                            class="hidden md:block text-textDark transition-transform duration-200"
-                            :class="isDropdownOpen ? 'rotate-180' : ''"
-                        >
-                            <i class="fi fi-sr-angle-down"></i>
-                        </p>
-                    </div>
-                </button>
-
-                <Transition name="fade">
-                    <div
-                        v-if="isDropdownOpen"
-                        class="absolute right-0 z-10 mt-2 w-56 bg-white rounded-2xl shadow-lg"
-                    >
-                        <Link
-                            href="/admin/pengguna"
-                            class="flex md:hidden items-center py-2.5 px-4 gap-4 hover:bg-bgGray duration-300 cursor-pointer"
-                        >
-                            <p class="text-textDark text-lg">
-                                <i class="fi fi-rr-users"></i>
-                            </p>
-                            <p class="text-textDark">Pengguna</p>
-                        </Link>
-                        <Link
-                            href="/admin/pengaturan"
-                            class="flex md:hidden items-center py-2.5 px-4 gap-4 hover:bg-bgGray duration-300 cursor-pointer"
-                        >
-                            <p class="text-textDark text-lg">
-                                <i class="fi fi-rr-settings"></i>
-                            </p>
-                            <p class="text-textDark">Pengaturan</p>
-                        </Link>
-                        <!-- Garis Pemisah -->
-                        <div
-                            class="border-t md:border-none border-textGray mt-1"
-                        ></div>
-                        <button
-                            @click="openModalKeluar"
-                            class="flex items-center p-4 gap-4 w-full hover:bg-bgGray duration-300 cursor-pointer"
-                        >
-                            <p class="text-secondary text-lg">
-                                <i class="fi fi-rr-sign-out-alt"></i>
-                            </p>
-                            <p class="text-secondary">Keluar</p>
-                        </button>
-                    </div>
-                </Transition>
-            </div>
-        </div>
+        <HeaderDashboard @openModalKeluar="openModalKeluar" />
 
         <section class="mt-4 w-full">
             <div class="md:flex justify-between">
@@ -176,9 +160,9 @@ const closeModalKeluar = () => {
                     Daftar Supplier
                 </h1>
                 <div class="grid grid-cols-1 md:grid-cols-3 md:gap-x-4">
-                    <button
-                        @click="openModalDetail"
-                        type="button"
+                    <div
+                        v-for="supplier in $page.props.suppliers"
+                        @click="openModalDetail(supplier)"
                         class="col-span-1 bg-white p-6 mt-4 rounded-3xl flex items-center gap-4 text-start cursor-pointer"
                     >
                         <div class="h-14 w-14 rounded-full overflow-hidden">
@@ -188,82 +172,18 @@ const closeModalKeluar = () => {
                             <h1
                                 class="line-clamp-1 text-textDark font-semibold"
                             >
-                                Nama Supplier
+                                {{ supplier?.name }}
                             </h1>
-                            <h2 class="text-textDark">0812345678910</h2>
+                            <h2 class="text-textDark">
+                                {{ supplier?.whatsapp_number }}
+                            </h2>
                         </div>
                         <div class="flex items-center ml-auto">
                             <p class="text-textDark">
                                 <i class="fi fi-rr-angle-right"></i>
                             </p>
                         </div>
-                    </button>
-                    <button
-                        @click="openModalDetail"
-                        type="button"
-                        class="col-span-1 bg-white p-6 mt-4 rounded-3xl flex items-center gap-4 text-start cursor-pointer"
-                    >
-                        <div class="h-14 w-14 rounded-full overflow-hidden">
-                            <img src="/assets/images/user.png" alt="user" />
-                        </div>
-                        <div>
-                            <h1
-                                class="line-clamp-1 text-textDark font-semibold"
-                            >
-                                Nama Supplier
-                            </h1>
-                            <h2 class="text-textDark">0812345678910</h2>
-                        </div>
-                        <div class="flex items-center ml-auto">
-                            <p class="text-textDark">
-                                <i class="fi fi-rr-angle-right"></i>
-                            </p>
-                        </div>
-                    </button>
-                    <button
-                        @click="openModalDetail"
-                        type="button"
-                        class="col-span-1 bg-white p-6 mt-4 rounded-3xl flex items-center gap-4 text-start cursor-pointer"
-                    >
-                        <div class="h-14 w-14 rounded-full overflow-hidden">
-                            <img src="/assets/images/user.png" alt="user" />
-                        </div>
-                        <div>
-                            <h1
-                                class="line-clamp-1 text-textDark font-semibold"
-                            >
-                                Nama Supplier
-                            </h1>
-                            <h2 class="text-textDark">0812345678910</h2>
-                        </div>
-                        <div class="flex items-center ml-auto">
-                            <p class="text-textDark">
-                                <i class="fi fi-rr-angle-right"></i>
-                            </p>
-                        </div>
-                    </button>
-                    <button
-                        @click="openModalDetail"
-                        type="button"
-                        class="col-span-1 bg-white p-6 mt-4 rounded-3xl flex items-center gap-4 text-start cursor-pointer"
-                    >
-                        <div class="h-14 w-14 rounded-full overflow-hidden">
-                            <img src="/assets/images/user.png" alt="user" />
-                        </div>
-                        <div>
-                            <h1
-                                class="line-clamp-1 text-textDark font-semibold"
-                            >
-                                Nama Supplier
-                            </h1>
-                            <h2 class="text-textDark">0812345678910</h2>
-                        </div>
-                        <div class="flex items-center ml-auto">
-                            <p class="text-textDark">
-                                <i class="fi fi-rr-angle-right"></i>
-                            </p>
-                        </div>
-                    </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -300,20 +220,24 @@ const closeModalKeluar = () => {
                                 Nama Supplier
                             </p>
                             <h1 class="text-textDark line-clamp-1">
-                                Aku Supplier
+                                {{ selectedSupplier?.name }}
                             </h1>
                         </div>
                         <div class="mt-2">
                             <p class="text-textGrayDark text-xs">
                                 Nomor WhatsApp
                             </p>
-                            <h2 class="text-textDark">0812345678910</h2>
+                            <h2 class="text-textDark">
+                                {{ selectedSupplier?.whatsapp_number }}
+                            </h2>
                         </div>
                         <div class="mt-2">
                             <p class="text-textGrayDark text-xs">Produk</p>
                             <h2 class="text-textDark">
-                                Risol Ayam, Pisang Aroma, Nasi Naget, Ayam
-                                Geprek
+                                {{
+                                    selectedSupplier?.items ||
+                                    "Belum ada produk"
+                                }}
                             </h2>
                         </div>
                     </div>
@@ -377,8 +301,9 @@ const closeModalKeluar = () => {
                         >
                         <div class="relative mt-2">
                             <input
-                                type="name"
+                                type="text"
                                 id="nama-supplier"
+                                v-model="newSupplier.name"
                                 class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                                 placeholder="Masukkan Nama Supplier"
                                 required
@@ -401,6 +326,7 @@ const closeModalKeluar = () => {
                                 type="number"
                                 id="nomor-whatsapp"
                                 class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
+                                v-model="newSupplier.whatsapp_number"
                                 placeholder="Masukkan Nomor WhatsApp"
                                 required
                             />
@@ -416,6 +342,7 @@ const closeModalKeluar = () => {
                     <div class="flex justify-end items-end mt-4">
                         <button
                             type="submit"
+                            @click="saveNewSupplier"
                             class="bg-primary px-12 py-3 rounded-full cursor-pointer translate-x-1.5 hover:brightness-90 duration-300"
                         >
                             <div class="flex justify-center items-center gap-2">
@@ -466,6 +393,7 @@ const closeModalKeluar = () => {
                             <input
                                 type="name"
                                 id="nama-supplier"
+                                v-model="editSupplierForm.name"
                                 class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                                 placeholder="Masukkan Nama Supplier"
                                 required
@@ -487,6 +415,7 @@ const closeModalKeluar = () => {
                             <input
                                 type="number"
                                 id="nomor-whatsapp"
+                                v-model="editSupplierForm.whatsapp_number"
                                 class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                                 placeholder="Masukkan Nomor WhatsApp"
                                 required
@@ -503,6 +432,7 @@ const closeModalKeluar = () => {
                     <div class="flex justify-end items-end mt-4">
                         <button
                             type="submit"
+                            @click="saveEditedSupplier"
                             class="bg-primary px-12 py-3 rounded-full cursor-pointer translate-x-1.5 hover:brightness-90 duration-300"
                         >
                             <div class="flex justify-center items-center gap-2">
@@ -546,6 +476,7 @@ const closeModalKeluar = () => {
                         Batal
                     </button>
                     <button
+                        @click="deleteSupplier"
                         class="w-full bg-primary text-textDark py-3 rounded-full font-medium cursor-pointer hover:brightness-90 duration-300"
                     >
                         Ya, Hapus
@@ -602,10 +533,6 @@ const closeModalKeluar = () => {
     transition: opacity 0.3s ease;
 }
 
-.fade-enter-from,
-.fade-leave-to {
-    opacity: 0;
-}
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;
