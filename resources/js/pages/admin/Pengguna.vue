@@ -180,7 +180,7 @@ const closeModalKeluar = () => {
                             </p>
                         </div>
                         <div class="h-14 w-14 rounded-full overflow-hidden">
-                            <img src="/assets/images/user.png" alt="user" />
+                            <img src="/assets/images/user.webp" alt="user" />
                         </div>
                         <div>
                             <h1

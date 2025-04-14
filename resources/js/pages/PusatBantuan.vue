@@ -37,7 +37,7 @@ const goBack = () => {
             >
                 <div class="w-[70%] overflow-hidden relative">
                     <img
-                        src="/assets/images/customer-service.png"
+                        src="/assets/images/customer-service.webp"
                         alt="customer service"
                     />
                 </div>

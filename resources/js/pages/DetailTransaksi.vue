@@ -240,7 +240,7 @@ const closeModal = () => {
                     </p>
                 </div>
                 <div class="mt-8">
-                    <img src="/assets/images/qris.jpeg" alt="QRIS SPW PPLG" />
+                    <img src="/assets/images/qris.webp" alt="QRIS SPW PPLG" />
                     <p class="text-start text-textDark font-bold mt-4">
                         Total Bayar: Rp{{
                             Number(order.total_amount).toLocaleString("id-ID")

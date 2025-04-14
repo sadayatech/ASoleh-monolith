@@ -87,7 +87,7 @@ const updateOrderStatus = (status) => {
                     class="flex items-center gap-4 cursor-pointer"
                 >
                     <div class="h-12 w-12 rounded-full overflow-hidden">
-                        <img src="/assets/images/user.png" alt="user" />
+                        <img src="/assets/images/user.webp" alt="user" />
                     </div>
                     <div class="hidden md:inline-flex flex-col text-left">
                         <h2 class="text-textDark font-semibold">Kasir</h2>

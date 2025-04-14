@@ -27,7 +27,7 @@ class User extends Authenticatable
 
     public function getImageAttribute($value)
     {
-        return $value ?? '/assets/images/user.png';
+        return $value ?? '/assets/images/user.webp';
     }
     /**
      * The attributes that should be hidden for serialization.

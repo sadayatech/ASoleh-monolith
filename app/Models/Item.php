@@ -37,7 +37,7 @@ class Item extends Model
     public function getImageAttribute($value)
     {
         if (!$value) {
-            return asset('assets/images/product.png');
+            return asset('assets/images/product.webp');
         }
         if (Storage::exists($value)) {
             return $value;

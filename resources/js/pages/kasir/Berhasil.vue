@@ -7,7 +7,7 @@ import Sidebar from "./components/Sidebar.vue";
         <section class="p-4">
             <div class="flex flex-col justify-center items-center">
                 <div class="w-[40%] overflow-hidden relative">
-                    <img src="/assets/images/check.png" alt="berhasil" />
+                    <img src="/assets/images/check.webp" alt="berhasil" />
                 </div>
                 <div class="text-center mt-8 px-8">
                     <h1 class="text-primary text-xl font-bold">

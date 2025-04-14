@@ -15,19 +15,19 @@ class CategorySeeder extends Seeder
         Category::create([
             'name' => 'Foods',
             'slug' => 'foods',
-            'image' => 'https://example.com/food.jpg',
+            'image' => 'https://example.com/food.webp',
             'status' => true,
         ]);
         Category::create([
             'name' => 'Drinks',
             'slug' => 'drinks',
-            'image' => 'https://example.com/drink.jpg',
+            'image' => 'https://example.com/drink.webp',
             'status' => true,
         ]);
         Category::create([
             'name' => 'Snacks',
             'slug' => 'snacks',
-            'image' => 'https://example.com/snack.jpg',
+            'image' => 'https://example.com/snack.webp',
             'status' => true,
         ]);
     }

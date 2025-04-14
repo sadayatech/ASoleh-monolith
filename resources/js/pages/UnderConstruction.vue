@@ -18,7 +18,7 @@ const goBack = () => {
             <div class="flex flex-col justify-center items-center">
                 <div class="w-[40%] overflow-hidden relative">
                     <img
-                        src="/assets/images/under-construction.png"
+                        src="/assets/images/under-construction.webp"
                         alt="Under Construction"
                     />
                 </div>

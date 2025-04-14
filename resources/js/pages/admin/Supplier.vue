@@ -156,7 +156,7 @@ const deleteSupplier = () => {
                     <div v-for="supplier in $page.props.suppliers" @click="openModalDetail(supplier)"
                         class="col-span-1 bg-white p-6 mt-4 rounded-3xl flex items-center gap-4 text-start cursor-pointer">
                         <div class="h-14 w-14 rounded-full overflow-hidden">
-                            <img src="/assets/images/user.png" alt="user" />
+                            <img src="/assets/images/user.webp" alt="user" />
                         </div>
                         <div>
                             <h1 class="line-clamp-1 text-textDark font-semibold">

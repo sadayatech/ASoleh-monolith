@@ -32,7 +32,7 @@ const showPassword = ref(false);
 
         <section>
             <div class="w-full">
-                <img src="/assets/images/SPANDUK SPW SECONDARY.jpg" alt="SPANDUK SPW" />
+                <img src="/assets/images/SPANDUK SPW SECONDARY.webp" alt="SPANDUK SPW" />
             </div>
             <form class="mt-4 p-4" @submit.prevent="submit">
                 <h1 class="text-textDark text-center text-xl font-bold">
