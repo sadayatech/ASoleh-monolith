@@ -14,11 +14,15 @@ class SupplierSeeder extends Seeder
     public function run(): void
     {
         Supplier::create([
-            'name' => 'Supplier 1',
+            'name' => 'Karl Marx',
             'whatsapp_number' => '081234567890',
         ]);
         Supplier::create([
-            'name' => 'Supplier 2',
+            'name' => 'Socrates',
+            'whatsapp_number' => '081234567890',
+        ]);
+        Supplier::create([
+            'name' => 'Aristotles',
             'whatsapp_number' => '081234567890',
         ]);
     }

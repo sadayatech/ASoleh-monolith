@@ -3,6 +3,7 @@ import { computed, ref } from "vue";
 import { Head, router, useForm, usePage } from "@inertiajs/vue3";
 import { konversiStatus } from "@/lib/utils";
 import { push } from "notivue";
+import { useClipboard } from "@vueuse/core";
 const { props } = usePage();
 const order = props.order;
 const OrderStatus = computed(() => konversiStatus(order.status));
@@ -46,7 +47,17 @@ const closeModal = () => {
 };
 
 // Copy To Clipboard
-
+const copied = ref(false);
+const { copy } = useClipboard();
+const copyToClipboard = (text) => {
+    if (!copied.value && copy(text)) {
+        copied.value = true;
+        push.success({ title: 'Sistem', message: 'Kode transaksi tersalin!', duration: 1500 });
+        setTimeout(() => {
+            copied.value = false;
+        }, 1500);
+    }
+};
 </script>
 
 <template>
@@ -110,16 +121,12 @@ const closeModal = () => {
             <div class="bg-white p-4 rounded-2xl">
                 <div class="">
                     <p class="text-textDark font-semibold">Kode Transaksi</p>
-                    <div
-                        class="flex justify-between bg-bgGray pt-3 pb-1.5 px-4 mt-2 rounded-2xl"
-                    >
+                    <div class="flex justify-between bg-bgGray pt-3 pb-1.5 px-4 mt-2 rounded-2xl">
                         <p class="text-textDark font-bold">
                             {{ order.transaction_code }}
                         </p>
-                        <button
-                            @click="() => copyToClipboard(order.transaction_code)"
-                            class="text-textDark text-2xl cursor-pointer"
-                        >
+                        <button @click="() => copyToClipboard(order.transaction_code)"
+                            class="text-textDark text-2xl cursor-pointer">
                             <i :class="copied ? 'fi fi-rr-check' : 'fi fi-rr-duplicate'"></i>
                         </button>
                     </div>
@@ -175,7 +182,7 @@ const closeModal = () => {
                             class="flex items-center gap-2 w-full bg-white rounded-full cursor-pointer shadow-sm">
                             <span class="bg-bgGray py-3 px-4 rounded-l-full text-textDark w-[50%]">Choose File</span>
                             <span class="text-textGrayDark pr-4 line-clamp-1 w-full">{{ fileName || "or drag file here"
-                                }}</span>
+                            }}</span>
                         </label>
                         <div class="flex justify-end">
                             <button type="submit" @click="submitBukti"
@@ -214,11 +221,8 @@ const closeModal = () => {
                     </p>
                 </div>
                 <div class="mt-4">
-                    <a
-                        href="/assets/images/qris.webp"
-                        download="QRIS SPW PPLG.png"
-                        class="flex justify-center gap-2 bg-primary w-full py-3 rounded-full cursor-pointer hover:brightness-90 duration-300"
-                    >
+                    <a href="/assets/images/qris.webp" download="QRIS SPW PPLG.png"
+                        class="flex justify-center gap-2 bg-primary w-full py-3 rounded-full cursor-pointer hover:brightness-90 duration-300">
                         <i class="fi fi-br-download"></i>
                         <span class="text-textDark font-bold">Download QR</span>
                     </a>
@@ -227,4 +231,3 @@ const closeModal = () => {
         </Transition>
     </div>
 </template>
-

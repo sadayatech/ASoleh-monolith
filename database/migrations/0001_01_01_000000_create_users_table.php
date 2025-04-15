@@ -20,8 +20,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->date('tanggal_lahir')->nullable();
-            $table->enum('jenis_kelamin', ['1', '0'])->nullable(); // 1: Laki-laki, 0: Perempuan
-            $table->enum('role', ['admin', 'staff', 'customer'])->default('customer  ');
+            $table->boolean('jenis_kelamin')->default(1); // 1: Laki-laki, 0: Perempuan
+            $table->enum('role', ['admin', 'staff', 'customer', 'cashier    '])->default('customer');
             $table->rememberToken();
             $table->timestamps();
         });

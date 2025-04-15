@@ -3,7 +3,7 @@ import path from "path";
 import laravel from "laravel-vite-plugin";
 import vue from "@vitejs/plugin-vue";
 import compression from 'vite-plugin-compression2';
-import tailwind from '@tailwindcss/vite'
+import tailwind from '@tailwindcss/vite';
 export default defineConfig({
     plugins: [
         laravel({
@@ -38,23 +38,16 @@ export default defineConfig({
             output: {
                 manualChunks(id) {
                     if (id.includes('node_modules')) {
-                        if (id.includes('vue')) return 'vue'
-                        if (id.includes('axios')) return 'axios'
-                        if (id.includes('vue3-apexcharts')) return 'vue3_apexcharts'
-                        if (!(id.includes('vue3-apexcharts')) && id.includes('apexcharts')) return 'apexcharts'
-                        return 'vendor'
-                    } 
+                        if (id.includes('vue')) return 'vue';
+                        if (id.includes('axios')) return 'axios';
+                        if (id.includes('vue3-apexcharts')) return 'vue3_apexcharts';
+                        if (!(id.includes('vue3-apexcharts')) && id.includes('apexcharts')) return 'apexcharts';
+                        return 'vendor';
+                    }
                 },
             },
         },
         chunkSizeWarningLimit: 3000, // opsional, supaya gak terlalu sering warning
-    },
-    server: {
-        watch: {
-            usePolling: true,
-            interval: 10000,
-            ignored: ['node_modules', 'public', 'storage', 'vendor', 'resources/js/app.js', 'app']
-        },
     },
     esbuild: true,
     resolve: {

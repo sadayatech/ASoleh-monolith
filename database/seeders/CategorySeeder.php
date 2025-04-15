@@ -13,21 +13,9 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         Category::create([
-            'name' => 'Foods',
-            'slug' => 'foods',
+            'name' => 'Main Course',
+            'slug' => 'main-course',
             'image' => 'https://example.com/food.webp',
-            'status' => true,
-        ]);
-        Category::create([
-            'name' => 'Drinks',
-            'slug' => 'drinks',
-            'image' => 'https://example.com/drink.webp',
-            'status' => true,
-        ]);
-        Category::create([
-            'name' => 'Snacks',
-            'slug' => 'snacks',
-            'image' => 'https://example.com/snack.webp',
             'status' => true,
         ]);
     }

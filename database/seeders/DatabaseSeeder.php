@@ -15,13 +15,41 @@ class DatabaseSeeder extends Seeder
     {
         \App\Models\User::create([
             'name' => 'Administrator',
-            'email' => 'admin@example.com',
+            'email' => 'admin@example.default',
             'password' => 'rahasia',
             'role' => 'admin',
-            'jenis_kelamin' => '1',
+            'jenis_kelamin' => 1,
             'tanggal_lahir' => '2000-01-01',
             'whatsapp_number' => '081234567890',
         ]);
+        \App\Models\User::create([
+            'name' => 'Kasir',
+            'email' => 'cashier@example.default',
+            'password' => 'rahasiakasir',
+            'role' => 'cashier',
+            'jenis_kelamin' => 0,
+            'tanggal_lahir' => '2000-01-01',
+            'whatsapp_number' => '081234567890',
+        ]);
+        \App\Models\User::create([
+            'name' => 'Pelayan',
+            'email' => 'pelayan@example.default',
+            'password' => 'rahasiapelayan',
+            'role' => 'staff',
+            'jenis_kelamin' => 0,
+            'tanggal_lahir' => '2000-01-01',
+            'whatsapp_number' => '081234567890',
+        ]);
+        \App\Models\User::create([
+            'name' => 'Customer',
+            'email' => 'customer@example.default',
+            'password' => 'rahasiacustomer',
+            'role' => 'customer',
+            'jenis_kelamin' => 1,
+            'tanggal_lahir' => '2000-01-01',
+            'whatsapp_number' => '081234567890',
+        ]);
+
         $this->call([
             SupplierSeeder::class,
             CategorySeeder::class,

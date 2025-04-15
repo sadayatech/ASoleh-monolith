@@ -64,15 +64,7 @@ class DashboardController extends Controller
         if ($search) {
             $usersQuery->where('name', 'like', '%' . $search . '%');
         }
-        $users = $usersQuery->latest()->get()->map(function ($user) {
-            return [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'role' => $user->role,
-                'image' => $user->image,
-            ];
-        });
+        $users = $usersQuery->latest()->get();
         return Inertia::render('admin/Pengguna', [
             'users' => $users,
             'filters' => [

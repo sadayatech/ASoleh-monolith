@@ -25,7 +25,7 @@ class ItemSeeder extends Seeder
             'description' => 'Cappucino yang enak',
             'price' => 5000,
             'supplier_price' => 5000,
-            'category_id' => 2,
+            'category_id' => 1,
             'supplier_id' => 2,
         ]);
         Item::create([
@@ -33,7 +33,7 @@ class ItemSeeder extends Seeder
             'description' => 'Chips yang enak',
             'price' => 3000,
             'supplier_price' => 3000,
-            'category_id' => 2,
+            'category_id' => 1,
             'supplier_id' => 1,
         ]);
         Item::factory()->count(15)->create();
