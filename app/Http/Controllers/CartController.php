@@ -24,6 +24,7 @@ class CartController extends Controller
                     'amount' => $cart_item['amount'],
                 ] : null;
             })->filter();
+
         }
     }
 
@@ -111,10 +112,11 @@ class CartController extends Controller
     {
         $carts = $this->getUserCarts($request);
         $total = $this->calculateTotal($carts);
-
-        if ($carts = []) {
+        
+        if ($carts === []) {
             return redirect()->back()->withErrors(['checkout_error' => 'Yah, keranjang kamu kosong nih, gak bisa checkout jadinya.']);
         }
+        
         return Inertia::render('Checkout', [
             'carts' => $carts,
             'total' => $total,

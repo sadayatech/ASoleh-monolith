@@ -19,6 +19,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 use Inertia\Inertia;
 
 /*
@@ -28,6 +29,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/', [HomeController::class, 'renderHomePage'])->name('home');
+Route::get('/unsupported-browser', fn() => view('unsupported-browser'));
 Route::get('/keranjang', [CartController::class, 'index'])->name('keranjang');
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('keranjang.add');
 Route::get('/checkout', [CartController::class, 'Checkout'])->name('confirm_checkout');
@@ -122,4 +124,5 @@ Route::middleware('auth')->group(function () {
     Route::post('supplier/store', [SupplierController::class, 'store'])->name('store.supplier')->middleware('role:admin,staff');
     Route::put('supplier/update/{supplier}', [SupplierController::class, 'update'])->name('update.supplier')->middleware('role:admin,staff');
     Route::delete('supplier/delete/{supplier}', [SupplierController::class, 'destroy'])->name('delete.supplier')->middleware('role:admin,staff');
+
 });

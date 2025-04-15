@@ -4,7 +4,12 @@ import { push } from "notivue";
 import { ref, watch } from "vue";
 
 const isOpen = ref(false);
-const selectedProduct = ref({});
+const selectedProduct = ref({
+    name: "Loading",
+    image: "/assets/image/product.webp",
+    stock: 1,
+    price: 1000,
+});
 const qty = ref(1);
 
 const form = useForm({
@@ -22,9 +27,6 @@ const openOffcanvas = (product) => {
 
 const closeOffcanvas = () => {
     isOpen.value = false;
-    setTimeout(() => {
-        selectedProduct.value = {};
-    }, 500);
 };
 
 const increaseQty = () => {

@@ -51,9 +51,9 @@ const deleteCart = (cart) => {
 //     });
 // };
 const checkoutForm = useForm({
-    consumer_name: page.props.auth.user?.name,
+    consumer_name: "",
     email: page.props.auth.user?.email,
-    whatsapp_number: page.props.auth.user?.whatsapp_number,
+    whatsapp_number: "",
     notes: "",
     payment_method: "cash",
     carts: carts.value,
@@ -339,7 +339,7 @@ const closeModalKeluar = () => {
         <Transition name="scale">
             <div
                 v-if="showModalCheckout"
-                class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-100 bg-bgGray w-[90%] md:w-[60%] py-8 px-6 rounded-4xl shadow-lg z-30"
+                class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-100 bg-bgGray w-[90%] py-8 px-6 rounded-4xl shadow-lg z-30"
             >
                 <div class="flex justify-between">
                     <h1 class="text-textDark text-lg font-semibold">
@@ -352,7 +352,7 @@ const closeModalKeluar = () => {
                         <i class="fi fi-rr-cross-small"></i>
                     </p>
                 </div>
-                <div class="grid grid-cols-2 gap-4 mt-4">
+                <div class="grid grid-cols-3 gap-8 mt-4">
                     <div class="col-span-1">
                         <h1 class="text-textDark font-semibold">
                             Data Pemesan
@@ -406,61 +406,14 @@ const closeModalKeluar = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <h1 class="text-textDark font-semibold mt-6">
-                            Data Pembayaran
-                        </h1>
-                        <div class="mt-4">
-                            <p class="text-textDark">Metode Pembayaran</p>
-                            <div class="flex justify-between gap-4 mt-2 w-full">
-                                <div
-                                    @click="selectPayment('cash')"
-                                    class="w-full py-3 rounded-full border-[1.5px] text-center font-semibold cursor-pointer transition"
-                                    :class="
-                                        selectedMethod === 'cash'
-                                            ? 'bg-white border-secondary text-secondary'
-                                            : 'bg-white border-none'
-                                    "
-                                >
-                                    CASH
-                                </div>
-                                <div
-                                    @click="selectPayment('qris')"
-                                    class="w-full py-3 rounded-full border-[1.5px] text-center font-semibold cursor-pointer transition"
-                                    :class="
-                                        selectedMethod === 'qris'
-                                            ? 'bg-white border-secondary text-secondary'
-                                            : 'bg-white border-none'
-                                    "
-                                >
-                                    QRIS
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex justify-between mt-6">
-                            <p class="text-textDark">
-                                Total:
-                                <span class="font-bold"
-                                    >Rp
-                                    {{
-                                        Number(total).toLocaleString("id-ID")
-                                    }}</span
-                                >
-                            </p>
-                        </div>
-                        <button
-                            @click="submit"
-                            class="bg-primary py-3 mt-4 w-full rounded-full cursor-pointer hover:brightness-90 duration-300"
-                        >
-                            <p class="font-semibold">Checkout</p>
-                        </button>
+                        </div> 
                     </div>
                     <div class="col-span-1">
                         <h1 class="text-textDark font-semibold">
                             Detail Pesanan
                         </h1>
                         <div
-                            class="flex flex-col gap-4 mt-4 bg-white p-4 rounded-2xl max-h-[274px] overflow-y-auto"
+                            class="flex flex-col gap-4 mt-4 bg-white p-4 rounded-2xl max-h-[225px] overflow-y-auto"
                         >
                             <div
                                 class="flex justify-between items-center"
@@ -507,6 +460,88 @@ const closeModalKeluar = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-span-1">
+                        <h1 class="text-textDark font-semibold">
+                            Data Pembayaran
+                        </h1>
+                        <div class="mt-4">
+                            <p class="text-textDark">Metode Pembayaran</p>
+                            <div class="flex justify-between gap-4 mt-2 w-full">
+                                <div
+                                    @click="selectPayment('cash')"
+                                    class="w-full py-3 rounded-full border-[1.5px] text-center font-semibold cursor-pointer transition"
+                                    :class="
+                                        selectedMethod === 'cash'
+                                            ? 'bg-white border-secondary text-secondary'
+                                            : 'bg-white border-none'
+                                    "
+                                >
+                                    CASH
+                                </div>
+                                <div
+                                    @click="selectPayment('qris')"
+                                    class="w-full py-3 rounded-full border-[1.5px] text-center font-semibold cursor-pointer transition"
+                                    :class="
+                                        selectedMethod === 'qris'
+                                            ? 'bg-white border-secondary text-secondary'
+                                            : 'bg-white border-none'
+                                    "
+                                >
+                                    QRIS
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <label
+                                for="jumlah-uang"
+                                class="text-textDark"
+                                >Jumlah Uang</label
+                            >
+                            <div class="relative mt-2">
+                                <input
+                                    type="number"
+                                    id="nomor-whatsapp"
+                                    v-model="checkoutForm.whatsapp_number"
+                                    class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
+                                    placeholder="Masukkan Jumlah Uang"
+                                    required
+                                />
+                                <div
+                                    class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4 pt-1"
+                                >
+                                    <p class="text-textDark text-xl">
+                                        <i
+                                            class="fi fi-rr-money-bill-wave"
+                                        ></i>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex mt-6">
+                            <p class="text-textDark">
+                                Total:
+                                <span class="font-bold"
+                                    >Rp
+                                    {{
+                                        Number(total).toLocaleString("id-ID")
+                                    }}</span
+                                >
+                            </p>
+                        </div>
+                        <div class="flex mt-2">
+                            <p class="text-textDark">
+                                Kembali:
+                                <span class="font-bold">Rp5.000</span
+                                >
+                            </p>
+                        </div>
+                        <button
+                            @click="submit"
+                            class="bg-primary py-3 mt-4 w-full rounded-full cursor-pointer hover:brightness-90 duration-300"
+                        >
+                            <p class="font-semibold">Checkout</p>
+                        </button>
                     </div>
                 </div>
             </div>

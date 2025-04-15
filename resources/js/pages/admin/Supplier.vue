@@ -421,7 +421,7 @@ const deleteSupplier = () => {
     </div>
 
     <!-- Sidebar -->
-    <AdminSidebar v-if="$page.url === '/admin/menu'" />
+    <AdminSidebar v-if="$page.url === '/admin/supplier'" />
     <PelayanSidebar v-else-if="$page.url === '/pelayan/supplier'" />
 </template>
 

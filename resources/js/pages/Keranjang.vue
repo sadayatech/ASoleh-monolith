@@ -50,7 +50,7 @@ const deleteCart = () => {
     const id = authenticated ? selectedCart.value.id : selectedCart.value.item.id;
     router.delete('/cart/' + id, {
         onSuccess: () => {
-            push.success({message: "Oke kapen! salah satu keranjangmu berhasil dihapus!", duration: 1750});
+            push.success({message: "Oke kapten! salah satu keranjangmu berhasil dihapus!", duration: 1750});
         },
         onError: (errors) => {
             Object.values(errors).forEach((error) => {

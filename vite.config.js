@@ -43,16 +43,16 @@ export default defineConfig({
                         if (id.includes('vue3-apexcharts')) return 'vue3_apexcharts'
                         if (!(id.includes('vue3-apexcharts')) && id.includes('apexcharts')) return 'apexcharts'
                         return 'vendor'
-                    }
+                    } 
                 },
             },
         },
-        chunkSizeWarningLimit: 1000, // opsional, supaya gak terlalu sering warning
+        chunkSizeWarningLimit: 3000, // opsional, supaya gak terlalu sering warning
     },
     server: {
         watch: {
             usePolling: true,
-            interval: 1000,
+            interval: 10000,
             ignored: ['node_modules', 'public', 'storage', 'vendor', 'resources/js/app.js', 'app']
         },
     },

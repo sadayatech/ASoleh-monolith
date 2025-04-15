@@ -1,9 +1,9 @@
 export const konversiStatus = (status) => {
     switch (status) {
         case "paid":
-            return "Sudah bayar";
+            return "Lunas";
         case "unpaid":
-            return "Belum bayar";
+            return "Belum lunas";
         case "under-review":
             return "Sedang ditinjau";
         case "rejected":

@@ -145,7 +145,7 @@ const closeModalKeluar = () => {
                         </div>
                         <div class="flex justify-between">
                             <div>
-                                <h2 class="text-textDark line-clamp-2">
+                                <h2 class="text-start text-textDark line-clamp-2">
                                     {{
                                         order.items
                                             .map((item) => item.item.name)

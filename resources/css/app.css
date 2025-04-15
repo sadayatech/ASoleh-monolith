@@ -31,6 +31,34 @@
 }
 
 
-input, select {
+input,
+select {
     @apply appearance-none border-none focus:outline-none focus:ring-0 focus:border-0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.1s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.scale-enter-active,
+.scale-leave-active {
+    transition:
+        transform 0.2s ease-out,
+        opacity 0.2s ease-out;
+}
+
+.scale-enter-from {
+    transform: scale(0.8);
+    opacity: 0;
+}
+
+.scale-leave-to {
+    transform: scale(0.8);
+    opacity: 0;
 }

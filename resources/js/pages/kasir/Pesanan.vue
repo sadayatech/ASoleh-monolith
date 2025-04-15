@@ -312,7 +312,7 @@ const updateOrderStatus = (status) => {
                                         <p class="text-textDark">
                                             Metode Pembayaran
                                         </p>
-                                        <p class="text-textDark">
+                                        <p class="text-textDark uppercase">
                                             {{ ORDER.payment_method }}
                                         </p>
                                     </div>
