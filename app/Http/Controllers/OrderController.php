@@ -18,7 +18,7 @@ class OrderController extends Controller
     public function checkout(Request $request)
     {
         $data = $request->validate([
-            'consumer_name' => 'required|string|max:255',
+            'customer_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'whatsapp_number' => 'required|max:255',
             'notes' => 'nullable|string|max:255',
@@ -65,7 +65,7 @@ class OrderController extends Controller
             $order = Order::create([
                 'user_id' => Auth::id(),
                 'transaction_code' => 'SPW' . now()->format('Ymd') . '-' . random_int(100000, 999999),
-                'consumer_name' => $data['consumer_name'],
+                'customer_name' => $data['customer_name'],
                 'user_has_account' => Auth::check(),
                 'whatsapp_number' => $data['whatsapp_number'],
                 'email' => $data['email'],
@@ -103,7 +103,7 @@ class OrderController extends Controller
                 $transactions = json_decode($request->cookie('transactions', '[]'), true);
                 $transactions[] = [
                     'transaction_code' => $order->transaction_code,
-                    'consumer_name' => $order->consumer_name,
+                    'customer_name' => $order->customer_name,
                     'payment_method' => $order->payment_method,
                     'total_amount' => $order->total_amount,
                     'notes' => $order->notes,

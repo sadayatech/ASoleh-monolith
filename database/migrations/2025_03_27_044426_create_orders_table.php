@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('transaction_code')->unique();
-            $table->string('consumer_name');
+            $table->string('customer_name');
             $table->string('whatsapp_number');
             $table->string('email');
             $table->boolean('user_has_account')->default(false);

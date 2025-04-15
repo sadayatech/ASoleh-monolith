@@ -17,7 +17,7 @@ class HomeController extends Controller
         $itemsQuery = Item::query();
 
         if ($search) {
-            $itemsQuery->where('name', 'like', '%'.$search.'%');
+            $itemsQuery->where('status', true)->where('stock', '>=', 1)->where('name', 'like', '%'.$search.'%');
         }
 
         $items = $itemsQuery->latest()->get()->map(function ($item) {

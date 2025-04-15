@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
+
 class CartController extends Controller
 {
     protected function getUserCarts(Request $request)
@@ -110,11 +111,11 @@ class CartController extends Controller
 
     public function checkout(Request $request)
     {
-        $carts = $this->getUserCarts($request);
+        $carts  = $this->getUserCarts($request);
         $total = $this->calculateTotal($carts);
         
-        if ($carts === []) {
-            return redirect()->back()->withErrors(['checkout_error' => 'Yah, keranjang kamu kosong nih, gak bisa checkout jadinya.']);
+        if ($carts->isEmpty()) {
+            return redirect('/keranjang')->withErrors(['checkout_error' => 'Yah, keranjang kamu kosong nih, gak bisa checkout jadinya.']);
         }
         
         return Inertia::render('Checkout', [
