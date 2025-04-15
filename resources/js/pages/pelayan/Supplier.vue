@@ -323,7 +323,7 @@ const deleteSupplier = () => {
                         >
                         <div class="relative mt-2">
                             <input
-                                type="number"
+                                type="tel"
                                 id="nomor-whatsapp"
                                 class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                                 v-model="newSupplier.whatsapp_number"

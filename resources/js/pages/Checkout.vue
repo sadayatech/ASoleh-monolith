@@ -116,7 +116,7 @@ const goBack = () => {
                         id="nomor-whatsapp"
                         v-model="form.whatsapp_number"
                         class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
-                        placeholder="Contoh: 6281234567891"
+                        placeholder="Masukkan Nomor WhatsApp"
                         required
                     />
                     <div

@@ -83,7 +83,7 @@ onUnmounted(() => {
 
         <!-- Banner -->
         <section>
-            <img src="/assets/images/SPANDUK SPW SECONDARY.webp" alt="" />
+            <img src="/assets/images/SPANDUK SPW SECONDARY.webp" alt="SPANDUK SPW" />
         </section>
 
         <!-- Product List -->

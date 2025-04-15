@@ -279,7 +279,7 @@ const deleteSupplier = () => {
                     <div class="col-span-1">
                         <label for="nomor-whatsapp" class="text-textDark">Nomor WhatsApp</label>
                         <div class="relative mt-2">
-                            <input type="number" id="nomor-whatsapp"
+                            <input type="tel" id="nomor-whatsapp"
                                 class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                                 v-model="newSupplier.whatsapp_number" placeholder="Masukkan Nomor WhatsApp" required />
                             <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4 pt-1">

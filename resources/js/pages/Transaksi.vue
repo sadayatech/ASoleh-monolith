@@ -66,9 +66,9 @@ onUnmounted(() => {
                                 </p>
                             </div>
                         </div>
-                        <div class="flex justify-between">
+                        <div class="flex justify-between gap-2">
                             <div>
-                                <h2 class="text-textDark line-clamp-2 truncate">
+                                <h2 class="text-textDark line-clamp-2">
                                     {{
                                         order.items
                                             .map((item) => item.item.name)
