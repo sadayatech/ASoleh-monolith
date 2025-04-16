@@ -24,9 +24,9 @@ class DatabaseSeeder extends Seeder
         ]);
         \App\Models\User::create([
             'name' => 'Kasir',
-            'email' => 'cashier@example.default',
+            'email' => 'kasir@example.default',
             'password' => 'rahasiakasir',
-            'role' => 'cashier',
+            'role' => 'kasir',
             'jenis_kelamin' => 0,
             'tanggal_lahir' => '2000-01-01',
             'whatsapp_number' => '081234567890',

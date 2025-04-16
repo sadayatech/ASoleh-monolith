@@ -66,7 +66,7 @@ onBeforeUnmount(() => {
         >
           <Link
             href="/admin/pengguna"
-            class="flex md:hidden items-center py-2.5 px-4 gap-4 hover:bg-bgGray duration-300 cursor-pointer"
+            class="flex md:hidden items-center py-2.5 px-4 gap-4 hover:bg-bgGray rounded-2xl duration-300 cursor-pointer"
           >
             <p class="text-textDark text-lg">
               <i class="fi fi-rr-users"></i>
@@ -75,7 +75,7 @@ onBeforeUnmount(() => {
           </Link>
           <Link
             href="/admin/pengaturan"
-            class="flex md:hidden items-center py-2.5 px-4 gap-4 hover:bg-bgGray duration-300 cursor-pointer"
+            class="flex md:hidden items-center py-2.5 px-4 gap-4 hover:bg-bgGray rounded-2xl duration-300 cursor-pointer"
           >
             <p class="text-textDark text-lg">
               <i class="fi fi-rr-settings"></i>
@@ -89,7 +89,7 @@ onBeforeUnmount(() => {
               $emit('openModalKeluar');
               isDropdownOpen = false;
             "
-            class="flex items-center p-4 gap-4 w-full hover:bg-bgGray duration-300 cursor-pointer"
+            class="flex items-center p-4 gap-4 w-full duration-300 cursor-pointer"
           >
             <p class="text-secondary text-lg">
               <i class="fi fi-rr-sign-out-alt"></i>

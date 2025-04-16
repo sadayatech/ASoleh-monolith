@@ -105,7 +105,7 @@ const copyToClipboard = (text) => {
                 {{ orderItem.item.name }}
               </h1>
               <h2 class="font-bold">
-                Rp{{ Number(orderItem.item.price).toLocaleString('id-ID') }}
+                Rp{{ Number(orderItem.price).toLocaleString('id-ID') }}
               </h2>
               <p class="text-xs text-textDark mt-1">
                 x{{ orderItem.quantity }}

@@ -92,6 +92,7 @@ class OrderController extends Controller
                     'item_id' => $item->id,
                     'quantity' => $cart->amount,
                     'price' => $item->price,
+                    'supplier_price' => $item->supplier_price,
                 ]);
             }
 
@@ -116,7 +117,7 @@ class OrderController extends Controller
             DB::commit();
 
 
-            if ($request->input('source') === 'cashier') {
+            if ($request->input('source') === 'kasir') {
                 return redirect('/kasir/berhasil')->with('success', 'Pesanan berhasil ditambahkan, silahkan lanjut dihalaman pesanan.');
             }
 

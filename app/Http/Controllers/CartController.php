@@ -124,7 +124,7 @@ class CartController extends Controller
         ]);
     }
 
-    public function cashier_add_to_cart(Request $request)
+    public function kasir_add_to_cart(Request $request)
     {
         $request->validate([
             'item_id' => 'required|exists:items,id',

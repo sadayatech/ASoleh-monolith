@@ -14,18 +14,28 @@ class DashboardController extends Controller
     public function render_home(Request $request)
     {
         $activeItemCount = Item::where('stock', '>', 0)->count();
-        $orderCount = Order::count(); // Assuming you have an Order model
+        $orderCount = Order::count();
         $supplierCount = Supplier::count();
         $customerCount = User::where('role', 'customer')->count();
         $todayIncome = Order::whereDate('created_at', now())
             ->whereIn('status', ['paid', 'done'])
-            ->with('orderItems')
+            ->with('items')
             ->get()
             ->flatMap(function ($order) {
-                return $order->orderItems;
+                return $order->items;
             })
             ->sum(function ($orderItem) {
-                return $orderItem->quantity * $orderItem->amount;
+                return $orderItem->quantity * $orderItem->price;
+            });
+        $profit = Order::whereDate('created_at', now())
+            ->whereIn('status', ['paid', 'done'])
+            ->with('items.item')
+            ->get()
+            ->flatMap(function ($order) {
+                return $order->items;
+            })
+            ->sum(function ($orderItem) {
+                return ($orderItem->price - $orderItem->supplier_price) * $orderItem->quantity;
             });
         return Inertia::render('admin/Home', [
             'stats' => [
@@ -34,6 +44,7 @@ class DashboardController extends Controller
                 'supplier' => $supplierCount,
                 'customer' => $customerCount,
                 'income' => $todayIncome,
+                'profit' => $profit,
             ],
         ]);
     }
@@ -103,7 +114,7 @@ class DashboardController extends Controller
     {
         return Inertia::render('admin/Laporan');
     }
-    public function render_cashier_dashboard(Request $request)
+    public function render_kasir_dashboard(Request $request)
     {
         $search = $request->input('search');
 
@@ -126,7 +137,7 @@ class DashboardController extends Controller
             ],
         ]);
     }
-    public function render_cashier_orders(Request $request)
+    public function render_kasir_orders(Request $request)
     {
         $search = $request->input('search');
         $ordersQuery = Order::query()->with(['items.item', 'payment'])->whereNot('status', 'done');
@@ -141,7 +152,7 @@ class DashboardController extends Controller
             ],
         ]);
     }
-    public function render_cashier_history(Request $request)
+    public function render_kasir_history(Request $request)
     {
         $search = $request->input('search');
         $ordersQuery = Order::query()->with(['items.item', 'payment'])->where('status', 'done');
@@ -156,5 +167,4 @@ class DashboardController extends Controller
             ],
         ]);
     }
-    
 }

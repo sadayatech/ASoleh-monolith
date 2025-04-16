@@ -508,7 +508,7 @@ const closeModalKeluar = () => {
                     Pilih Peran Pengguna
                   </option>
                   <option value="admin">Admin</option>
-                  <option value="cashier">Kasir</option>
+                  <option value="kasir">Kasir</option>
                   <option value="staff">Pelayan</option>
                   <option value="customer">Customer</option>
                 </select>
@@ -749,7 +749,7 @@ const closeModalKeluar = () => {
                     Pilih Peran Pengguna
                   </option>
                   <option value="admin">Admin</option>
-                  <option value="cashier">Kasir</option>
+                  <option value="kasir">Kasir</option>
                   <option value="staff">Pelayan</option>
                   <option value="customer">Customer</option>
                 </select>

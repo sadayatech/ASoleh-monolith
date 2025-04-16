@@ -42,7 +42,7 @@ class LoginController extends Controller
             case "admin":
                 $rto = "/admin/dashboard";
                 break;
-            case "cashier":
+            case "kasir":
                 $rto = "/kasir/dashboard";
                 break;
             case "staff":

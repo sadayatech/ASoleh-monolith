@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->date('tanggal_lahir')->nullable();
             $table->boolean('jenis_kelamin')->default(1); // 1: Laki-laki, 0: Perempuan
-            $table->enum('role', ['admin', 'staff', 'customer', 'cashier    '])->default('customer');
+            $table->enum('role', ['admin', 'staff', 'customer', 'kasir'])->default('customer');
             $table->rememberToken();
             $table->timestamps();
         });

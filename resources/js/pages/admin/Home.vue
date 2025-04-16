@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="bg-bgGray min-h-screen md:ps-[150px] p-4 md:pe-4 pt-[18px] pb-24 md:pb-0"
-  >
+  <div class="bg-bgGray min-h-screen md:ps-[150px] p-4 md:pe-4 pt-[18px] pb-24 md:pb-0">
     <HeaderDashboard @openModalKeluar="openModalKeluar" />
 
     <section class="bg-white mt-4 p-4 rounded-2xl">
@@ -9,19 +7,10 @@
         <h1 class="text-textDark text-lg font-semibold">Statistik Hari Ini</h1>
         <!-- Chart -->
         <div class="col-span-2 md:hidden">
-          <VueApexCharts
-            type="bar"
-            height="320"
-            :options="chartOptions"
-            :series="series"
-          />
+          <VueApexCharts type="bar" height="320" :options="chartOptions" :series="series" />
         </div>
-        <div
-          class="grid grid-cols-1 md:grid-cols-3 space-y-4 md:space-x-4 mt-4"
-        >
-          <div
-            class="col-span-1 bg-primaryThin p-4 rounded-3xl flex justify-between items-center"
-          >
+        <div class="grid grid-cols-1 md:grid-cols-3 space-y-4 md:space-x-4 mt-4">
+          <div class="col-span-1 bg-primaryThin p-4 rounded-3xl flex justify-between items-center">
             <div class="space-y-2">
               <p class="text-textDark">Menu Aktif</p>
               <h1 class="text-textDark text-3xl font-bold">
@@ -34,9 +23,7 @@
               </p>
             </div>
           </div>
-          <div
-            class="col-span-1 bg-primaryThin p-4 rounded-3xl flex justify-between items-center"
-          >
+          <div class="col-span-1 bg-primaryThin p-4 rounded-3xl flex justify-between items-center">
             <div class="space-y-2">
               <p class="text-textDark">Jumlah Pesanan Hari Ini</p>
               <h1 class="text-textDark text-3xl font-bold">
@@ -49,13 +36,11 @@
               </p>
             </div>
           </div>
-          <div
-            class="col-span-1 bg-primaryThin p-4 rounded-3xl flex justify-between items-center"
-          >
+          <div class="col-span-1 bg-primaryThin p-4 rounded-3xl flex justify-between items-center">
             <div class="space-y-2">
               <p class="text-textDark">Total Pendapatan Hari Ini</p>
               <h1 class="text-textDark text-3xl font-bold">
-                Rp{{ $page.props.stats.income || 0 }}
+                Rp{{ Number($page.props.stats.income || 0).toLocaleString('id-ID') }}
               </h1>
             </div>
             <div>
@@ -66,25 +51,17 @@
           </div>
         </div>
 
-        <div
-          class="grid grid-cols-1 md:grid-cols-3 space-y-4 md:space-x-4 mt-4"
-        >
+        <div class="grid grid-cols-1 md:grid-cols-3 space-y-4 md:space-x-4 mt-4">
           <!-- Chart -->
           <div class="col-span-2 hidden md:block">
-            <VueApexCharts
-              type="bar"
-              height="320"
-              :options="chartOptions"
-              :series="series"
-            />
+            <VueApexCharts type="bar" height="320" :options="chartOptions" :series="series" />
           </div>
           <div class="col-span-1 flex flex-col justify-between gap-4 md:gap-0">
-            <div
-              class="bg-primaryThin p-4 rounded-3xl flex justify-between items-center"
-            >
+            <div class="bg-primaryThin p-4 rounded-3xl flex justify-between items-center">
               <div class="space-y-2">
                 <p class="text-textDark">Total Keuntungan Hari Ini</p>
-                <h1 class="text-textDark text-3xl font-bold">Rp50.000</h1>
+                <h1 class="text-textDark text-3xl font-bold">Rp{{
+                  Number($page.props.stats.profit).toLocaleString('id-ID') }}</h1>
               </div>
               <div>
                 <p class="text-primary text-5xl">
@@ -92,9 +69,7 @@
                 </p>
               </div>
             </div>
-            <div
-              class="bg-primaryThin p-4 rounded-3xl flex justify-between items-center"
-            >
+            <div class="bg-primaryThin p-4 rounded-3xl flex justify-between items-center">
               <div class="space-y-2">
                 <p class="text-textDark">Jumlah Supplier</p>
                 <h1 class="text-textDark text-3xl font-bold">
@@ -107,9 +82,7 @@
                 </p>
               </div>
             </div>
-            <div
-              class="bg-primaryThin p-4 rounded-3xl flex justify-between items-center"
-            >
+            <div class="bg-primaryThin p-4 rounded-3xl flex justify-between items-center">
               <div class="space-y-2">
                 <p class="text-textDark">Pengguna Terdaftar</p>
                 <h1 class="text-textDark text-3xl font-bold">
@@ -129,35 +102,26 @@
 
     <!-- Backdrop Modal Konfirmasi Keluar -->
     <Transition name="fade">
-      <div
-        v-if="showModalKeluar"
-        class="fixed inset-0 bg-black/50 flex items-center justify-center z-20"
-        @click="closeModalKeluar"
-      ></div>
+      <div v-if="showModalKeluar" class="fixed inset-0 bg-black/50 flex items-center justify-center z-20"
+        @click="closeModalKeluar"></div>
     </Transition>
 
     <!-- Modal Konfirmasi Keluar -->
     <Transition name="scale">
-      <div
-        v-if="showModalKeluar"
-        class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-100 bg-white w-[80%] max-w-[480px] py-8 px-6 rounded-4xl shadow-lg text-center z-30"
-      >
+      <div v-if="showModalKeluar"
+        class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-100 bg-white w-[80%] max-w-[480px] py-8 px-6 rounded-4xl shadow-lg text-center z-30">
         <div class="">
           <p class="text-center text-textDark text-xl font-semibold">
             Apakah Anda yakin ingin keluar?
           </p>
         </div>
         <div class="flex justify-between mt-4 gap-2">
-          <button
-            @click="closeModalKeluar"
-            class="w-full text-secondary py-3 rounded-full font-medium cursor-pointer"
-          >
+          <button @click="closeModalKeluar" class="w-full text-secondary py-3 rounded-full font-medium cursor-pointer">
             Batal
           </button>
           <button
             class="w-full bg-primary text-textDark py-3 rounded-full font-medium cursor-pointer hover:brightness-90 duration-300"
-            @click="$inertia.post('/logout')"
-          >
+            @click="$inertia.post('/logout')">
             Keluar
           </button>
         </div>

@@ -25,7 +25,7 @@ const checkoutForm = useForm({
   cash_given: 0,
   change: null,
   carts: carts.value,
-  source: 'cashier',
+  source: 'kasir',
 });
 
 // Cart Functions
@@ -180,7 +180,7 @@ watch(checkoutForm, (value) => {
           >
             <button
               @click="openModalKeluar"
-              class="flex items-center p-4 gap-4 w-full hover:bg-bgGray duration-300 cursor-pointer"
+              class="flex items-center p-4 gap-4 w-full hover:bg-bgGray rounded-2xl duration-300 cursor-pointer"
             >
               <p class="text-secondary text-lg">
                 <i class="fi fi-rr-sign-out-alt"></i>

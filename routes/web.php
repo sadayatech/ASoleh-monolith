@@ -91,7 +91,7 @@ Route::middleware('auth')->group(function () {
             'email' => 'required|email|unique:users,email',
             'whatsapp_number' => 'nullable|string|max:15',
             'password' => 'required|string',
-            'role' => 'required|string|in:admin,cashier,staff,customer',
+            'role' => 'required|string|in:admin,kasir,staff,customer',
             'tanggal_lahir' => 'nullable|date',
             'jenis_kelamin' => 'required|integer',
         ]);
@@ -114,7 +114,7 @@ Route::middleware('auth')->group(function () {
             'email' => 'required|email|unique:users,email,' . $user->id,
             'whatsapp_number' => 'nullable|string|max:15',
             'password' => 'nullable|string',
-            'role' => 'required|string|in:admin,cashier,staff,customer',
+            'role' => 'required|string|in:admin,kasir,staff,customer',
             'tanggal_lahir' => 'nullable|date',
             'jenis_kelamin' => 'required|integer',
         ]);
@@ -149,12 +149,12 @@ Route::middleware('auth')->group(function () {
         return redirect()->back()->with('success', 'Pengguna berhasil dihapus');
     });
     // Kasir
-    Route::get('/kasir/dashboard', [DashboardController::class, 'render_cashier_dashboard'])->name('kasir.dashboard')->middleware('role:kasir,admin');
-    Route::get('/kasir/pesanan', [DashboardController::class, 'render_cashier_orders'])->name('kasir.pesanan')->middleware('role:kasir,admin');
-    Route::get('/kasir/riwayat', [DashboardController::class, 'render_cashier_history'])->name('kasir.riwayat')->middleware('role:kasir,admin');
+    Route::get('/kasir/dashboard', [DashboardController::class, 'render_kasir_dashboard'])->name('kasir.dashboard')->middleware('role:kasir,admin');
+    Route::get('/kasir/pesanan', [DashboardController::class, 'render_kasir_orders'])->name('kasir.pesanan')->middleware('role:kasir,admin');
+    Route::get('/kasir/riwayat', [DashboardController::class, 'render_kasir_history'])->name('kasir.riwayat')->middleware('role:kasir,admin');
     Route::get('/kasir/pengaturan', fn() => Inertia::render('kasir/Pengaturan'))->middleware('role:kasir,admin');
     Route::get('/kasir/berhasil', fn() => Inertia::render('kasir/Berhasil'))->middleware('role:kasir,admin');
-    Route::post('/kasir/cart/add', [CartController::class, 'cashier_add_to_cart'])->name('kasir.keranjang.add')->middleware('role:kasir,admin');
+    Route::post('/kasir/cart/add', [CartController::class, 'kasir_add_to_cart'])->name('kasir.keranjang.add')->middleware('role:kasir,admin');
     Route::patch('/pesanan/{order}', [OrderController::class, 'updateOrderStatus'])->name('kasir.update_order_status')->middleware('role:kasir,admin');
 
 
