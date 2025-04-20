@@ -80,7 +80,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/dashboard', [DashboardController::class, 'render_home'])->middleware('role:admin')->name('dashboard');
     Route::get('/admin/menu', [DashboardController::class, 'render_menu'])->middleware('role:admin')->name('dashboard.menu');
     Route::get('/admin/supplier', [DashboardController::class, 'render_supplier'])->middleware('role:admin')->name('dashboard.supplier');
-    Route::get('/admin/users', [DashboardController::class, 'render_users'])->middleware('role:admin')->name('dashboard.users');
+    Route::get('/admin/pengguna', [DashboardController::class, 'render_users'])->middleware('role:admin')->name('dashboard.pengguna');
+
+    // Aneh ga jalan😭
+    Route::get('/admin/pengaturan', fn() => Inertia::render('admin/Pengaturan'))->middleware('role:admin');
+    Route::get('/admin/laporan', fn() => Inertia::render('admin/Laporan'))->middleware('role:admin');
 
 
 
@@ -162,6 +166,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/pelayan/dashboard', [DashboardController::class, 'render_menu'])->middleware('role:staff,admin');
     Route::get('/pelayan/supplier', [DashboardController::class, 'render_supplier'])->middleware('role:staff,admin');
     Route::get('/pelayan/pengaturan', fn() => Inertia::render('pelayan/Pengaturan'))->middleware('role:staff,admin');
+    Route::get('/pelayan/pesanan', fn() => Inertia::render('pelayan/Pesanan'))->middleware('role:staff,admin');
 
 
     // Email Verification

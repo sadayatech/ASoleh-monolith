@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import Sidebar from './components/Sidebar.vue';
+import HeaderDashboard from '@/components/HeaderDashboard.vue';
 import { konversiStatus } from '../../lib/utils';
 
 const previewImage = ref(false);
@@ -46,51 +47,7 @@ const closeModalKeluar = () => {
   <div
     class="bg-bgGray min-h-screen md:ps-[150px] p-4 md:pe-4 pt-[18px] pb-24 md:pb-0"
   >
-    <div class="bg-white p-4 rounded-2xl flex justify-between items-center">
-      <div>
-        <h1 class="text-lg font-semibold">SPW Gridas</h1>
-      </div>
-      <!-- Dropdown -->
-      <div class="relative" ref="dropdownRef">
-        <button
-          @click="toggleDropdown"
-          class="flex items-center gap-4 cursor-pointer"
-        >
-          <div class="h-12 w-12 rounded-full overflow-hidden">
-            <img src="/assets/images/user.webp" alt="user" />
-          </div>
-          <div class="hidden md:inline-flex flex-col text-left">
-            <h2 class="text-textDark font-semibold">Kasir</h2>
-            <p class="text-textDark text-sm">kasir@gmail.com</p>
-          </div>
-          <div>
-            <p
-              class="hidden md:block text-textDark transition-transform duration-200"
-              :class="isDropdownOpen ? 'rotate-180' : ''"
-            >
-              <i class="fi fi-sr-angle-down"></i>
-            </p>
-          </div>
-        </button>
-
-        <Transition name="fade">
-          <div
-            v-if="isDropdownOpen"
-            class="absolute right-0 z-20 mt-2 w-56 bg-white rounded-2xl shadow-lg"
-          >
-            <button
-              @click="openModalKeluar"
-              class="flex items-center p-4 gap-4 w-full hover:bg-bgGray rounded-2xl duration-300 cursor-pointer"
-            >
-              <p class="text-secondary text-lg">
-                <i class="fi fi-rr-sign-out-alt"></i>
-              </p>
-              <p class="text-secondary">Keluar</p>
-            </button>
-          </div>
-        </Transition>
-      </div>
-    </div>
+    <HeaderDashboard @openModalKeluar="openModalKeluar" />
 
     <section class="mt-6">
       <div>

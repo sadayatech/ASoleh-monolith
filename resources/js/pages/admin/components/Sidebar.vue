@@ -49,9 +49,9 @@ const route = { path: page.url };
       </Link>
 
       <Link
-        href="/admin/report"
+        href="/admin/laporan"
         :class="
-          route.path === '/admin/report'
+          route.path === '/admin/laporan'
             ? 'bg-primary text-textDark'
             : 'bg-transparent text-textGrayDark'
         "
@@ -64,9 +64,9 @@ const route = { path: page.url };
       </Link>
 
       <Link
-        href="/admin/users"
+        href="/admin/pengguna"
         :class="
-          route.path === '/admin/users'
+          route.path === '/admin/pengguna'
             ? 'bg-primary text-textDark'
             : 'bg-transparent text-textGrayDark'
         "
@@ -77,9 +77,9 @@ const route = { path: page.url };
       </Link>
 
       <Link
-        href="/admin/settings"
+        href="/admin/pengaturan"
         :class="
-          route.path === '/admin/settings'
+          route.path === '/admin/pengaturan'
             ? 'bg-primary text-textDark'
             : 'bg-transparent text-textGrayDark'
         "
