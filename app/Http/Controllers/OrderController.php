@@ -109,9 +109,9 @@ class OrderController extends Controller
                     'total_amount' => $order->total_amount,
                     'notes' => $order->notes,
                     'created_at' => now()->toDateTimeString(),
-                ];
+                ]; 
                 cookie()->queue(cookie('transactions', json_encode($transactions), 60 * 24 * 30)); // Simpan selama 30 hari
-                cookie()->forget('cart'); // Hapus cart cookie
+                cookie()->queue(cookie()->forget('cart')); // Hapus cart cookie
             }
 
             DB::commit();

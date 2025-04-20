@@ -38,6 +38,7 @@ const createUserForm = useForm({
 
 const editUserForm = useForm({
   id: null,
+  _method: 'PATCH',
   image: '',
   name: '',
   email: '',
@@ -81,12 +82,13 @@ const saveNewUser = () => {
 };
 
 const updateUser = () => {
-  editUserForm.put('/user/' + editUserForm.id, {
+  editUserForm.post('/user/' + editUserForm.id, {
     onSuccess: () => {
       push.success('Mantap! Data penggunanya udah di-update 🔧');
       router.visit(usePage().url);
     },
-    onError: () => {
+    onError: (errors) => {
+      console.error(errors);
       push.error('Aduh, gak bisa update datanya 😵');
     },
   });
@@ -227,7 +229,7 @@ const closeModalKeluar = () => {
               </p>
             </div>
             <div class="h-14 w-14 rounded-full overflow-hidden">
-              <img src="/assets/images/user.webp" alt="user" />
+              <img :src="userL.image" alt="user" />
             </div>
             <div>
               <h1 class="line-clamp-1 text-textDark font-semibold">

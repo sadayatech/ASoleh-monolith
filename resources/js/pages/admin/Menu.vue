@@ -6,6 +6,8 @@ import { router, useForm, usePage } from '@inertiajs/vue3';
 import HeaderDashboard from '@/components/HeaderDashboard.vue';
 import { push } from 'notivue';
 
+
+const fileName = ref('');
 const page = usePage();
 // Dropdown Profil
 const product = ref({});
@@ -26,6 +28,8 @@ const saveNewProduct = () => {
     onSuccess: () => {
       newProduct.reset();
       closeModalTambah();
+      fileName.value = '';
+
       push.success(page.props.flash.success);
     },
   });
@@ -49,6 +53,8 @@ const submitEdit = () =>
     onSuccess: () => {
       editProductForm.reset();
       closeModalUbah();
+      fileName.value = '';
+
       router.visit('/admin/menu');
       push.success(page.props.flash.success);
     },
@@ -57,8 +63,9 @@ const submitEdit = () =>
     },
   });
 const dropdownRef = ref(null);
-const updateFileName = (event, targetForm) => {
-  targetForm.bukti_pembayaran = event.target.files[0];
+const updateFileName = (event) => {
+  editProductForm.image = event.target.files[0];
+  newProduct.image = event.target.files[0];
   const file = event.target.files[0];
   fileName.value = file ? file.name : '';
 };
@@ -82,6 +89,7 @@ const deleteProduct = () => {
     onSuccess: () => {
       closeModalHapus();
       closeModalDetail();
+      fileName.value = '';
       router.visit('/admin/menu');
     },
   });

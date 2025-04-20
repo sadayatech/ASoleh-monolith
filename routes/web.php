@@ -111,7 +111,7 @@ Route::middleware('auth')->group(function () {
         return redirect()->back()->with('success', 'Mantap! Pengguna berhasil ditambahkan');
     });
 
-    Route::put('/user/{user}', function (\App\Models\User $user) {
+    Route::patch('/user/{user}', function (\App\Models\User $user) {
         $validatedData = request()->validate([
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'name' => 'required|string|max:255',

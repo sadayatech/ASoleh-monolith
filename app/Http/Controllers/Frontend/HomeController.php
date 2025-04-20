@@ -14,10 +14,10 @@ class HomeController extends Controller
     {
         $search = $request->input('search');
 
-        $itemsQuery = Item::query();
+        $itemsQuery = Item::query()->where('stock', '>=', 1)->where('status' , true);
 
         if ($search) {
-            $itemsQuery->where('status', true)->where('stock', '>=', 1)->where('name', 'like', '%'.$search.'%');
+            $itemsQuery->where('name', 'like', '%'.$search.'%');
         }
 
         $items = $itemsQuery->latest()->get()->map(function ($item) {
