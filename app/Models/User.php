@@ -29,7 +29,7 @@ class User extends Authenticatable
     public function getImageAttribute($value)
     {
         if (!$value) {
-            return asset('assets/images/users.webp');
+            return asset('assets/images/user.webp');
         }
         if (Storage::exists($value)) {
             return $value;
