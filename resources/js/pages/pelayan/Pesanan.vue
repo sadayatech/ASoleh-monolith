@@ -81,16 +81,17 @@ const updateOrderStatus = (status) => {
 
     <section class="mt-6">
       <div>
-        <h1 class="text-textDark text-lg font-semibold">Pesanan Masuk</h1>
+        <h1 class="text-textDark text-lg font-semibold">Pesanan-pesanan</h1>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
           <button
             v-for="order in $page.props.orders"
             @click="openModalDetail(order)"
-            class="relative block bg-primaryThin p-4 space-y-5 rounded-2xl hover:bg-white duration-300 cursor-pointer"
+            class="relative block p-4 space-y-5 rounded-2xl hover:bg-white duration-300 cursor-pointer"
+            :class="order.status == 'paid' || order.status == 'done' ? 'bg-white' : 'bg-primaryThin'" 
           >
             <!-- Badge -->
-            <div
-              class="absolute top-0 right-0 bg-primary py-1.5 px-4 rounded-tr-2xl rounded-bl-2xl"
+            <div v-if="!(order.status == 'paid' || order.status == 'done')"
+              class="bg-primary absolute top-0 right-0 py-1.5 px-4 rounded-tr-2xl rounded-bl-2xl"
             >
               <p class="text-sm text-textDark font-medium">Pesanan Baru</p>
             </div>
@@ -302,12 +303,12 @@ const updateOrderStatus = (status) => {
                 </div>
               </div>
 
-              <button
+              <!-- <button
                 @click="openModalPesanan"
                 class="bg-primaryThin py-3 mt-4 md:mt-auto w-full rounded-full cursor-pointer hover:brightness-90 duration-300"
               >
                 <p class="font-semibold">Konfirmasi Pesanan</p>
-              </button>
+              </button> -->
             </div>
           </div>
         </div>

@@ -18,6 +18,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SupplierController;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Inertia\Inertia;
@@ -166,7 +167,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/pelayan/dashboard', [DashboardController::class, 'render_menu'])->middleware('role:staff,admin');
     Route::get('/pelayan/supplier', [DashboardController::class, 'render_supplier'])->middleware('role:staff,admin');
     Route::get('/pelayan/pengaturan', fn() => Inertia::render('pelayan/Pengaturan'))->middleware('role:staff,admin');
-    Route::get('/pelayan/pesanan', fn() => Inertia::render('pelayan/Pesanan'))->middleware('role:staff,admin');
+    Route::get('/pelayan/pesanan', function (\Illuminate\Http\Request $request) {
+        $search = $request->input('search');
+        $ordersQuery = Order::query()->with(['items.item', 'payment']);
+        if ($search) {
+            $ordersQuery->where('invoice_number', 'like', '%' . $search . '%');
+        }
+        $orders = $ordersQuery->latest()->get();
+        return Inertia::render('pelayan/Pesanan', [
+            'orders' => $orders,
+            'filters' => [
+                'search' => $search,
+            ],
+        ]);
+    })->middleware('role:staff,admin');
 
 
     // Email Verification
@@ -195,5 +209,4 @@ Route::middleware('auth')->group(function () {
     Route::post('supplier/store', [SupplierController::class, 'store'])->name('store.supplier')->middleware('role:admin,staff');
     Route::put('supplier/update/{supplier}', [SupplierController::class, 'update'])->name('update.supplier')->middleware('role:admin,staff');
     Route::delete('supplier/delete/{supplier}', [SupplierController::class, 'destroy'])->name('delete.supplier')->middleware('role:admin,staff');
-
 });
