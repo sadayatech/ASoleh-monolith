@@ -46,13 +46,13 @@ const goBack = () => {
     <section class="bg-primary w-full p-4">
       <div class="flex items-center">
         <p
-          class="text-textDark text-2xl translate-y-0.5 cursor-pointer"
+          class="text-2xl translate-y-0.5 cursor-pointer"
           @click="goBack"
         >
           <i class="fi fi-rr-arrow-left"></i>
         </p>
         <h1
-          class="text-textDark text-lg font-semibold absolute left-1/2 -translate-x-1/2"
+          class="text-lg font-semibold absolute left-1/2 -translate-x-1/2"
         >
           Checkout
         </h1>
@@ -69,7 +69,7 @@ const goBack = () => {
             type="name"
             v-model="form.customer_name"
             id="nama-pemesan"
-            class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
+            class="peer py-3 px-4 ps-12 block w-full bg-white rounded-2xl focus:outline-none"
             placeholder="Masukkan nama pemesan"
             required
           />
@@ -91,7 +91,7 @@ const goBack = () => {
             type="email"
             v-model="form.email"
             id="email-pemesan"
-            class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
+            class="peer py-3 px-4 ps-12 block w-full bg-white rounded-2xl focus:outline-none"
             placeholder="Masukkan email pemesan"
             required
           />
@@ -113,7 +113,7 @@ const goBack = () => {
             type="tel"
             id="nomor-whatsapp"
             v-model="form.whatsapp_number"
-            class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
+            class="peer py-3 px-4 ps-12 block w-full bg-white rounded-2xl focus:outline-none"
             placeholder="Masukkan Nomor WhatsApp"
             required
           />
@@ -157,7 +157,7 @@ const goBack = () => {
             type="text"
             v-model="form.notes"
             id="catatan"
-            class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
+            class="peer py-3 px-4 ps-12 block w-full bg-white rounded-2xl focus:outline-none"
             placeholder="Masukkan catatan (opsional)"
           />
           <div
@@ -174,7 +174,7 @@ const goBack = () => {
         <div class="flex justify-between gap-4 mt-2 w-full">
           <div
             @click="selectPayment('cash')"
-            class="w-full py-3 rounded-full border-[1.5px] text-center font-semibold cursor-pointer transition"
+            class="w-full py-3 rounded-2xl border-[1.5px] text-center font-semibold cursor-pointer transition"
             :class="
               form.payment_method === 'cash'
                 ? 'bg-white border-secondary text-secondary'
@@ -185,7 +185,7 @@ const goBack = () => {
           </div>
           <div
             @click="selectPayment('qris')"
-            class="w-full py-3 rounded-full border-[1.5px] text-center font-semibold cursor-pointer transition"
+            class="w-full py-3 rounded-2xl border-[1.5px] text-center font-semibold cursor-pointer transition"
             :class="
               form.payment_method === 'qris'
                 ? 'bg-white border-secondary text-secondary'
@@ -199,7 +199,7 @@ const goBack = () => {
     </section>
 
     <div
-      class="fixed z-10 bottom-0 left-1/2 -translate-y-4 -translate-x-1/2 w-[calc(100%-32px)] max-w-[448px] bg-white shadow-sm rounded-full flex justify-around py-2"
+      class="fixed z-10 bottom-0 left-1/2 -translate-y-4 -translate-x-1/2 w-[calc(100%-32px)] max-w-[448px] bg-white shadow-sm rounded-2xl flex justify-around py-2"
     >
       <div class="flex justify-between items-center w-full px-4">
         <div class="flex flex-col -space-y-0.5">
@@ -210,7 +210,7 @@ const goBack = () => {
         </div>
         <button
           @click.prevent="submit"
-          class="bg-primary px-6 py-3 rounded-full cursor-pointer translate-x-1.5 hover:brightness-90 duration-300"
+          class="bg-primary px-6 py-3 rounded-2xl cursor-pointer translate-x-1.5 hover:brightness-90 duration-300"
         >
           <p class="font-semibold">Buat Pesanan</p>
         </button>

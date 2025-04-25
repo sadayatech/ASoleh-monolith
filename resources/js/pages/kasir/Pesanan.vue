@@ -92,7 +92,7 @@ const updateOrderStatus = (status) => {
             <div
               class="absolute top-0 right-0 bg-primary py-1.5 px-4 rounded-tr-2xl rounded-bl-2xl"
             >
-              <p class="text-sm text-textDark font-medium">Pesanan Baru</p>
+              <p class="text-sm font-medium">Pesanan Baru</p>
             </div>
             <div class="flex justify-between">
               <div class="text-start">

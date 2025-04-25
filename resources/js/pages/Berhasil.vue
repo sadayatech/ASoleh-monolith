@@ -49,7 +49,7 @@ onUnmounted(() => {
                 '/detail-transaksi/' + $page.props.order.transaction_code
               )
             "
-            class="bg-primary w-full py-3 mt-4 rounded-full cursor-pointer hover:brightness-90 duration-300"
+            class="bg-primary w-full py-3 mt-4 rounded-2xl cursor-pointer hover:brightness-90 duration-300"
           >
             <p class="font-bold">Lihat Detail Transaksi</p>
           </button>

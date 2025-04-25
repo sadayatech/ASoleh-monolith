@@ -202,10 +202,10 @@ const closeModalKeluar = () => {
             @click="openModalTambah"
             class="bg-primary py-3 md:px-8 w-full md:w-auto rounded-full flex justify-center items-center gap-2 cursor-pointer hover:brightness-90 duration-300"
           >
-            <p class="text-textDark text-sm translate-y-0.5">
+            <p class="text-sm translate-y-0.5">
               <i class="fi fi-rr-plus"></i>
             </p>
-            <p class="text-textDark font-medium">Tambah Pengguna</p>
+            <p class="font-medium">Tambah Pengguna</p>
           </button>
         </div>
       </div>
@@ -577,7 +577,7 @@ const closeModalKeluar = () => {
                 class="bg-primary px-12 py-3 rounded-full cursor-pointer translate-x-1.5 hover:brightness-90 duration-300"
               >
                 <div class="flex justify-center items-center gap-2">
-                  <p class="text-textDark text-lg translate-y-0.5">
+                  <p class="text-lg translate-y-0.5">
                     <i class="fi fi-rr-disk"></i>
                   </p>
                   <p class="font-semibold">Simpan</p>
@@ -818,7 +818,7 @@ const closeModalKeluar = () => {
                 class="bg-primary px-12 py-3 rounded-full cursor-pointer translate-x-1.5 hover:brightness-90 duration-300"
               >
                 <div class="flex justify-center items-center gap-2">
-                  <p class="text-textDark text-lg translate-y-0.5">
+                  <p class="text-lg translate-y-0.5">
                     <i class="fi fi-rr-disk"></i>
                   </p>
                   <p class="font-semibold">Simpan</p>

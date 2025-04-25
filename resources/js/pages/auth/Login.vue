@@ -30,7 +30,7 @@ const showPassword = ref(false);
     <section>
       <div class="w-full">
         <img
-          src="/assets/images/SPANDUK SPW SECONDARY.webp"
+          src="/assets/images/BANNER ASOLEH.jpg"
           alt="SPANDUK SPW"
         />
       </div>
@@ -44,7 +44,7 @@ const showPassword = ref(false);
               id="email"
               v-model="form.email"
               autofocus
-              class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
+              class="peer py-3 px-4 ps-12 block w-full bg-white rounded-2xl focus:outline-none"
               placeholder="Masukkan Email"
               required
             />
@@ -64,7 +64,7 @@ const showPassword = ref(false);
               v-model="form.password"
               :type="showPassword ? 'text' : 'password'"
               id="kata-sandi"
-              class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
+              class="peer py-3 px-4 ps-12 block w-full bg-white rounded-2xl focus:outline-none"
               placeholder="Masukkan Kata Sandi"
               required
             />
@@ -91,9 +91,9 @@ const showPassword = ref(false);
         <div class="mt-4">
           <button
             type="submit"
-            class="bg-primary w-full py-3 mt-4 rounded-full cursor-pointer hover:brightness-90 duration-300"
+            class="bg-primary w-full py-3 mt-4 rounded-2xl cursor-pointer hover:brightness-90 duration-300"
           >
-            <p class="text-textDark font-bold">Masuk</p>
+            <p class="font-bold">Masuk</p>
           </button>
         </div>
         <div class="text-center text-sm mt-4">
@@ -109,7 +109,7 @@ const showPassword = ref(false);
         </div>
         <Link
           href="/pusat-bantuan"
-          class="fixed z-10 bottom-0 right-0 -translate-y-24 -translate-x-4 py-4 px-6 bg-white shadow-sm rounded-full hover:brightness-90 duration-300"
+          class="fixed z-10 bottom-0 right-0 -translate-y-24 -translate-x-4 py-4 px-6 bg-white shadow-sm rounded-2xl hover:brightness-90 duration-300"
         >
           <p>Perlu Bantuan?</p>
         </Link>

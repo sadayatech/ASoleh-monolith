@@ -171,7 +171,7 @@ watch(checkoutForm, (value) => {
           <button
             class="bg-primary py-3 md:px-8 w-full md:w-auto rounded-full flex justify-center items-center gap-2 cursor-pointer hover:brightness-90 duration-300"
           >
-            <p class="text-textDark font-medium">QR Code</p>
+            <p class="font-medium">QR Code</p>
           </button>
         </div>
       </div>

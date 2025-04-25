@@ -550,7 +550,7 @@ const closeModalKeluar = () => {
                 class="bg-primary px-12 py-3 rounded-full cursor-pointer translate-x-1.5 hover:brightness-90 duration-300"
               >
                 <div class="flex justify-center items-center gap-2">
-                  <p class="text-textDark text-lg translate-y-0.5">
+                  <p class="text-lg translate-y-0.5">
                     <i class="fi fi-rr-disk"></i>
                   </p>
                   <p class="font-semibold">Simpan</p>
@@ -765,7 +765,7 @@ const closeModalKeluar = () => {
                 class="bg-primary px-12 py-3 rounded-full cursor-pointer translate-x-1.5 hover:brightness-90 duration-300"
               >
                 <div class="flex justify-center items-center gap-2">
-                  <p class="text-textDark text-lg translate-y-0.5">
+                  <p class="text-lg translate-y-0.5">
                     <i class="fi fi-rr-disk"></i>
                   </p>
                   <p class="font-semibold">Simpan</p>

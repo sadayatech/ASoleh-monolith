@@ -31,7 +31,7 @@ const showPassword = ref(false);
     <section>
       <div class="w-full">
         <img
-          src="/assets/images/SPANDUK SPW SECONDARY.webp"
+          src="/assets/images/BANNER ASOLEH.jpg"
           alt="SPANDUK SPW"
         />
       </div>
@@ -44,7 +44,7 @@ const showPassword = ref(false);
               v-model="form.name"
               type="name"
               id="nama-lengkap"
-              class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
+              class="peer py-3 px-4 ps-12 block w-full bg-white rounded-2xl focus:outline-none"
               placeholder="Masukkan Nama Lengkap"
               required
             />
@@ -64,7 +64,7 @@ const showPassword = ref(false);
               v-model="form.email"
               type="email"
               id="email"
-              class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
+              class="peer py-3 px-4 ps-12 block w-full bg-white rounded-2xl focus:outline-none"
               placeholder="Masukkan Email"
               required
             />
@@ -86,7 +86,7 @@ const showPassword = ref(false);
               v-model="form.whatsapp_number"
               type="tel"
               id="nomor-whatsapp"
-              class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
+              class="peer py-3 px-4 ps-12 block w-full bg-white rounded-2xl focus:outline-none"
               placeholder="Masukkan Nomor Whatsapp"
               required
             />
@@ -106,7 +106,7 @@ const showPassword = ref(false);
               v-model="form.password"
               :type="showPassword ? 'text' : 'password'"
               id="kata-sandi"
-              class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
+              class="peer py-3 px-4 ps-12 block w-full bg-white rounded-2xl focus:outline-none"
               placeholder="Masukkan Kata Sandi"
               required
             />
@@ -133,9 +133,9 @@ const showPassword = ref(false);
         <div class="mt-4">
           <button
             type="submit"
-            class="bg-primary w-full py-3 mt-4 rounded-full cursor-pointer hover:brightness-90 duration-300"
+            class="bg-primary w-full py-3 mt-4 rounded-2xl cursor-pointer hover:brightness-90 duration-300"
           >
-            <p class="text-textDark font-bold">Buat Akun</p>
+            <p class="font-bold">Buat Akun</p>
           </button>
         </div>
         <div class="text-center text-sm mt-4">

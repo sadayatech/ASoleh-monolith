@@ -38,13 +38,13 @@ const submit = () => {
     <section class="bg-primary w-full p-4">
       <div class="flex items-center">
         <p
-          class="text-textDark text-2xl translate-y-0.5 cursor-pointer"
+          class="text-2xl translate-y-0.5 cursor-pointer"
           @click="goBack"
         >
           <i class="fi fi-rr-arrow-left"></i>
         </p>
         <h1
-          class="text-textDark text-lg font-semibold absolute left-1/2 -translate-x-1/2"
+          class="text-lg font-semibold absolute left-1/2 -translate-x-1/2"
         >
           Pengaturan Akun
         </h1>
@@ -53,7 +53,7 @@ const submit = () => {
 
     <section class="mt-4 p-4">
       <div class="flex justify-center items-center gap-2">
-        <i class="fi fi-br-user-pen text-textDark text-lg translate-y-0.5"></i>
+        <i class="fi fi-br-user-pen text-lg translate-y-0.5"></i>
         <h1 class="text-textDark text-lg font-semibold">Ubah Kata Sandi</h1>
       </div>
 
@@ -69,7 +69,7 @@ const submit = () => {
               :type="showPasswordOld ? 'text' : 'password'"
               v-model="form.current_password"
               id="current_password"
-              class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
+              class="peer py-3 px-4 ps-12 block w-full bg-white rounded-2xl focus:outline-none"
               placeholder="Masukkan Kata Sandi Saat Ini"
             />
             <div
@@ -106,7 +106,7 @@ const submit = () => {
               :type="showPasswordNew ? 'text' : 'password'"
               v-model="form.password"
               id="password"
-              class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
+              class="peer py-3 px-4 ps-12 block w-full bg-white rounded-2xl focus:outline-none"
               placeholder="Masukkan Kata Sandi Baru"
             />
             <div
@@ -143,7 +143,7 @@ const submit = () => {
               :type="showPasswordConfirm ? 'text' : 'password'"
               v-model="form.password_confirmation"
               id="password_confirmation"
-              class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
+              class="peer py-3 px-4 ps-12 block w-full bg-white rounded-2xl focus:outline-none"
               placeholder="Ketik Ulang Kata Sandi Baru"
             />
             <div
@@ -174,10 +174,10 @@ const submit = () => {
 
         <button
           type="submit"
-          class="bg-primary w-full py-3 rounded-full cursor-pointer hover:brightness-90 duration-300"
+          class="bg-primary w-full py-3 rounded-2xl cursor-pointer hover:brightness-90 duration-300"
           :disabled="form.processing"
         >
-          <p class="text-textDark font-bold">Simpan Perubahan</p>
+          <p class="font-bold">Simpan Perubahan</p>
         </button>
       </form>
     </section>

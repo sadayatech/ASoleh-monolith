@@ -1,17 +1,18 @@
 <script setup>
 import { usePage } from '@inertiajs/vue3';
-const route = { path: usePage().url };
 import { Link } from '@inertiajs/vue3';
-</script>
 
+const fullUrl = usePage().url;
+const route = { path: fullUrl.split('?')[0].split('#')[0] };
+</script>
 <template>
   <nav
-    class="fixed z-10 bottom-0 left-1/2 -translate-y-4 -translate-x-1/2 w-[calc(100%-32px)] max-w-[448px] bg-white shadow-sm rounded-full flex justify-around py-2"
+    class="fixed z-10 bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[448px] bg-white shadow-2xl rounded-t-4xl flex justify-around pt-3 pb-2"
   >
     <Link
       href="/"
       :class="
-        route.path === '/' ? 'text-secondary' : 'text-textGrayDark scale-90'
+        route.path === '/' ? 'text-primary' : 'text-textGrayDark scale-90'
       "
       class="text-center"
     >
@@ -23,7 +24,7 @@ import { Link } from '@inertiajs/vue3';
       href="/transaksi"
       :class="
         route.path === '/transaksi'
-          ? 'text-secondary'
+          ? 'text-primary'
           : 'text-textGrayDark scale-90'
       "
       class="text-center"
@@ -36,7 +37,7 @@ import { Link } from '@inertiajs/vue3';
       href="/akun"
       :class="
         route.path === '/akun'
-          ? 'text-secondary'
+          ? 'text-primary'
           : 'text-textGrayDark scale-[85%]'
       "
       class="text-center"

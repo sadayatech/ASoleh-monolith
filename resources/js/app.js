@@ -9,7 +9,7 @@ import UserLayout from './layouts/UserLayout.vue';
 import 'notivue/notification.css';
 import 'notivue/animations.css';
 import { createNotivue } from 'notivue';
-const appName = import.meta.env.VITE_APP_NAME || 'SPW Gridas';
+const appName = import.meta.env.VITE_APP_NAME || 'ASoleh';
 
 const notivue = createNotivue({
   position: 'top-center',
@@ -48,7 +48,7 @@ createInertiaApp({
       .mount(el);
   },
   progress: {
-    color: '#f1bd2c',
+    color: '#308555',
     showSpinner: true,
     delay: 0,
   },

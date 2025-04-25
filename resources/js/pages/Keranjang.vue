@@ -101,13 +101,13 @@ const decreaseQty = (cart) => {
     <section class="bg-primary w-full p-4">
       <div class="flex items-center">
         <p
-          class="text-textDark text-2xl translate-y-0.5 cursor-pointer"
+          class="text-2xl translate-y-0.5 cursor-pointer"
           @click="goBack"
         >
           <i class="fi fi-rr-arrow-left"></i>
         </p>
         <h1
-          class="text-textDark text-lg font-semibold absolute left-1/2 -translate-x-1/2"
+          class="text-lg font-semibold absolute left-1/2 -translate-x-1/2"
         >
           Keranjang
         </h1>
@@ -134,7 +134,7 @@ const decreaseQty = (cart) => {
               Sisa {{ cart.item.stock }}
             </p>
             <div
-              class="flex justify-between items-center w-32 mt-3 bg-white px-4 rounded-full"
+              class="flex justify-between items-center w-32 mt-3 bg-white px-4 rounded-2xl"
             >
               <button
                 @click="decreaseQty(cart)"
@@ -170,7 +170,7 @@ const decreaseQty = (cart) => {
 
     <!-- Checkout Footer -->
     <div
-      class="fixed z-10 bottom-0 left-1/2 -translate-y-4 -translate-x-1/2 w-[calc(100%-32px)] max-w-[448px] bg-white shadow-sm rounded-full flex justify-around py-2"
+      class="fixed z-10 bottom-0 left-1/2 -translate-y-4 -translate-x-1/2 w-[calc(100%-32px)] max-w-[448px] bg-white shadow-sm rounded-2xl flex justify-around py-2"
     >
       <div class="flex justify-between items-center w-full px-4">
         <p class="text-textDark font-bold">
@@ -178,7 +178,7 @@ const decreaseQty = (cart) => {
         </p>
         <Link href="/checkout">
           <button
-            class="bg-primary px-6 py-3 rounded-full cursor-pointer translate-x-1.5 hover:brightness-90 duration-300"
+            class="bg-primary px-6 py-3 rounded-2xl cursor-pointer translate-x-1.5 hover:brightness-90 duration-300"
           >
             <p class="font-semibold">Checkout</p>
           </button>
@@ -209,13 +209,13 @@ const decreaseQty = (cart) => {
         <div class="flex justify-between mt-4 gap-2">
           <button
             @click="closeModal"
-            class="w-full text-secondary py-3 rounded-full font-medium cursor-pointer"
+            class="w-full text-secondary py-3 rounded-2xl font-medium cursor-pointer"
           >
             Batal
           </button>
           <button
             @click="deleteCart"
-            class="w-full bg-primary text-textDark py-3 rounded-full font-medium cursor-pointer hover:brightness-90 duration-300"
+            class="w-full bg-primary text-textDark py-3 rounded-2xl font-medium cursor-pointer hover:brightness-90 duration-300"
           >
             Hapus
           </button>

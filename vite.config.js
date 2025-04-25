@@ -58,4 +58,10 @@ export default defineConfig({
     optimizeDeps: {
         esbuildOptions: { minifyWhitespace: true, minify: true, minifyIdentifiers: true, minifySyntax: true, legalComments: "none" },
     },
+    server: {
+        host: '192.168.4.98',
+        hmr: {
+            host: '192.168.4.98',
+        },
+    }
 });

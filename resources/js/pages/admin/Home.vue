@@ -116,11 +116,11 @@
           </p>
         </div>
         <div class="flex justify-between mt-4 gap-2">
-          <button @click="closeModalKeluar" class="w-full text-secondary py-3 rounded-full font-medium cursor-pointer">
+          <button @click="closeModalKeluar" class="w-full text-secondary py-3 rounded-2xl font-medium cursor-pointer">
             Batal
           </button>
           <button
-            class="w-full bg-primary text-textDark py-3 rounded-full font-medium cursor-pointer hover:brightness-90 duration-300"
+            class="w-full bg-primary text-textDark py-3 rounded-2xl font-medium cursor-pointer hover:brightness-90 duration-300"
             @click="$inertia.post('/logout')">
             Keluar
           </button>

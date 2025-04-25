@@ -70,13 +70,13 @@ const copyToClipboard = (text) => {
     <section class="bg-primary w-full p-4">
       <div class="flex items-center">
         <p
-          class="text-textDark text-2xl translate-y-0.5 cursor-pointer"
+          class="text-2xl translate-y-0.5 cursor-pointer"
           @click="goBack"
         >
           <i class="fi fi-rr-arrow-left"></i>
         </p>
         <h1
-          class="text-textDark text-lg font-semibold absolute left-1/2 -translate-x-1/2"
+          class="text-lg font-semibold absolute left-1/2 -translate-x-1/2"
         >
           Detail Transaksi
         </h1>
@@ -119,7 +119,7 @@ const copyToClipboard = (text) => {
       <div v-if="order.notes">
         <label class="text-textDark">Catatan</label>
         <div
-          class="relative mt-2 py-3 px-4 ps-12 block w-full bg-white rounded-full"
+          class="relative mt-2 py-3 px-4 ps-12 block w-full bg-white rounded-2xl"
         >
           <span class="text-textGrayDark">{{ order?.notes }}</span>
           <div
@@ -170,7 +170,7 @@ const copyToClipboard = (text) => {
     </section>
     <section class="px-4">
       <div
-        class="flex justify-between bg-white w-full mt-2 py-3 px-4 rounded-full"
+        class="flex justify-between bg-white w-full mt-2 py-3 px-4 rounded-2xl"
       >
         <p class="text-textDark font-bold">Total</p>
         <p class="text-textDark font-bold">
@@ -187,10 +187,10 @@ const copyToClipboard = (text) => {
       <section class="px-4">
         <button
           type="button"
-          class="bg-primary w-full py-3 mt-4 rounded-full cursor-pointer hover:brightness-90 duration-300"
+          class="bg-primary w-full py-3 mt-4 rounded-2xl cursor-pointer hover:brightness-90 duration-300"
           @click="openModal"
         >
-          <p class="text-textDark font-bold">Bayar Sekarang</p>
+          <p class="font-bold">Bayar Sekarang</p>
         </button>
       </section>
       <section class="mt-4 px-4">
@@ -207,10 +207,10 @@ const copyToClipboard = (text) => {
             />
             <label
               for="uploadBuktiPembayaran"
-              class="flex items-center gap-2 w-full bg-white rounded-full cursor-pointer shadow-sm"
+              class="flex items-center gap-2 w-full bg-white rounded-2xl cursor-pointer shadow-sm"
             >
               <span
-                class="bg-bgGray py-3 px-4 rounded-l-full text-textDark w-[50%]"
+                class="bg-bgGray py-3 px-4 rounded-l-2xl text-textDark w-[50%]"
                 >Choose File</span
               >
               <span class="text-textGrayDark pr-4 line-clamp-1 w-full">{{
@@ -221,9 +221,9 @@ const copyToClipboard = (text) => {
               <button
                 type="submit"
                 @click="submitBukti"
-                class="bg-primary py-3 px-8 mt-4 rounded-full cursor-pointer hover:brightness-90 duration-300"
+                class="bg-primary py-3 px-8 mt-4 rounded-2xl cursor-pointer hover:brightness-90 duration-300"
               >
-                <p class="text-textDark font-bold">Submit</p>
+                <p class="font-bold">Serahkan</p>
               </button>
             </div>
           </div>
@@ -264,10 +264,10 @@ const copyToClipboard = (text) => {
           <a
             href="/assets/images/qris.webp"
             download="QRIS SPW PPLG.png"
-            class="flex justify-center gap-2 bg-primary w-full py-3 rounded-full cursor-pointer hover:brightness-90 duration-300"
+            class="flex justify-center gap-2 bg-primary w-full py-3 rounded-2xl cursor-pointer hover:brightness-90 duration-300"
           >
             <i class="fi fi-br-download"></i>
-            <span class="text-textDark font-bold">Download QR</span>
+            <span class="font-bold">Download QR</span>
           </a>
         </div>
       </div>

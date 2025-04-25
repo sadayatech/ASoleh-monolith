@@ -19,22 +19,27 @@
 @theme {
     --font-display: "Plus Jakarta Sans", "sans-serif";
 
-    --color-primary: #f1bd2c;
+    --color-primary: #308555;
+    --color-invert-primary: #ffffff;
     --color-secondary: #a40c0b;
     --color-bgGray: #f8f8f8;
     --color-textGray: #e6e6e6;
     --color-textGrayDark: #a4a2a7;
     --color-textDark: #2d3134;
+    /* --color-textDark: var(--color-invert-primary); */
     --color-white: #ffffff;
     --color-green: #31cf4a;
-    --color-primaryThin: #FFF5D8;
+    --color-primaryThin: #DBFFEB;
 }
 
-
+.bg-primary {
+    @apply text-invert-primary bg-primary;
+}
 input,
 select {
     @apply appearance-none border-none focus:outline-none focus:ring-0 focus:border-0;
 }
+
 
 .fade-enter-active,
 .fade-leave-active {
@@ -62,3 +67,11 @@ select {
     transform: scale(0.8);
     opacity: 0;
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }

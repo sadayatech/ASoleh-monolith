@@ -10,23 +10,18 @@ import { push } from 'notivue';
 const fileName = ref('');
 const page = usePage();
 // Dropdown Profil
-const product = ref({});
+const category = ref({});
 const isDropdownOpen = ref(false);
-const newProduct = useForm({
+const newCategory = useForm({
   name: '',
-  supplier_price: 0,
-  price: 0,
-  stock: 0,
-  category_id: 1, // change this to the correct category id later
   image: null,
-  supplier_id: 'placeholder',
   status: 'placeholder',
 });
 
-const saveNewProduct = () => {
-  newProduct.post('/item/store', {
+const savenewCategory = () => {
+  newCategory.post('/category/store', {
     onSuccess: () => {
-      newProduct.reset();
+      newCategory.reset();
       closeModalTambah();
       fileName.value = '';
 
@@ -35,23 +30,18 @@ const saveNewProduct = () => {
   });
 };
 
-const editProductForm = useForm({
+const editCategoryForm = useForm({
   _method: 'PUT',
   name: null,
-  category_id: 1, // change this to the correct category id later
-  supplier_price: null,
-  price: null,
-  stock: null,
   image: null,
-  supplier_id: null,
   status: null,
   id: null,
 });
 
 const submitEdit = () =>
-  editProductForm.post('/item/update/' + editProductForm.id, {
+  editCategoryForm.post('/category/update/' + editCategoryForm.id, {
     onSuccess: () => {
-      editProductForm.reset();
+      editCategoryForm.reset();
       closeModalUbah();
       fileName.value = '';
 
@@ -64,8 +54,8 @@ const submitEdit = () =>
   });
 const dropdownRef = ref(null);
 const updateFileName = (event) => {
-  editProductForm.image = event.target.files[0];
-  newProduct.image = event.target.files[0];
+  editCategoryForm.image = event.target.files[0];
+  newCategory.image = event.target.files[0];
   const file = event.target.files[0];
   fileName.value = file ? file.name : '';
 };
@@ -85,7 +75,7 @@ onBeforeUnmount(() => {
 });
 
 const deleteProduct = () => {
-  router.delete('/item/delete/' + product.value.id, {
+  router.delete('/category/delete/' + category.value.id, {
     onSuccess: () => {
       closeModalHapus();
       closeModalDetail();
@@ -98,7 +88,7 @@ const deleteProduct = () => {
 const showModalDetail = ref(false);
 const openModalDetail = (item) => {
   showModalDetail.value = true;
-  product.value = item;
+  category.value = item;
 };
 const closeModalDetail = () => {
   showModalDetail.value = false;
@@ -106,20 +96,20 @@ const closeModalDetail = () => {
 
 // Toggle Aktif/Non Aktif Menu
 const statusText = computed(() =>
-  product.value && product.value.status ? 'Aktif' : 'Nonaktif'
+  category.value && category.value.status ? 'Aktif' : 'Nonaktif'
 );
 function toggle() {
-  product.value.status = !product.value.status;
+  category.value.status = !category.value.status;
   router.post(
-    `/item/toggle/${product.value.id}`,
-    { status: product.value.status },
+    `/category/toggle/${category.value.id}`,
+    { status: category.value.status },
     {
       onSuccess: () => {
-        push.success('Status menu berhasil diubah');
+        push.success('Kategori berhasil diubah nih asyik!');
       },
       onError: (error) => {
-        console.error('Gagal mengubah status menu', error);
-        push.error('Gagal mengubah status menu');
+        console.error('Gagal mengubah status kategori :(', error);
+        push.error('Gagal mengubah status kategori :(');
       },
     }
   );
@@ -137,13 +127,9 @@ const closeModalTambah = () => {
 // Modal Ubah Menu
 const showModalUbah = ref(false);
 const openModalUbah = () => {
-  editProductForm.name = product.value?.name;
-  editProductForm.price = product.value?.price;
-  editProductForm.stock = product.value?.stock;
-  editProductForm.supplier_id = product.value?.supplier_id;
-  editProductForm.supplier_price = product.value?.supplier_price;
-  editProductForm.status = product.value?.status;
-  editProductForm.id = product.value?.id;
+  editCategoryForm.name = category.value?.name;
+  editCategoryForm.status = category.value?.status;
+  editCategoryForm.id = category.value?.id;
   showModalUbah.value = true;
 };
 const closeModalUbah = () => {
@@ -279,22 +265,22 @@ const closeModalKeluar = () => {
             class="relative w-36 h-36 md:w-[calc(50%-56px)] md:h-auto rounded-full md:rounded-3xl mx-auto overflow-hidden"
           >
             <img
-              :src="product?.image"
+              :src="category?.image"
               class="absolute top-0 left-0 w-full h-full object-cover"
               alt=""
             />
           </div>
           <div class="w-[56%] text-start mt-4 md:mt-0">
-            <h1 class="line-clamp-1">{{ product?.name }}</h1>
+            <h1 class="line-clamp-1">{{ category?.name }}</h1>
             <div class="mt-2">
               <p class="text-textGrayDark text-xs">Harga</p>
               <h2 class="text-textDark font-bold">
-                Rp{{ Number(product?.price).toLocaleString('id-ID') }}
+                Rp{{ Number(category?.price).toLocaleString('id-ID') }}
               </h2>
             </div>
             <div class="mt-2">
               <p class="text-textGrayDark text-xs">Stok</p>
-              <h2 class="text-textDark">{{ product.stock }}</h2>
+              <h2 class="text-textDark">{{ category.stock }}</h2>
             </div>
             <div class="mt-2">
               <p class="text-textGrayDark text-xs">Status</p>
@@ -303,17 +289,17 @@ const closeModalKeluar = () => {
                   @click="toggle"
                   :class="[
                     'w-[52px] h-7 rounded-full flex items-center transition-colors duration-300 p-1 cursor-pointer',
-                    product?.status ? 'bg-green' : 'bg-textGray',
+                    category?.status ? 'bg-green' : 'bg-textGray',
                   ]"
                 >
                   <div
                     class="w-5 h-5 bg-white rounded-full shadow-md transform transition-transform duration-300 text-sm"
-                    :class="product?.status ? 'translate-x-6' : 'translate-x-0'"
+                    :class="category?.status ? 'translate-x-6' : 'translate-x-0'"
                   >
                     <i
                       :class="[
                         'text-xs transition-opacity duration-200',
-                        product?.status
+                        category?.status
                           ? 'fi fi-rr-check text-green'
                           : 'fi fi-rr-cross text-secondary',
                       ]"
@@ -322,7 +308,7 @@ const closeModalKeluar = () => {
                 </button>
 
                 <p
-                  :class="product?.status ? 'text-green' : 'text-textGrayDark'"
+                  :class="category?.status ? 'text-green' : 'text-textGrayDark'"
                 >
                   {{ statusText }}
                 </p>
@@ -396,7 +382,7 @@ const closeModalKeluar = () => {
                   type="file"
                   id="uploadFotoMenu"
                   class="hidden"
-                  @change="updateFileName($event, saveNewProduct)"
+                  @change="updateFileName($event, savenewCategory)"
                   ref="fileInput"
                 />
                 <label
@@ -421,7 +407,7 @@ const closeModalKeluar = () => {
                 <input
                   type="text"
                   id="nama-menu"
-                  v-model="newProduct.name"
+                  v-model="newCategory.name"
                   class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                   placeholder="Masukkan Nama Menu"
                   required
@@ -445,7 +431,7 @@ const closeModalKeluar = () => {
                 <input
                   type="number"
                   id="harga-supplier"
-                  v-model="newProduct.supplier_price"
+                  v-model="newCategory.supplier_price"
                   class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                   placeholder="Masukkan Harga Supplier"
                   required
@@ -467,7 +453,7 @@ const closeModalKeluar = () => {
                 <input
                   type="number"
                   id="harga-jual"
-                  v-model="newProduct.price"
+                  v-model="newCategory.price"
                   class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                   placeholder="Masukkan Harga Jual"
                   required
@@ -489,7 +475,7 @@ const closeModalKeluar = () => {
                 <input
                   type="number"
                   id="stok"
-                  v-model="newProduct.stock"
+                  v-model="newCategory.stock"
                   class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                   placeholder="Masukkan Stok"
                   required
@@ -510,7 +496,7 @@ const closeModalKeluar = () => {
               <div class="relative mt-2">
                 <select
                   id="supplier"
-                  v-model="newProduct.supplier_id"
+                  v-model="newCategory.supplier_id"
                   class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none appearance-none cursor-pointer"
                   required
                 >
@@ -535,7 +521,7 @@ const closeModalKeluar = () => {
               <div class="relative mt-2">
                 <select
                   id="status"
-                  v-model="newProduct.status"
+                  v-model="newCategory.status"
                   class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none appearance-none cursor-pointer"
                   required
                 >
@@ -557,7 +543,7 @@ const closeModalKeluar = () => {
             <div class="md:col-span-2 flex justify-end">
               <button
                 type="submit"
-                @click="saveNewProduct"
+                @click="savenewCategory"
                 class="bg-primary px-12 py-3 rounded-full cursor-pointer translate-x-1.5 hover:brightness-90 duration-300"
               >
                 <div class="flex justify-center items-center gap-2">
@@ -612,7 +598,7 @@ const closeModalKeluar = () => {
                   type="file"
                   id="uploadFotoMenu"
                   class="hidden"
-                  @change="updateFileName($event, editProductForm)"
+                  @change="updateFileName($event, editCategoryForm)"
                   ref="fileInput"
                 />
                 <label
@@ -636,7 +622,7 @@ const closeModalKeluar = () => {
               <div class="relative mt-2">
                 <input
                   type="text"
-                  v-model="editProductForm.name"
+                  v-model="editCategoryForm.name"
                   id="nama-menu"
                   class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                   placeholder="Masukkan Nama Menu"
@@ -660,7 +646,7 @@ const closeModalKeluar = () => {
               <div class="relative mt-2">
                 <input
                   type="number"
-                  v-model="editProductForm.supplier_price"
+                  v-model="editCategoryForm.supplier_price"
                   id="harga-supplier"
                   class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                   placeholder="Masukkan Harga Supplier"
@@ -683,7 +669,7 @@ const closeModalKeluar = () => {
                 <input
                   type="number"
                   id="harga-jual"
-                  v-model="editProductForm.price"
+                  v-model="editCategoryForm.price"
                   class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                   placeholder="Masukkan Harga Jual"
                   required
@@ -704,7 +690,7 @@ const closeModalKeluar = () => {
               <div class="relative mt-2">
                 <input
                   type="number"
-                  v-model="editProductForm.stock"
+                  v-model="editCategoryForm.stock"
                   id="stok"
                   class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
                   placeholder="Masukkan Stok"
@@ -726,7 +712,7 @@ const closeModalKeluar = () => {
               <div class="relative mt-2">
                 <select
                   id="supplier"
-                  v-model="editProductForm.supplier_id"
+                  v-model="editCategoryForm.supplier_id"
                   class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none appearance-none cursor-pointer"
                   required
                 >
@@ -749,7 +735,7 @@ const closeModalKeluar = () => {
               <div class="relative mt-2">
                 <select
                   id="status"
-                  v-model="editProductForm.status"
+                  v-model="editCategoryForm.status"
                   class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none appearance-none cursor-pointer"
                   required
                 >

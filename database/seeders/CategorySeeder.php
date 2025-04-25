@@ -12,11 +12,29 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::create([
-            'name' => 'Main Course',
-            'slug' => 'main-course',
-            'image' => 'https://example.com/food.webp',
-            'status' => true,
-        ]);
+        $categories = [
+            [
+                'name' => 'Makanan',
+                'slug' => 'makanan',
+                'image' => '/assets/images/makanan.png',
+                'status' => true,
+            ],
+            [
+                'name' => 'Kriya',
+                'slug' => 'kriya',
+                'image' => '/assets/images/kriya.png',
+                'status' => true,
+            ],
+            [
+                'name' => 'Fashion',
+                'slug' => 'fashion',
+                'image' => '/assets/images/fashion.png',
+                'status' => true,
+            ],
+        ];
+
+        foreach ($categories as $category) {
+            Category::create($category);
+        }
     }
 }
