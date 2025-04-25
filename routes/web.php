@@ -153,6 +153,40 @@ Route::middleware('auth')->group(function () {
         $user->delete();
         return redirect()->back()->with('success', 'Pengguna berhasil dihapus');
     });
+
+    Route::put('/profil/', function () {
+        $user = auth()->user();
+        $validatedData = request()->validate([
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'whatsapp_number' => 'nullable|string|max:15',
+            'password' => 'nullable|string',
+            'tanggal_lahir' => 'nullable|date',
+            'jenis_kelamin' => 'required|integer',
+        ]);
+
+        // Handle image upload if provided
+        if (request()->hasFile('image')) {
+            $validatedData['image'] = request()->file('image')->store('user_images', 'public');
+
+            // Delete the old image if it exists
+            if ($user->image) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->image);
+            }
+        }
+
+        // Update the user
+        if (!empty($validatedData['password'])) {
+            $validatedData['password'] = bcrypt($validatedData['password']);
+        } else {
+            unset($validatedData['password']); // Ignore password if not provided
+        }
+        
+        $user->update($validatedData);
+
+        return redirect()->back()->with('success', 'Mantap! Pengguna berhasil diperbarui');
+    });
     // Kasir
     Route::get('/kasir/dashboard', [DashboardController::class, 'render_kasir_dashboard'])->name('kasir.dashboard')->middleware('role:kasir,admin');
     Route::get('/kasir/pesanan', [DashboardController::class, 'render_kasir_orders'])->name('kasir.pesanan')->middleware('role:kasir,admin');

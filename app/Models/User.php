@@ -13,29 +13,17 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    // protected $fillable = [
-    //     'name',
-    //     'email',
-    //     'password',
-    // ];
-
     protected $guarded = [];
 
     public function getImageAttribute($value)
     {
         if (!$value) {
             return asset('assets/images/user.webp');
-        }
-        if (Storage::exists($value)) {
-            return $value;
+        } else if (Storage::disk('public')->exists($value)) {
+            return '/storage/' . $value;
         }
         
-        return '/storage/' . $value;
+        return asset('assets/images/user.webp');
     }
     /**
      * The attributes that should be hidden for serialization.

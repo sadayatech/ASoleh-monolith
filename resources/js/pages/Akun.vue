@@ -46,7 +46,7 @@ const closeModal = () => {
     <section class="max-w-[480px] p-4">
       <div class="flex flex-col justify-center items-center">
         <div class="h-36 w-36 rounded-full overflow-hidden relative">
-          <img src="/assets/images/user.webp" alt="user profile" />
+          <img :src="$page.props.auth.user.image || '/assets/images/user.webp'" alt="user profile" />
         </div>
         <div class="text-center mt-4">
           <h1 class="text-textDark text-xl font-bold">
