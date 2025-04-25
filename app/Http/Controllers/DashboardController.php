@@ -11,10 +11,19 @@ use Inertia\Inertia;
 
 class DashboardController extends Controller
 {
-    public function render_home(Request $request)
+    public function render_home()
     {
         $activeItemCount = Item::where('stock', '>', 0)->count();
         $orderCount = Order::count();
+
+        $orders = Order::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+            ->whereYear('created_at', now()->year)
+            ->groupBy('month')
+            ->pluck('count', 'month');
+
+        $monthlyCounts = collect(range(1, 12))->map(function ($month) use ($orders) {
+            return $orders->get($month, 0);
+        });
         $supplierCount = Supplier::count();
         $customerCount = User::where('role', 'customer')->count();
         $todayIncome = Order::whereDate('created_at', now())
@@ -41,6 +50,7 @@ class DashboardController extends Controller
             'stats' => [
                 'items' => $activeItemCount,
                 'orders' => $orderCount,
+                'monthlyCounts' => $monthlyCounts,
                 'supplier' => $supplierCount,
                 'customer' => $customerCount,
                 'income' => $todayIncome,

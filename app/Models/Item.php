@@ -38,12 +38,11 @@ class Item extends Model
     {
         if (!$value) {
             return asset('assets/images/product.webp');
-        }
-        if (Storage::exists($value)) {
-            return $value;
+        } else if (Storage::disk('public')->exists($value)) {
+            return '/storage/' . $value;
         }
         
-        return '/storage/' . $value;
+        return asset('assets/images/product.webp');
     }
 
     public function setNameAttribute($value)

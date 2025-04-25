@@ -134,12 +134,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref,  } from 'vue';
 import Sidebar from './components/Sidebar.vue';
 import VueApexCharts from 'vue3-apexcharts';
-import { Link } from '@inertiajs/vue3';
 import HeaderDashboard from '@/components/HeaderDashboard.vue';
+import { usePage } from '@inertiajs/vue3';
 
+
+const page = usePage();
 // Modal Konfirmasi Keluar
 const showModalKeluar = ref(false);
 const openModalKeluar = () => {
@@ -153,7 +155,7 @@ const closeModalKeluar = () => {
 const series = ref([
   {
     name: 'Pesanan',
-    data: [23, 31, 40, 101, 40, 36, 32, 23, 14, 8, 5, 2],
+    data: page.props.stats.monthlyCounts,
   },
 ]);
 
