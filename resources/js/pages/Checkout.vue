@@ -84,7 +84,7 @@ const goBack = () => {
       </div>
       <div class="mt-4">
         <label for="email-pemesan" class="text-textDark"
-          >Email Pemesan <span class="text-secondary">*</span></label
+          >Email Pemesan</label
         >
         <div class="relative mt-2">
           <input
@@ -93,7 +93,6 @@ const goBack = () => {
             id="email-pemesan"
             class="peer py-3 px-4 ps-12 block w-full bg-white rounded-2xl focus:outline-none"
             placeholder="Masukkan email pemesan"
-            required
           />
           <div
             class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4 pt-1"

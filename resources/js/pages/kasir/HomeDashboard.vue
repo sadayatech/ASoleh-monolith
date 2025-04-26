@@ -155,7 +155,7 @@ watch(checkoutForm, (value) => {
           <div class="w-full md:w-96 relative">
             <input
               type="search"
-              class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
+              class="peer py-3 px-4 ps-12 block w-full bg-white rounded-xl focus:outline-none"
               placeholder="Cari menu"
             />
             <div
@@ -169,7 +169,7 @@ watch(checkoutForm, (value) => {
         </div>
         <div class="mt-4 md:mt-0">
           <button
-            class="bg-primary py-3 md:px-8 w-full md:w-auto rounded-full flex justify-center items-center gap-2 cursor-pointer hover:brightness-90 duration-300"
+            class="bg-primary py-3 md:px-8 w-full md:w-auto rounded-xl flex justify-center items-center gap-2 cursor-pointer hover:brightness-90 duration-300"
           >
             <p class="font-medium">QR Code</p>
           </button>
@@ -244,7 +244,7 @@ watch(checkoutForm, (value) => {
                 Rp{{ Number(cart.item.price).toLocaleString('id-ID') }}
               </h2>
               <div
-                class="flex justify-between items-center w-32 mt-3 bg-bgGray px-4 rounded-full"
+                class="flex justify-between items-center w-32 mt-3 bg-bgGray px-4 rounded-xl"
               >
                 <button
                   @click="updateCart(cart, cart.amount - 1)"
@@ -288,7 +288,7 @@ watch(checkoutForm, (value) => {
           </div>
           <button
             @click="openModalCheckout"
-            class="bg-primary py-3 mt-4 w-full rounded-full cursor-pointer hover:brightness-90 duration-300"
+            class="bg-primary py-3 mt-4 w-full rounded-xl cursor-pointer hover:brightness-90 duration-300"
           >
             <p class="font-semibold">Checkout</p>
           </button>
@@ -331,7 +331,7 @@ watch(checkoutForm, (value) => {
                   <input
                     type="name"
                     id="nama-pemesan"
-                    class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
+                    class="peer py-3 px-4 ps-12 block w-full bg-white rounded-xl focus:outline-none"
                     placeholder="Masukkan Nama Pemesan"
                     required
                     v-model="checkoutForm.customer_name"
@@ -354,7 +354,7 @@ watch(checkoutForm, (value) => {
                     type="tel"
                     id="nomor-whatsapp"
                     v-model="checkoutForm.whatsapp_number"
-                    class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
+                    class="peer py-3 px-4 ps-12 block w-full bg-white rounded-xl focus:outline-none"
                     placeholder="Masukkan Nomor WhatsApp"
                     required
                   />
@@ -399,7 +399,7 @@ watch(checkoutForm, (value) => {
                   type="text"
                   id="catatan"
                   v-model="checkoutForm.notes"
-                  class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
+                  class="peer py-3 px-4 ps-12 block w-full bg-white rounded-xl focus:outline-none"
                   placeholder="Masukkan catatan (opsional)"
                 />
                 <div
@@ -419,7 +419,7 @@ watch(checkoutForm, (value) => {
               <div class="flex justify-between gap-4 mt-2 w-full">
                 <div
                   @click="selectPayment('cash')"
-                  class="w-full py-3 rounded-full border-[1.5px] text-center font-semibold cursor-pointer transition"
+                  class="w-full py-3 rounded-xl border-[1.5px] text-center font-semibold cursor-pointer transition"
                   :class="
                     selectedMethod === 'cash'
                       ? 'bg-white border-secondary text-secondary'
@@ -430,7 +430,7 @@ watch(checkoutForm, (value) => {
                 </div>
                 <div
                   @click="selectPayment('qris')"
-                  class="w-full py-3 rounded-full border-[1.5px] text-center font-semibold cursor-pointer transition"
+                  class="w-full py-3 rounded-xl border-[1.5px] text-center font-semibold cursor-pointer transition"
                   :class="
                     selectedMethod === 'qris'
                       ? 'bg-white border-secondary text-secondary'
@@ -448,7 +448,7 @@ watch(checkoutForm, (value) => {
                   type="number"
                   id="uang"
                   v-model="checkoutForm.cash_given"
-                  class="peer py-3 px-4 ps-12 block w-full bg-white rounded-full focus:outline-none"
+                  class="peer py-3 px-4 ps-12 block w-full bg-white rounded-xl focus:outline-none"
                   placeholder="Masukkan Jumlah Uang"
                   required
                 />
@@ -488,7 +488,7 @@ watch(checkoutForm, (value) => {
             </div>
             <button
               @click="SubmitCart"
-              class="bg-primary py-3 mt-4 w-full rounded-full cursor-pointer hover:brightness-90 duration-300"
+              class="bg-primary py-3 mt-4 w-full rounded-xl cursor-pointer hover:brightness-90 duration-300"
             >
               <p class="font-semibold">Checkout</p>
             </button>
@@ -520,12 +520,12 @@ watch(checkoutForm, (value) => {
         <div class="flex justify-between mt-4 gap-2">
           <button
             @click="closeModalKeluar"
-            class="w-full text-secondary py-3 rounded-full font-medium cursor-pointer"
+            class="w-full text-secondary py-3 rounded-xl font-medium cursor-pointer"
           >
             Batal
           </button>
           <button
-            class="w-full bg-primary text-textDark py-3 rounded-full font-medium cursor-pointer hover:brightness-90 duration-300"
+            class="w-full bg-primary text-textDark py-3 rounded-xl font-medium cursor-pointer hover:brightness-90 duration-300"
             @click="$inertia.post('/logout')"
           >
             Keluar

@@ -19,7 +19,7 @@ class OrderController extends Controller
     {
         $data = $request->validate([
             'customer_name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'email' => 'nullable|email|max:255',
             'whatsapp_number' => 'required|max:255',
             'notes' => 'nullable|string|max:255',
             'payment_method' => 'required|in:qris,cash',
@@ -68,7 +68,7 @@ class OrderController extends Controller
                 'customer_name' => $data['customer_name'],
                 'user_has_account' => Auth::check(),
                 'whatsapp_number' => $data['whatsapp_number'],
-                'email' => $data['email'],
+                'email' => $data['email'] ?? null,
                 'payment_method' => $data['payment_method'],
                 'notes' => $data['notes'],
                 'total_amount' => $total,
