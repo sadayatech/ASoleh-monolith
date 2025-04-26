@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Item;
 use App\Models\Order;
 use App\Models\Supplier;
@@ -76,6 +77,25 @@ class DashboardController extends Controller
                 'search' => $search,
             ],
             'suppliers' => Supplier::all()
+        ]);
+    }
+    public function render_category(Request $request)
+    {
+        $search = $request->input('search');
+
+        $categoryQuery = Category::query()->withCount('items');
+
+        if ($search) {
+            $categoryQuery->where('name', 'like', '%' . $search . '%');
+        }
+
+        $categories = $categoryQuery->latest()->get();
+
+        return Inertia::render('admin/Category', [
+            'categories' => $categories,
+            'filters' => [
+                'search' => $search,
+            ],
         ]);
     }
     public function render_users(Request $request)

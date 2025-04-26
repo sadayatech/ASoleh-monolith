@@ -23,6 +23,18 @@ const route = { path: page.url };
       </Link>
 
       <Link
+        href="/admin/kategori"
+        :class="
+          route.path === '/admin/kategori'
+            ? 'bg-primary text-textDark'
+            : 'bg-transparent text-textGrayDark'
+        "
+        class="py-3 px-2 rounded-2xl text-center block"
+      >
+        <p class="text-3xl"><i class="fi fi-sr-category"></i></p>
+        <p class="text-sm">Kategori</p>
+      </Link>
+      <Link
         href="/admin/menu"
         :class="
           route.path === '/admin/menu'
