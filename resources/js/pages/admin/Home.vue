@@ -134,7 +134,7 @@
 </template>
 
 <script setup>
-import { ref,  } from 'vue';
+import { ref, } from 'vue';
 import Sidebar from './components/Sidebar.vue';
 import VueApexCharts from 'vue3-apexcharts';
 import HeaderDashboard from '@/components/HeaderDashboard.vue';
@@ -164,7 +164,7 @@ const chartOptions = ref({
     height: 320,
     type: 'bar',
   },
-  colors: ['#F1BD2C'],
+  colors: ['#308555'],
   plotOptions: {
     bar: {
       borderRadius: 10,
@@ -175,7 +175,6 @@ const chartOptions = ref({
   },
   dataLabels: {
     enabled: true,
-    // formatter: (val) => val + '%',
     offsetY: -20,
     style: {
       fontSize: '12px',
@@ -211,11 +210,11 @@ const chartOptions = ref({
   yaxis: {
     labels: {
       show: false,
-      //   formatter: (val) => val + '%',
+        // formatter: (val) => val + '%',
     },
   },
   title: {
-    text: 'Grafik Pesanan Tahun 2025',
+    text: 'Grafik Pesanan Tahun Ini',
     floating: true,
     offsetY: 300,
     align: 'center',
